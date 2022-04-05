@@ -21,7 +21,7 @@ const UsuarioState = (props) => {
     useEffect(() => {
           const fetchProductos = async() => {
               const dataProductos =  await getDocs(collection(db, "productos"))
-              const getDataProductos = dataProductos.docs.map((doc) => ({...doc.data()}))      
+              const getDataProductos = dataProductos.docs.map((doc) => ({...doc.data(), id: doc.id}))      
               setProductos(getDataProductos)
               setLoading(false)
             }

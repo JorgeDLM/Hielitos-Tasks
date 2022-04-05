@@ -9,10 +9,11 @@ import Inicio from './Components/InicioCatalogo/InicioCatalogo'
 import Catalogo from './Components/InicioCatalogo/Catalogo'
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
+import ProductoID from "./Components/InicioCatalogo/ProductoID";
 
 function App() {
 
-    const { usuarioLoggeado } = useContext(Usuario)
+    const { usuarioLoggeado, productos } = useContext(Usuario)
 
 return (
 		<React.Fragment>
@@ -35,6 +36,9 @@ return (
 						<Route path="admin/*" element={<Navigate to="/iniciar-sesion" />} />
 						<Route path="/" element={<Navigate to="/catalogo" />} />
 						<Route path="/*" element={<Navigate to="/catalogo" />} />
+						{productos.map((p,i) => 
+							<Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />
+						)}
 					</>}
 				</React.Fragment>
 			</Routes>

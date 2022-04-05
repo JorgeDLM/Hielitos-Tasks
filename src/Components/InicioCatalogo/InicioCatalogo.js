@@ -16,7 +16,7 @@ function InicioCatalogo() {
     return (
         <React.Fragment>
             <Menu links={links} logoNegro  />
-			<Container className="parmediano pabenorme">
+			<Container className="parmediano pabenorme noselect">
 				<Outlet />
 			</Container>
         </React.Fragment>

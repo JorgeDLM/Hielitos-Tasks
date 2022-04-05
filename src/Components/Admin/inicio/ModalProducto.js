@@ -21,6 +21,8 @@ function Admin() {
     const [tematica, setTematica] = useState("")
     const [precio_compra, setPrecioCompra] = useState("")
     const [precio_venta, setPrecioVenta] = useState("")
+    const [precio_venta_ml, setPrecioVentaML] = useState("")
+    const [precio_venta_mayoreo, setPrecioVentaMayoreo] = useState("")
     const [envio, setEnvio] = useState("")
     const [medidas, setMedidas] = useState("")
     const [descripcion, setDescripcion] = useState("")
@@ -41,6 +43,8 @@ function Admin() {
     const precio_compraInvalido = !precio_compra
     const precioInvalido = ((precio_venta - precio_compra) <= 0)
     const precio_ventaInvalido = !precio_venta || (precioInvalido)
+    const precio_ventaInvalidoML = !precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)
+    const precio_venta_mayoreoInvalido = !precio_venta_mayoreo || (precio_venta_mayoreo - precio_compra)
     const precioEnvio = (precio_venta - precio_compra) < 70
     const envioInvalido = envio === "" || precioEnvio
     const descripcionInvalida = !descripcion
@@ -63,6 +67,7 @@ function Admin() {
         setTematica("")
         setPrecioCompra("")
         setPrecioVenta("")
+        setPrecioVentaML("")
         setEnvio("")
         setMedidas("")
         setDescripcion("")
@@ -73,7 +78,7 @@ function Admin() {
         setModal(false)
     }
 
-    const dataCompleta =  !imagenInvalida && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !descripcionInvalida
+    const dataCompleta =  !imagenInvalida && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !descripcionInvalida && !precio_ventaInvalidoML
 
 // POST IMAGEN ---------------------------------------------------------------
     const postImagen = (img) => {
@@ -139,6 +144,8 @@ function Admin() {
                 tematica: tematica ? tematica : "",
                 precio_compra: precio_compra ? precio_compra : "",
                 precio_venta: precio_venta ? precio_venta : "",
+                precio_venta_ml: precio_venta_ml ? precio_venta_ml : "",
+                precio_venta_mayoreo: precio_venta_mayoreo ? precio_venta_mayoreo : "",
                 envio: envio === "false" ? false : envio === "true" ? true : false,
                 ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
                 medidas: medidas ? medidas : "",
@@ -264,9 +271,23 @@ function Admin() {
                     </FormGroup>
 
                 {/* Precio de venta */}
-                    <div className="wbold">Precio de venta:</div>
+                    <div className="wbold">Precio de venta Mercadolibre:</div>
+                    <FormGroup>
+                        <Input placeholder="Precio de venta Mercadolibre" type="number" onChange={(e) => setPrecioVentaML(e.target.value)} invalid={precio_venta_ml} />
+                        {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
+                    </FormGroup>
+
+                {/* Precio de venta */}
+                    <div className="wbold">Precio de retial:</div>
                     <FormGroup>
                         <Input placeholder="Precio de venta" type="number" onChange={(e) => setPrecioVenta(e.target.value)} invalid={precio_ventaInvalido} />
+                        {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
+                    </FormGroup>
+
+                {/* Precio de venta */}
+                    <div className="wbold">Precio de mayoreo:</div>
+                    <FormGroup>
+                        <Input placeholder="Precio de venta" type="number" onChange={(e) => setPrecioVentaMayoreo(e.target.value)} invalid={precio_venta_mayoreoInvalido} />
                         {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
                     </FormGroup>
 
