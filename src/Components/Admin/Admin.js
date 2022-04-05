@@ -15,10 +15,6 @@ function Admin() {
 			path: `/inicio`,
 		},
 		{
-			nombre: "Productos",
-			path: `productos`,
-		},
-		{
 			nombre: "Inventario",
 			path: `inventario`,
 		},

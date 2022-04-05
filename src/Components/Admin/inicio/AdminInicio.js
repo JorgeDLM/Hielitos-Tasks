@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Container, Spinner } from "reactstrap";
 import ModalProducto from './ModalProducto'
 import ModalCategorias from "./ModalCategorias";
-import Producto from "../productos/Producto";
+import Producto from "../inventario/Producto";
 import UsuarioContext from "../context/UsuarioContext";
 
 function Admin() {

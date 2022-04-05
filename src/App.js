@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 
 import Admin from './Components/Admin/Admin'
 import AdminInicio from './Components/Admin/inicio/AdminInicio'
-import Productos from './Components/Admin/productos/Productos'
+import Inventario from './Components/Admin/inventario/Inventario'
 // import Usuario from "./Components/Admin/context/UsuarioContext";
 
 function App() {
@@ -20,7 +20,7 @@ return (
 				<React.Fragment>
 					<Route path="/*" element={<Admin/>}  >
 						<Route path="inicio" element={<AdminInicio/>} />
-						<Route path="productos" element={<Productos/>} />
+						<Route path="inventario" element={<Inventario/>} />
 					</Route>
 					<Route path="/*" element={<Navigate to="/inicio" />} />
 					<Route path="/" element={<Navigate to="/inicio" />} />

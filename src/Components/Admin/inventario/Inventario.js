@@ -4,7 +4,7 @@ import Producto from "./Producto";
 import UsuarioContext from "../context/UsuarioContext";
 
 
-function Productos() {
+function Inventario() {
 
     const {productos} = useContext(UsuarioContext)
 
@@ -21,4 +21,4 @@ function Productos() {
     );
 }
 
-export default Productos;
+export default Inventario;
