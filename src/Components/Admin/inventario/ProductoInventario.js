@@ -3,9 +3,9 @@ import { Card, Row, Col, Button } from "reactstrap";
 import { FaCopy } from 'react-icons/fa'
 
 
-function Producto(props) {
+function ProductoInventario(props) {
 
-    const [ver, setVer] = useState(false)
+    const [editar, setEditar] = useState(false)
 
     const copiar = () => {
         navigator.clipboard.writeText(props.p.descripcion)
@@ -25,14 +25,13 @@ function Producto(props) {
                                 <Col>${props.p.precio_venta}</Col>
                                 {props.p.envio === true && <Col className="wbold verde">Envío gratis</Col>}
                                 <Col><span className="wbold azul">{props.p.propietario}</span></Col>
-                                {props.p.cantidad && <Col><span className="gris">{props.p.cantidad} {props.p.cantidad > 1 ? "pzas" : "pza"}</span></Col>}
                             </Row>
                         </Col>
                     </Row>
-                    {ver && <hr />}
+                    {editar && <hr />}
                 </div>
-                {!ver && <Button onClick={() => setVer(!ver)} className="botonAmarillo w100">Ver más</Button>}
-                    {ver && <div className="pizchico pdechico pabchico">
+                {!editar && <Button onClick={() => setEditar(!editar)} className="botonAmarillo w100">Ver más</Button>}
+                    {editar && <div className="pizchico pdechico pabchico">
                         <div><span className="wbold azul">Temática:</span> {props.p.tematica}</div>
                         <div><span className="wbold azul">Categoria:</span> {props.p.categoria}</div>
                         <div><span className="wbold azul">Precio de compra:</span> {props.p.precio_compra}</div>
@@ -48,10 +47,11 @@ function Producto(props) {
                         <div><span className="wbold azul">Inventario:</span> {props.p.cantidad}</div>
                         <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
                     </div>}
-                {ver && <Button onClick={() => setVer(!ver)} className="botonAmarillo w100">Ver menos</Button>}
+                {editar && <Button onClick={() => setEditar(!editar)} className="botonAmarillo w100">Guardar</Button>}
+                {editar && <Button onClick={() => setEditar(!editar)} className="botonRojo w100">Cancelar</Button>}
             </Card>
         </div>
     );
 }
 
-export default Producto;
+export default ProductoInventario;
