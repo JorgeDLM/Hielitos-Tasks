@@ -59,7 +59,7 @@ function Admin() {
                                         <div><span className="wbold azul">Ganancia:</span> {p.precio_venta - p.precio_compra - (p.precio_venta >= 299 ? (p.envio === true ? 72 : 0) : (p.envio === true ? 100 : 0))}</div>
                                         <div><span className="wbold azul">Medidas:</span> {p.medidas}</div>
                                         <hr />
-                                        <div><span className="wbold azul">Descripción:</span> {p.descripcion}</div>
+                                        <div><span className="wbold azul">Descripción:</span> <br />{p.descripcion}</div>
                                         <div><span className="wbold azul">Inventario:</span> {p.cantidad}</div>
                                         <div><span className="wbold azul">Proveedor:</span> {p.proveedor}</div>
                                     </div>}
