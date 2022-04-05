@@ -57,7 +57,6 @@ function Admin() {
     }
 
     const clearInputs = () => {
-        setModal(true)
         setImagen("")
         setNombre("")
         setCategoria("seleccione")
@@ -71,9 +70,10 @@ function Admin() {
         setProveedor("")
         setPropietario("seleccione")
         setDescripcionDefault("")
+        setModal(false)
     }
 
-    const dataCompleta =  !imagenInvalida && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido
+    const dataCompleta =  !imagenInvalida && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !descripcionInvalida
 
 // POST IMAGEN ---------------------------------------------------------------
     const postImagen = (img) => {
@@ -162,8 +162,8 @@ function Admin() {
             })
 
             localStorage.setItem('productoInfo', JSON.stringify(data))
-            setProductos(...productos, data)
-            clearInputs("")
+            setProductos([...productos, data])
+            clearInputs()
             setLoading(false);
 
             // window.location.reload()
@@ -277,31 +277,37 @@ function Admin() {
                     </FormGroup>
 
                 {/* Envio */}
-                    <div className="wbold">Envio:</div>
+                    <div className="wbold">Envío:</div>
                     <FormGroup>
                         <Input type="select" onChange={(e) => setEnvio(e.target.value)} invalid={envioInvalido} >
                             <option value="" disabled={envio !== ""}>Seleccione:</option>
-                            {precio_venta >= 250 && <option value={true}>Sí</option>}
                             {precio_venta < 299 && <option value={false} >No</option>}
+                            {precio_venta >= 250 && <option value={true}>Sí</option>}
                         </Input>
-                        <FormFeedback>{`${precioEnvio ? "Muy poca ganancia valide nuevamente." : "¿Envio incluido en precio de venta?"}`}</FormFeedback>
+                        <FormFeedback>{`${precioEnvio ? "Muy poca ganancia valide nuevamente." : "¿Envío incluido en precio de venta?"}`}</FormFeedback>
+                    </FormGroup>
+
+                {/* Medidas */}
+                    <div className="wbold">Medidas:</div>
+                    <FormGroup>
+                        <Input placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} />
                     </FormGroup>
 
                 {/* Descripción */}
                     <div className="wbold">Descripción:</div>
                     <FormGroup>
                         <div className="pabmuychico"><Button className="botonAmarillo" onClick={() => setDescripcionDefault(`*********************************************************************************************************
-                            ¡PUBLICACIÓN POR ${nombre.toUpperCase()} DE ${tematica.toUpperCase()}!
-                            *********************************************************************************************************
+¡PUBLICACIÓN POR ${nombre.toUpperCase()} DE ${tematica.toUpperCase()}!
+*********************************************************************************************************
 
-                            Material: 
-                            Tipo: ${subCategoria}
-                            Tamaño de espada: ${medidas}
+Material: 
+Tipo: ${subCategoria}
+Tamaño: ${medidas}
 
 
-                            *********************************************************************************************************
-                            Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
-                            *********************************************************************************************************`)}><FaPlus className="tIconos" /></Button></div>
+*********************************************************************************************************
+Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
+*********************************************************************************************************`)}><FaPlus className="tIconos" /></Button></div>
                         <Input placeholder="Descripción" type="textarea" rows="12" defaultValue={descripcionDefault}
                             onChange={(e) => setDescripcion(e.target.value)} invalid={descripcionInvalida} />
                     </FormGroup>
@@ -321,12 +327,6 @@ function Admin() {
                     <div className="wbold">Cantidad en inventario:</div>
                     <FormGroup>
                         <Input placeholder="Cantidad" type="number" onChange={(e) => setCantidad(e.target.value)} />
-                    </FormGroup>
-
-                {/* Medidas */}
-                    <div className="wbold">Medidas:</div>
-                    <FormGroup>
-                        <Input placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} />
                     </FormGroup>
 
                 {/* Proveedor */}

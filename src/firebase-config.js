@@ -12,13 +12,13 @@ import { getAuth } from "@firebase/auth"
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAO_etBlded9K8zK42-Vk2NJ0AbRPHjY9Y",
-  authDomain: "mercado-libre-65ada.firebaseapp.com",
-  projectId: "mercado-libre-65ada",
-  storageBucket: "mercado-libre-65ada.appspot.com",
-  messagingSenderId: "589897391123",
-  appId: "1:589897391123:web:b8240eeb93c1d11d63f3e6",
-  measurementId: "G-KGVDN7BTM1"
+  apiKey: "AIzaSyD_gSBFBxj_UoaSEGaMDYuh1eW6crhQHQU",
+  authDomain: "mercado-libre-2.firebaseapp.com",
+  projectId: "mercado-libre-2",
+  storageBucket: "mercado-libre-2.appspot.com",
+  messagingSenderId: "285091232336",
+  appId: "1:285091232336:web:d8d49c0e1e2b0217bdef55",
+  measurementId: "G-9KLQGYCFZJ"
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

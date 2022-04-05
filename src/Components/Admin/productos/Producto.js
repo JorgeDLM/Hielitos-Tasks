@@ -33,7 +33,7 @@ function Admin(props) {
                         <div><span className="wbold azul">Ganancia:</span> {props.p.precio_venta - props.p.precio_compra - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))}</div>
                         <div><span className="wbold azul">Medidas:</span> {props.p.medidas}</div>
                         <hr />
-                        <div><span className="wbold azul">Descripción:</span> <br />{props.p.descripcion}</div>
+                        <div className="descripcion"><span className="wbold azul">Descripción:</span> <br />{props.p.descripcion}</div>
                         <div><span className="wbold azul">Inventario:</span> {props.p.cantidad}</div>
                         <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
                     </div>}
