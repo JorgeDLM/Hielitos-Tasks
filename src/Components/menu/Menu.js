@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavbarToggler, Collapse } from 'reactstrap';
 import logoBlanco from "../../imgs/logoBlanco.png";
 import logoNegro from "../../imgs/logoNegro.png";
-// import { signOut } from "firebase/auth";
-// import { auth } from "../../firebase-config";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase-config";
+import UsuarioContext from "../Admin/context/UsuarioContext";
 
 function Menu(props) {
 
   const [toggle, setToggle] = useState(false)
+  const { usuarioLoggeado } = useContext(UsuarioContext)
+  const navigate = useNavigate()
 
 
         // TODO: Falta una funcion que calcule en el resize el tamaño de la pantalla
@@ -19,15 +22,17 @@ function Menu(props) {
           windowSize <= (props.expand ? 1700 : 768) &&  setToggle(!toggle)
         } 
         
-      //   // CERRAR SESION FIREBASE
-      //   const cerrarSesionFB = async() => {
-      //     await signOut(auth)
-      //   }
+        // CERRAR SESION FIREBASE
+        const cerrarSesionFB = async() => {
+          await signOut(auth)
+        }
 
-      //   const cerrarSesion = () => {
-      //     cerrarSesionFB()
-      //     localStorage.removeItem("infoUsuario")
-      // }
+        const cerrarSesion = () => {
+          cerrarSesionFB()
+          localStorage.removeItem("infoUsuario")
+          window.location.reload()
+          navigate('/')
+      }
         
     return (
       <React.Fragment>
@@ -60,14 +65,17 @@ function Menu(props) {
                     </NavLink>
                   </NavItem>
                 ))}
-                {/* <hr className="fondoBlanco d-block d-md-none" />
+                <hr className="fondoBlanco d-block d-md-none" />
                   <NavItem className="pabMenu">
-                      <NavLink className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar(); cerrarSesion()}}  to='/'>
+                      {usuarioLoggeado ? <NavLink className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar(); cerrarSesion()}}  to='/'>
                         Cerrar sesión
+                      </NavLink> :
+                      <NavLink className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}}  to='/iniciar-sesion'>
+                        Iniciar sesión
                       </NavLink>
-                  </NavItem> */}
+                      }
+                  </NavItem>
               </Nav>
-            {/* menu corto para recuperar contraseña y registro */}
           </Collapse>
         </Navbar>
       </React.Fragment>

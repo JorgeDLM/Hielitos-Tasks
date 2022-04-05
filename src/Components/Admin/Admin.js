@@ -12,7 +12,7 @@ function Admin() {
 	const links = [
 		{
 			nombre: "Inicio",
-			path: `/inicio`,
+			path: `inicio`,
 		},
 		{
 			nombre: "Inventario",
@@ -32,9 +32,9 @@ function Admin() {
     return (
         <>
 			<Menu links={links} logoNegro  />
-			<div className="">
+			<>
 				<Outlet/>
-			</div>
+			</>
         </>
     );
 }
