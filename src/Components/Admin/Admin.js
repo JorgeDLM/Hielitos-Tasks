@@ -18,6 +18,18 @@ function Admin() {
 			nombre: "Productos",
 			path: `productos`,
 		},
+		{
+			nombre: "Inventario",
+			path: `inventario`,
+		},
+		{
+			nombre: "Ventas",
+			path: `ventas`,
+		},
+		{
+			nombre: "Compras",
+			path: `compras`,
+		},
 
 	];
 
