@@ -14,8 +14,6 @@ function App() {
 
     const { usuarioLoggeado } = useContext(Usuario)
 
-
-
 return (
 		<React.Fragment>
 			<div style={{ minHeight: '91px' }} />
