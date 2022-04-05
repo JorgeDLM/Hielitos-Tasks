@@ -5,7 +5,7 @@ import Admin from './Components/Admin/Admin'
 import AdminInicio from './Components/Admin/inicio/AdminInicio'
 import Inventario from './Components/Admin/inventario/Inventario'
 import Login from './Components/login/Login'
-import Inicio from './Components/Inicio/Inicio'
+import Inicio from './Components/Inicio/InicioCatalogo'
 import Catalogo from './Components/Inicio/Catalogo'
 
 import Usuario from "./Components/Admin/context/UsuarioContext";

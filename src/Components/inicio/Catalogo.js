@@ -9,7 +9,6 @@ function Catalogo() {
     const {productos} = useContext(UsuarioContext)
     return (
         <React.Fragment>
-        Catálogo:
 			<Row className="pabchico">
                 {productos.map((p,i) => 
 			        <ProductoCatalogo key={i} p={p} />

@@ -4,7 +4,7 @@ import { Container } from "reactstrap";
 import Menu from "../menu/Menu";
 
 
-function Inicio() {
+function InicioCatalogo() {
 
 	const links = [
 		{
@@ -23,4 +23,4 @@ function Inicio() {
     );
 }
 
-export default Inicio;
+export default InicioCatalogo;
