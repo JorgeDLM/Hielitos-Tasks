@@ -1,0 +1,3569 @@
+$negro:          #231F20
+$negrohover:     #363031
+
+$gris: grey
+$grisclaro:   #d9d9d9
+$grisclaro2:   #cccccc
+$grisclaro3:   #F7F7F7
+$grisclaro4:   #e6e6e6
+$grisobscuro: #5f5457
+
+$azul:        rgb(22, 2, 136)
+$azulclaro:   #d5eaf6
+$azulobscuro: #215B7C
+
+$rojo:        #EA4435
+$rojoclaro:   #fad4d1
+$rojoobscuro: #BF382B
+
+$verde:        #79C254
+$verdeclaro:   #e2f1da
+$verdeobscuro: #55893B
+
+$amarillo:        rgb(235, 223, 50)
+$amarilloclaro:   #fef0cd
+$amarilloobscuro: #BF8C0D
+$amarillocalendario: #fed777
+
+$cafe: #d39314
+$cafeclaro: #febe12
+$cafeobscuro: #febe12
+$blanco: white
+
+/*----Otras Variables------*/
+
+$opacity: .8
+
+$micro: 2px
+$muychico: 5px
+$chico: 10px
+$mediano: 15px
+$grande: 20px
+$muygrande: 25px
+$enorme: 30px
+
+$tmuychica: 10px
+$tchica: 13px
+$tmediana: 16px
+$tgrande: 20px
+$tmuygrande: 25px
+$tenorme: 35px
+
+$a: .555
+
+
+/*LETRA*/
+body
+  margin: 0
+  padding: 0
+  font-family: url(./fonts/AvenirLTStd-Book.otf)
+
+// Hace que el texto no sea seleccionable
+.noselect 
+  user-select: none 
+  -webkit-touch-callout: none 
+  -webkit-user-select: none 
+  -khtml-user-select: none 
+  -moz-user-select: none 
+  -ms-user-select: none 
+
+.yesselect 
+  user-select: text
+  -webkit-touch-callout: text
+  -webkit-user-select: text
+  -khtml-user-select: text
+  -moz-user-select: text
+  -ms-user-select: text
+
+.mouseSelectClick
+  cursor: pointer
+
+/*COLOR LETRA*/
+.negro
+  color: $negro !important
+
+.gris
+  color: $gris !important
+.grisClaro
+  color: $grisclaro !important
+.grisObscuro
+  color: $grisobscuro !important
+
+.azul
+  color: $azul !important
+.azulClaro
+  color: $azulclaro !important
+.azulObscuro
+  color: $azulobscuro !important
+
+.rojo
+  color: $rojo !important
+.rojoClaro
+  color: $rojoclaro !important
+.rojoObscuro
+  color: $rojoobscuro !important
+
+.verde
+  color: $verde !important
+.verdeClaro
+  color: $verdeclaro !important
+.verdeObscuro
+  color: $verdeobscuro !important
+
+.amarillo
+  color: $amarillo !important
+.amarilloClaro
+  color: $amarilloclaro !important
+.amarilloObscuro
+  color: $amarilloobscuro !important
+
+.cafe
+  color: $cafe !important
+.cafeClaro
+  color: $cafeclaro !important
+.cafeObscuro
+  color: $cafeobscuro !important
+
+.blanco
+  color: $blanco !important
+
+
+/*COLOR FONDO*/
+.fondoNegro
+  background: $negro !important
+
+.fondoGris
+  background: $gris !important
+.fondoGrisClaro
+  background: $grisclaro !important
+.fondoGrisClaro2
+  background: $grisclaro2 !important
+.fondoGrisClaro3
+  background: $grisclaro3 !important
+.fondoGrisClaro4
+  background: $grisclaro4 !important
+.fondoGrisObscuro
+  background: $grisobscuro !important
+
+.fondoAzul
+  background: $azul !important
+.fondoAzulClaro
+  background: $azulclaro !important
+.fondoAzulObscuro
+  background: $azulobscuro !important
+
+.fondoRojo
+  background: $rojo !important
+.fondoRojoClaro
+  background: $rojoclaro !important
+.fondoRojoObscuro
+  background: $rojoobscuro !important
+
+.fondoVerde
+  background: $verde !important
+.fondoVerdeClaro
+  background: $verdeclaro !important
+.fondoVerdeObscuro
+  background: $verdeobscuro !important
+
+.fondoAmarillo
+  background: $amarillo !important
+.fondoAmarilloClaro
+  background: $amarilloclaro !important
+.fondoAmarilloObscuro
+  background: $amarilloobscuro !important
+
+.fondoCafe
+  background: $cafe !important
+.fondoCafeClaro
+  background: $cafeclaro !important
+.fondoCafeObscuro
+  background: $cafeobscuro !important
+
+.fondoBlanco
+  background: $blanco !important
+  
+
+// TAMAÑO DE LETRA
+.tmuychica
+  font-size: calc($tmuychica + 1vmin)
+.tchica
+  font-size: calc($tchica + 1vmin)
+.tmediana
+  font-size: calc($tmediana + 1vmin)
+.tgrande
+  font-size: calc($tgrande + 1vmin)
+.tmuygrande
+  font-size: calc($tmuygrande + 1vmin)
+.tenorme
+  font-size: calc($tenorme + 1vmin)
+.tepica
+  font-size: calc(60px + 1vmin)
+
+
+/*PADDING*/
+.pmicro
+  padding: 1px
+.pmuychico
+  padding: 2px
+.pchico
+  padding: 5px
+.pmediano
+  padding: 10px
+.pgrande
+  padding: 15px
+.pmuygrande
+  padding: 20px
+.penorme
+  padding: 30px
+
+.parmicro
+  padding-top: $micro !important
+.parmuychico
+  padding-top: $muychico !important
+.parchico
+  padding-top: $chico !important
+.parmediano
+  padding-top: $mediano !important
+.pargrande
+  padding-top: $grande !important
+.parmuygrande
+  padding-top: $muygrande !important
+.parenorme
+  padding-top: $enorme !important
+.parMenu
+  padding-top: 91px
+
+.pabmicro
+  padding-bottom: $micro !important
+.pabmuychico
+  padding-bottom: $muychico !important
+.pabchico
+  padding-bottom: $chico !important
+.pabmediano
+  padding-bottom: $mediano !important
+.pabgrande
+  padding-bottom: $grande !important
+.pabmuygrande
+  padding-bottom: $muygrande !important
+.pabenorme
+  padding-bottom: $enorme !important
+
+.pizmicro
+  padding-left: $micro !important
+.pizmuychico
+  padding-left: $muychico !important
+.pizchico
+  padding-left: $chico !important
+.pizmediano
+  padding-left: $mediano !important
+.pizgrande
+  padding-left: $grande !important
+.pizmuygrande
+  padding-left: $muygrande !important
+.pizenorme
+  padding-left: $enorme !important
+
+.pdemicro
+  padding-right: $micro !important
+.pdemuychico
+  padding-right: $muychico !important
+.pdechico
+  padding-right: $chico !important
+.pdemediano
+  padding-right: $mediano !important
+.pdegrande
+  padding-right: $grande !important
+.pdemuygrande
+  padding-right: $muygrande !important
+.pdeenorme
+  padding-right: $enorme !important
+
+.sinpym
+    padding: 0px !important
+    margin: 0px !important
+.sinpymde
+    padding-right: 0px !important
+.sinpymiz
+    padding-left: 0px !important
+.sinpymar
+    padding-top: 0px !important
+    margin-top: 0px !important
+.sinpymab
+    padding-bottom: 0px !important
+    margin-bottom: 0px !important
+.sinpymlados
+    padding-right: 0px !important
+    padding-left: 0px !important
+
+/*FONT WEIGHT*/
+.wnormal
+  font-weight: normal !important
+.wbold
+  font-weight: bold !important
+.wbolder
+  font-weight: bolder
+
+/*ALINEAR*/
+.centro
+  text-align: center
+  align-items: center
+.izquierda
+  text-align: left !important
+  align-items: center !important
+.derecha
+  text-align: right
+  align-items: center
+.justificado
+  text-align: justify
+  text-justify: inter-word
+.enmedio
+  vertical-align: middle !important
+  display: inline !important
+.abajo
+  vertical-align: bottom
+
+
+// LINKS Y OTROS
+.linkSF
+  text-decoration: none !important
+  
+
+.linkBlanco
+  a
+    color: $blanco
+    text-decoration: none
+    &:hover
+      color: $grisclaro  
+
+.linkNegro
+  a
+    color: $negro
+    text-decoration: none
+    &:hover
+      color: $negrohover
+
+.linkGris
+  a
+    color: $gris
+    text-decoration: none
+    &:hover
+      color: $grisobscuro
+.linkGrisClaro
+  a
+    color: $grisclaro
+    text-decoration: none
+    &:hover
+      color: $gris
+.linkGrisObscuro
+  a
+    color: $grisobscuro
+    text-decoration: none
+    &:hover
+      color: $gris
+
+.linkAzul
+  a
+    color: $azul
+    text-decoration: none
+    &:hover
+      color: $azulobscuro
+.linkAzulClaro
+  a
+    color: $azulclaro
+    text-decoration: none
+    &:hover
+          color: $azul
+.linkAzulObscuro
+  a
+    color: $azulobscuro
+    text-decoration: none
+    &:hover
+      color: $azul
+
+.linkRojo
+  a
+    color: $rojo
+    text-decoration: none
+    &:hover
+      color: $rojoobscuro
+.linkRojoClaro
+  a
+    color: $rojoclaro
+    text-decoration: none
+    &:hover
+      color: $rojo
+.linkRojoObscuro
+  a
+    color: $rojoobscuro
+    text-decoration: none
+    &:hover
+      color: $rojo
+
+.linkVerde
+  a
+    color: $verde
+    text-decoration: none
+    &:hover
+      color: $verdeobscuro
+.linkVerdeClaro
+  a
+    color: $verdeclaro
+    text-decoration: none
+    &:hover
+      color: $verde
+.linkVerdeObscuro
+  a
+    color: $verdeobscuro
+    text-decoration: none
+    &:hover
+      color: $verde
+
+.linkAmarillo
+  a
+    color: $amarillo
+    text-decoration: none
+    &:hover
+      color: $amarilloobscuro
+.linkAmarilloClaro
+  a
+    color: $amarilloclaro
+    text-decoration: none
+    &:hover
+      color: $amarillo
+.linkAmarilloObscuro
+  a
+    color: $amarilloobscuro
+    text-decoration: none
+    &:hover
+      color: $amarillo
+
+.linkCafe
+  a
+    color: $cafe
+    text-decoration: none
+    &:hover
+      color: $cafeobscuro
+.linkCafeClaro
+  a
+    color: $cafeclaro
+    text-decoration: none
+    &:hover
+      color: $cafe
+.linkCafeObscuro
+  a
+    color: $cafeobscuro
+    text-decoration: none
+    &:hover
+      color: $cafe
+
+.linkBlanco
+    color: $blanco
+    text-decoration: none
+    &:hover
+      color: $grisclaro
+
+
+/*COLOR BOTON - Estilos */
+.botonNegro
+  background: $negro !important
+  border: none !important
+  color: $blanco !important
+  font-weight: bold !important
+  &:active
+    background: $negro !important
+    opacity: $opacity !important
+  &:hover
+    opacity: .9 !important
+    
+// FORMULARIO HAZ TU PEDIDO
+.botonNegro2
+  background: $negro !important
+  border: none !important
+  color: $blanco !important
+  font-weight: bold !important
+  &:active
+    background: $negro
+    opacity:  $opacity
+  &:hover
+    background: $negrohover
+
+.botonGris
+  background: $gris !important
+  border: none !important
+  color: $blanco !important
+  font-weight: bold !important
+  &:active
+    background: $gris !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisobscuro !important
+
+.botonGrisClaro
+  background: $grisclaro !important
+  border: none
+  color: $negro !important
+  font-weight: bold !important
+  &:active
+    background: $grisclaro !important
+    opacity: $opacity !important
+  &:hover
+    background: $gris !important
+    color: $blanco !important
+
+.botonAzul
+  background: $azul !important
+  border-color: $azulclaro !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $azul !important
+    opacity: $opacity !important
+  &:hover
+    background: $azulobscuro !important
+
+.botonAzulClaro
+  background: $azulclaro !important
+  border: none !important
+  color: $negro !important
+  font-weight: bold !important
+  &:active
+    background: $verde  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $verdeclaro  !important
+    color: $negro  !important
+
+.botonRojo
+  background: $rojo !important
+  border-color: $rojoclaro !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $rojo  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $rojoobscuro  !important
+
+.botonRojoClaro
+  background: $rojoclaro !important
+  border: none !important
+  color: $negro !important
+  font-weight: bold !important
+  &:active
+    background: $verde !important
+    opacity: $opacity !important
+  &:hover
+    background: $verdeclaro !important
+    color: $negro !important
+
+.botonVerde
+  background: $verde !important
+  border-color: $verdeclaro !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $verde !important
+    opacity: $opacity !important
+  &:hover
+    background: $verdeobscuro !important
+
+.botonAmarillo
+  background: $amarillo  !important
+  border-color: $amarillo !important
+  color: $azul !important
+  font-weight: bold !important
+  &:active
+    opacity: $opacity !important
+  &:hover
+    opacity: $opacity !important
+
+.botonAmarilloLink
+  text-decoration: none
+  border-radius: 5px
+  padding: 7px 7px 7px
+  background: $amarillo  !important
+  border-color: $amarilloclaro !important
+  color: $blanco !important
+  font-weight: bold !important
+  &:active
+    background: $amarillo !important
+    opacity: $opacity !important
+  &:hover
+    background: $amarilloobscuro !important
+
+
+.botonCafe
+  background: $cafe
+  border: none
+  color: $blanco
+  font-weight: bold
+  &:active
+    background: $cafe
+    opacity: $opacity
+  &:hover
+    background: $cafeobscuro
+
+.botonBlanco
+  background: $blanco !important
+  border: none !important
+  color: $negro !important
+  font-weight: bold !important
+  &:active
+    background: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $rojo !important
+    color: $blanco !important
+/*azul*/
+.botonBlanco1
+  background: $blanco !important
+  border: none !important
+  color: $azul !important
+  font-weight: bold !important
+  &:active
+    background: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisclaro !important
+    color: $azul !important
+/*rojo*/
+.botonBlanco3
+  background: $blanco !important
+  border: none !important
+  color: $rojo !important
+  font-weight: bold !important
+  &:active
+    background: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisclaro !important
+    color: $rojo !important
+/*verde*/
+.botonBlanco4
+  background: $blanco !important
+  border: none !important
+  color: $verde !important
+  font-weight: bold !important
+  &:active
+    background: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisclaro !important
+    color: $verde !important
+/*amarillo*/
+.botonBlanco2
+  background: $blanco !important
+  border: none !important
+  color: $amarillo !important
+  font-weight: bold !important
+  &:active
+    background: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisclaro !important
+    color: $amarillo !important
+
+.widthbotones
+    width: 205.36px
+
+.claseBotonCuadrado
+    width: 42px
+    height: 42px
+
+.botonCuadrado
+  height: 150px
+  width: 150px
+  font-size: 20px
+  font-weight: bold
+
+.botonCuadrado2
+  height: 100px
+  width: 100px
+  font-size: 15px
+  font-weight: bold
+
+.claseBoton
+  padding-top: 0px
+  padding-bottom: 0px
+  padding-left: 10px
+  padding-right: 10px
+  border-radius: 50px
+
+.claseBoton1
+  padding-top: 4px !important
+  padding-bottom: 5px !important
+  padding-left: 8px !important
+  padding-right: 8px !important
+  border-radius: 5px !important
+
+.claseBoton2
+  padding-top: 0px !important
+  padding-bottom: 3px !important
+  padding-left: 4px !important
+  padding-right: 4px !important
+  border-radius: 5px !important
+
+.claseBoton3
+  padding-top: 3px !important
+  padding-bottom: 3px !important
+  padding-left: 3px !important
+  padding-right: 3px !important
+  border-radius: 0px !important
+
+.claseBoton4
+  padding-top: 3px !important
+  padding-bottom: 3px !important
+  padding-left: 5px !important
+  padding-right: 5px !important
+  border-radius: 6px !important
+
+
+.botonArchivo
+  border: 2px solid $azul !important
+  color: $azul !important
+  background-color: $blanco !important
+  padding: 4px 15px !important
+  border-radius: 8px !important
+  font-size: 16px !important
+  font-weight: bold !important
+
+.botonArchivo-wrapper
+  position: relative
+  overflow: hidden
+  display: inline-block
+  input[type=file]
+    font-size: 50px
+    position: absolute
+    left: 0
+    top: 0
+    opacity: 0
+
+
+/*BORDER*/
+.bordeAmarillo
+  border: 2px solid $amarillo
+
+.bordeRojo
+  border: 2px solid $rojo
+
+.bordeAzul
+  border: 2px solid $azul
+
+.bordeGris
+  border: 2px solid $gris
+
+.bordeNegro
+  border: 2px solid $negro
+
+.bordeVerde
+  border: 2px solid $verde
+
+.bordeBlanco
+  border: 2px solid $blanco
+
+/*WIDTH - HEIGHT - BORDER*/
+.h100
+    height: 100%
+.w100
+    width: 100%
+.w75
+    width: 75%
+.w50
+    width: 50%
+.circulo
+    border-radius: 50%
+
+// Logo Menu
+.mercadologo 
+  height: 65px
+  padding-left: 1vw
+
+// Logo 
+.logoContrasena 
+  height: 140px
+
+.hMenu
+  height: 91px
+
+.navbar
+  max-height: 91px
+  -webkit-box-shadow: 0px 0px 7px 1px rgba(125,125,125,0.57) !important
+  -moz-box-shadow: 0px 0px 7px 1px rgba(125,125,125,0.57) !important
+  box-shadow: 0px 0px 7px 1px rgba(125,125,125,0.57) !important
+
+div.container-fluid
+  max-height: 91px 
+
+.burgerMenu
+    height: 50px
+    position: absolute
+    top: 20px 
+    right: 7px
+    background-color: $blanco !important
+    
+.logoMenu
+  @media (max-width: 767px)
+    height: 91px
+    position: absolute
+    top: 7px 
+    left: 7px
+
+.navHighlight
+  color: rgba(0, 0, 0, 1) !important
+  &:hover 
+    color: $amarillo !important
+    // font-weight: bold
+  &:active
+    color: $amarillo !important
+    // font-weight: bold
+  @media (max-width: 767px)
+    top: 91px
+    height: 45px
+    margin-left: 10px
+    border-radius: 4px
+
+
+.navHighlightBlanco
+  color: $negro !important
+  &:hover 
+    color: $grisclaro4 !important
+  &:active
+    color: $grisclaro4 !important
+  @media (max-width: 767px)
+    top: 91px
+    height: 45px
+    margin-left: 10px
+    border-radius: 4px
+
+.navHighlightBlancoMenu
+  color: $negro !important
+  padding-right: 5px
+  padding-left: 20px
+  text-decoration: none
+  &:hover 
+    color: $grisclaro !important
+  &:active
+    color: $grisclaro !important
+  @media (max-width: 767px)
+    padding-bottom: 5px !important
+    top: 91px
+    height: 45px
+    margin-left: 10px
+    border-radius: 4px
+
+.pabMenu
+  @media (max-width: 767px)
+    padding-bottom: 17px
+
+.pabItemsMenu
+  @media (max-width: 767px)
+    padding-top: 10px
+
+
+.collapseMenuBlanco
+  @media (max-width: 767px)
+    position: absolute
+    top: 0px
+    width: 100%
+    margin-left: 0px
+    margin-top: 91px
+    background-color: $grisclaro3
+    border-bottom-left-radius: 15px
+
+.collapseMenuNegro
+  background-color: $negro !important
+  @media (max-width: 767px)
+    position: absolute
+    top: 0px
+    width: 100%
+    margin-left: 0px
+    margin-top: 91px
+    background-color: $grisclaro3
+    border-bottom-left-radius: 15px
+
+.collapseMenuAzul
+  background-color: $azul !important
+  @media (max-width: 767px)
+    position: absolute
+    top: 0px
+    width: 100%
+    margin-left: 0px
+    margin-top: 91px
+    background-color: $grisclaro3
+    border-bottom-left-radius: 15px
+
+.collapseMenuRojo
+  background-color: $rojo !important
+  @media (max-width: 767px)
+    position: absolute
+    top: 0px
+    width: 100%
+    margin-left: 0px
+    margin-top: 91px
+    background-color: $grisclaro3
+    border-bottom-left-radius: 15px
+
+.linkMenuBlanco
+  color: $negro !important
+  &:hover
+    color: $gris !important
+  @media (max-width: 767px)
+    position: relative
+    left: 20px
+    bottom: 10px
+    
+.linkMenuNegro
+  color: $blanco !important
+  &:hover
+    color: $gris !important
+  @media (max-width: 767px)
+    position: relative
+    left: 20px
+    bottom: 10px
+
+.widthLinkMenu
+  // width: 150px
+  @media (min-width: 768px)
+    width: 76%
+  @media (min-width: 850px)
+    width: 80%
+  @media (min-width: 1000px)
+    width: 83%
+  @media (min-width: 1200px)
+    width: 87%
+
+.widthLinkMenu2
+  // width: 150px
+  @media (min-width: 768px)
+    width: 96%
+
+/*MAYUSCULAS Y MINUSCULAS*/
+.minus
+  text-transform: lowercase
+
+.mayus
+  text-transform: uppercase
+
+.pmayus:first-letter
+  text-transform: uppercase
+
+
+  
+// Inicio
+.hPage 
+  vertical-align: middle
+  display: inline-block
+
+
+// OTROS
+  
+/*MERCADO*/
+.tamanoProductoImg
+  width: 75px
+
+.tamanoProductoImg2
+  width: 100px
+
+.tamanoProductoImg3
+  width: 150px
+
+
+.mercadologo 
+  height: 65px
+  padding-left: 1vw
+
+//inicio scroll scrollHorizontal
+
+
+
+.scrollHorizontal
+  overflow: hidden
+  white-space: nowrap
+  
+
+
+.hPage 
+  vertical-align: middle
+  display: inline-block
+
+
+
+//inicio
+//chevrons en centro pantalla mediana a grande
+#naveg
+  position: absolute
+  margin: 0
+  top: 40%
+  -ms-transform: translateY(-50%)
+  transform: translateY(50%)
+
+//chevrons abajo pantalla chica
+#naveg2
+  position: sticky
+  margin: 0
+  height: 100%
+  bottom: 0px
+  -ms-transform: translateY(-90%)
+  transform: translateY(90%)
+
+.transparente
+  background: rgba(255,255,255, 0.7) !important
+
+//card de inicio transparente en centro
+#naveg3
+  position: absolute
+  margin: 0
+  height: 100%
+  top: 1vw
+  -ms-transform: translateY(-19%)
+  transform: translateY(19%)
+  @media (min-width: 692px)
+    top: 1vw
+    -ms-transform: translateY(-25%)
+    transform: translateY(25%)
+  @media (min-width: 900px)
+    top: 1vw
+    -ms-transform: translateY(-20%)
+    transform: translateY(20%) 
+  @media (min-width: 1367px)
+    top: 1vw
+    -ms-transform: translateY(-29%)
+    transform: translateY(29%)  
+//pantalla menosxs 576xs 768sm, 992md, 1200lg
+
+.naveg4
+  bottom: 100px
+  position: absolute
+  left: 50%
+  margin-left: -15px
+
+.chevronInicio
+  color: $blanco
+  opacity: 1
+  &:hover
+    color: $grisclaro
+    opacity: .7
+  &:focus
+    opacity: 0
+
+
+.textoInicio
+  font-size: 20px
+  @media (min-width: 692px)
+    font-size: 25px
+  @media (min-width: 900px)
+    font-size: 35px
+
+.botonInicio
+  background: $rojo !important
+  border-color: $rojoclaro !important
+  color: $blanco  !important
+  font-weight: bold !important
+  font-size: 16px !important
+  @media (min-width: 692px)
+    font-size: 23px !important
+  @media (min-width: 900px)
+    font-size: 28px !important
+  &:active
+    background: $rojo  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $rojoobscuro  !important
+
+.textoEpico
+  font-size: 45px
+  @media (min-width: 900px)
+    font-size: 60px
+
+   
+.paddingPantallaEnorme
+  @media (min-width: 1600px)
+    padding-top: 4vw  
+
+// seccion2 porque somos tu mejor opcion
+//pantalla menosxs 576xs 768sm, 992md, 1200lg
+
+.paddingCompraLMP
+  @media (min-width: 1200px)
+    // padding-top: 50px
+
+.compralmp
+  text-align: justify
+  @media (min-width: 768px)
+    font-size: 2.5vw
+  @media (min-width: 850px)
+    font-size: 2.59vw
+  @media (min-width: 1200px)
+    font-size: 1.65vw
+  // @media (min-width: 1400px)
+  //   font-size: 1.75vw
+
+.frutasTexto
+  @media (min-width: 576px)
+    font-size: 2.8vw
+  @media (min-width: 768px)
+    font-size: 2.3vw
+  @media (min-width: 1073px)
+    font-size: 2.1vw
+  @media (min-width: 1133px)
+    font-size: 2vw
+  @media (min-width: 1200px)
+    font-size: 1.75vw
+  @media (min-width: 1400px)
+    font-size: 1.75vw
+
+
+.paddingSeccion
+  padding-left: 1vw
+  padding-right: 2vw
+  @media (min-width: 414px)
+    padding-left: 2vw
+    padding-right: 2vw
+  @media (min-width: 450px)
+    padding-left: 2vw
+    padding-right: 2vw
+  @media (min-width: 500px)
+    padding-left: 2vw
+    padding-right: 2vw
+  @media (min-width: 576px)
+    padding-left: 2vw
+    padding-right: 2vw
+
+
+.paddingPorque
+  @media (min-width: 414px)
+    padding-top: 3vw
+  @media (min-width: 1200px)
+    padding-top: 0vw
+
+.paddingPorque2
+  @media (min-width: 414px)
+    padding-top: 6vw
+  @media (min-width: 450px)
+    padding-top: 4vw
+  @media (min-width: 663px)
+    padding-top: 1vw
+
+.pizPorque
+  @media (min-width: 1600px)
+    padding-left: 20px
+  @media (min-width: 1720px)
+    padding-left: 60px
+  
+
+.letraPorque
+  font-size: 10vw
+  font-weight: bold
+  line-height: 12.2vw
+  @media (min-width: 400px)
+    font-size: 9.5vw
+    line-height: 10.2vw
+  @media (min-width: 450px)
+    font-size: 9vw
+    line-height: 9.7vw
+  @media (min-width: 500px)
+    font-size: 7vw
+    line-height: 7.7vw
+  @media (min-width: 576px)
+    font-size: 8vw
+    line-height: 10vw
+  @media (min-width: 768px)
+    font-size: 5vw
+    line-height: 5.7vw
+  @media (min-width: 800px)
+    font-size: 4.5vw
+    line-height: 5.2vw
+  @media (min-width: 1200px)
+    font-size: 4vw
+    line-height: 4.7vw
+
+.letraPorqueAmarilla
+  font-size: 15px
+  color: $amarillo
+  font-weight: bold
+  @media (min-width: 414px)
+    font-size: 16px
+    line-height: 17px
+  @media (min-width: 576px)
+    font-size: 18px
+    padding-top: 3px
+  @media (min-width: 768px)
+    font-size: 18px
+    padding-top: 5px
+  @media (min-width: 992px)
+    font-size: 20px
+    padding-top: 7px
+  @media (min-width: 1200px)
+    font-size: 20px
+    padding-top: 10px
+  @media (min-width: 1366px)
+    font-size: 20px
+    padding-top: 10px
+  @media (min-width: 1600px)
+    font-size: 29px
+    padding-top: 25px
+
+.letraPorqueBlanca
+  font-size: 13px
+  max-width: 400px
+  @media (min-width: 576px)
+    font-size: 14px
+  @media (min-width: 768px)
+    font-size: 15px
+  @media (min-width: 992px)
+    font-size: 16px
+  @media (min-width: 1200px)
+    font-size: 16px
+    max-width: 500px
+  @media (min-width: 1366px)
+    font-size: 16px
+  @media (min-width: 1600px)
+    padding-top: 10px
+    max-width: 630px
+    font-size: 20px
+// seccion3 facil
+.letraFacil
+  font-size: 35px
+  @media (min-width: 321px)
+    font-size: 40px
+  @media (min-width: 900px)
+    font-size: 60px
+
+.tituloFacil
+  font-size: calc(#{$a} * 24px)
+  @media (min-width: 321px)
+    font-size: calc(#{$a} * 26px)
+  @media (min-width: 414px)
+    font-size: calc(#{$a} * 28px)
+
+.subtituloFacil
+  font-size: calc(#{$a} * 14px)
+  @media (min-width: 321px)
+    font-size: calc(#{$a} * 16px)
+  @media (min-width: 414px)
+    font-size: calc(#{$a} * 17px)
+  @media (min-width: 500px)
+    font-size: calc(#{$a} * 20px)
+
+//animaciones facil
+// .fadeIn1
+//   animation-name: mymove
+//   animation-duration: 3s
+
+.fadeIn2
+  opacity: 0
+  margin-top: 5%
+  margin-bottom: 5%
+  padding-left: 10%
+  @media (min-width: 420px)
+    padding-left: 15%
+  @media (min-width: 1800px)
+    padding-left: 19%
+
+.fadeIn3
+  opacity: 0
+  margin-top: 5%
+  margin-bottom: 5%
+  padding-left: 10%
+  @media (min-width: 420px)
+    padding-left: 15%
+  @media (min-width: 1800px)
+    padding-left: 19%
+
+.fadeIn4
+  opacity: 0
+  margin-top: 5%
+  margin-bottom: 5%
+  padding-left: 10%
+  @media (min-width: 420px)
+    padding-left: 15%
+  @media (min-width: 1800px)
+    padding-left: 19%
+  
+.fadeIn5
+  opacity: 0
+  margin-top: 0%
+  margin-bottom: 5%
+  padding-left: 10%
+  padding-top: 0px
+  @media (min-width: 420px)
+    padding-left: 15%
+  @media (min-width: 1800px)
+    padding-left: 19%
+
+
+// seccion4 zonas de entrega
+.paddingZona1
+  padding-left: 10vw
+  @media (min-width: 992px)
+    padding-left: 0vw
+
+.paddingZona2
+  padding-left: 10vw
+  @media (min-width: 576px)
+    padding-left: 0px
+
+.camionZona
+  font-size: 15vw
+  @media (min-width: 450px)
+    font-size: 15vw
+  @media (min-width: 576px)
+    font-size: 10vw
+  @media (min-width: 768px)
+    font-size: 9vw
+  @media (min-width: 992px)
+    font-size: 7.5vw
+  @media (min-width: 1200px)
+    font-size: 7vw
+  @media (min-width: 1366px)
+    font-size: 7vw
+  @media (min-width: 1600px)
+    font-size: 6vw
+
+.letraZona
+  font-size: 25px
+  @media (min-width: 375px)
+    font-size: 28px
+  @media (min-width: 414px)
+    font-size: 30px
+  @media (min-width: 450px)
+    font-size: 35px
+  @media (min-width: 576px)
+    padding-right: 0px
+    font-size: 4.4vw
+  @media (min-width: 992px)
+    font-size: 5.4vw
+  @media (min-width: 1200px)
+    font-size: 3.9vw
+  @media (min-width: 1600px)
+    font-size: 4vw
+
+
+.letraZonas
+  padding-left: 20px
+  font-size: 15px
+  @media (min-width: 375px)
+    font-size: 16px
+  @media (min-width: 414px)
+    font-size: 17.5px
+  @media (min-width: 450px)
+    font-size: 19px
+  @media (min-width: 576px)
+    padding-left: 0px
+    font-size: 2.7vw
+  @media (min-width: 850px)
+    font-size: 2.5vw
+  @media (min-width: 992px)
+    font-size: 2vw
+  @media (min-width: 1200px)
+    font-size: 1.6vw
+  @media (min-width: 1600px)
+    font-size: 1.3vw
+
+//linea vertical (zonas)
+.vl
+  border-left: 4px solid white
+  height: 100%
+  position: absolute
+  margin-left: -3px
+
+
+// seccion5 quienes somos
+.letraQuienes
+  font-size: 11px
+  @media (min-width: 375px)
+    padding-top: 4.5px
+    font-size: 11.5px
+  @media (min-width: 414px)
+    padding-top: 8px
+    font-size: 14px
+  @media (min-width: 576px)
+    font-size: 12px
+    padding-top: 2vw
+    padding-right: 10vw
+  @media (min-width: 1000px)
+    font-size: 14px
+    padding-top: 2vw
+    padding-right: 10vw
+  @media (min-width: 1300px)
+    font-size: 16px
+    padding-top: 2vw
+    padding-right: 10vw
+
+.paddingArriba
+  padding-top: $chico
+  @media (min-width: 576px)
+    padding-top: $mediano
+  @media (min-width: 1600px)
+    padding-top: $enorme
+
+.logoQuienes
+  width: 80%
+  padding-left: 5vw
+  text-align: right
+  @media (min-width: 576px)
+    width: 100%
+    padding-left: 0px
+  @media (min-width: 768px)
+    width: 80%
+    padding-left: 5vw
+    
+.paddingLogo
+  padding: $enorme
+  @media (min-width: 576px)
+    padding: $mediano
+  @media (min-width: 768px)
+    padding: $enorme  
+
+
+.fotoMaximoQuienes
+  max-height: 180px
+  max-width: 180px
+  -webkit-filter: grayscale(100%) 
+  filter: grayscale(100%)
+  @media (min-width: 1600px)
+    max-height: 100%
+    max-width: 100%
+
+// .letraJorge
+//   font-size: $mediano
+//   @media (min-width: 375px)
+//     font-size: 18px
+//   @media (min-width: 414px)
+//     font-size: $grande
+
+// .letraPuesto
+//   font-size: $chico
+//   @media (min-width: 375px)
+//     font-size: 14px
+//   @media (min-width: 414px)
+//     font-size: $mediano
+
+.paddingResponsivo
+  padding-top: 0vw
+  @media (min-width: 414px)
+    padding-top: 1vw
+  @media (min-width: 576px)
+    padding-top: 5vw
+
+.letraMision
+  font-size: $grande
+  @media (min-width: 375px)
+    padding-top: 2vw
+    font-size: 26px
+  @media (min-width: 576px)
+    padding-top: 5px
+    font-size: $muygrande
+  @media (min-width: 1000px)
+    font-size: 30px
+  @media (min-width: 1300px)
+    font-size: 32px
+
+.letraExplicacion
+  font-size: 11px
+  @media (min-width: 375px)
+    font-size: 12px
+  @media (min-width: 414px)
+    font-size: 12px
+  @media (min-width: 576px)
+    font-size: 14px
+
+// seccion6 preguntas
+.letraBuscadorAyuda
+  font-size: 22px
+  @media (min-width: 414px)
+    font-size: 23px
+  @media (min-width: 576px)
+    font-size: $enorme
+
+.letraPregunta
+  font-size: 14px
+  @media (min-width: 414px)
+    font-size: 15px
+  @media (min-width: 576px)
+    font-size: 16px
+
+.letraRespuesta
+  color: $blanco
+  font-size: 13px
+  @media (min-width: 414px)
+    font-size: 14px
+  @media (min-width: 576px)
+    font-size: 15px
+
+.misionHover
+  opacity: 1
+  &:hover
+    opacity: .7
+
+// seccion7 contacto
+.paddingPedido  
+  padding-left: 6vw
+  @media (min-width: 414px)
+    padding-left: 5vw
+  @media (min-width: 500px)
+    padding-left: 10vw
+  @media (min-width: 576px)
+    padding-left: 0vw
+  @media (min-width: 640px)
+    padding-left: 2vw
+  @media (min-width: 715px)
+    padding-left: 4vw
+  @media (min-width: 768px)
+    padding-left: 1vw
+  @media (min-width: 800px)
+    padding-left: 2vw
+  @media (min-width: 860px)
+    padding-left: 3vw
+  @media (min-width: 992px)
+    padding-left: 0vw
+  @media (min-width: 1250px)
+    padding-left: 2vw
+  @media (min-width: 1360px)
+    padding-left: 3vw
+  @media (min-width: 1500px)
+    padding-left: 4vw
+  @media (min-width: 1650px)
+    padding-left: 5.5vw
+
+.letraHaz
+  font-size: 180%
+  @media (min-width: 375px)
+    font-size: 190%
+  @media (min-width: 375px)
+    font-size: 210%
+  @media (min-width: 414px)
+    font-size: 220%
+  @media (min-width: 576px)
+    font-size: 250%
+
+.letraHorario
+  font-size: $mediano
+  @media (min-width: 375px)
+    font-size: 16px
+  @media (min-width: 375px)
+    font-size: 17px
+  @media (min-width: 414px)
+    font-size: 18px
+  @media (min-width: 576px)
+    font-size: $grande
+
+.iconoReloj
+  font-size: 21px
+  @media (min-width: 375px)
+    font-size: 22px
+  @media (min-width: 375px)
+    font-size: 24px
+  @media (min-width: 414px)
+    font-size: 26px
+  @media (min-width: 576px)
+    font-size: $enorme
+
+.botonRegistrate
+  @media (min-width: 768px)
+    font-size: $grande !important
+
+.paddingBotonContacto
+  padding-top: $mediano
+  @media (min-width: 768px)
+    padding-top: $enorme
+
+.paddingContacto
+  padding-top: 6vw
+  @media (min-width: 576px)
+    padding-top: 15vw
+
+.paddingEstaremos
+  padding-top: $enorme
+  @media (min-width: 768px)
+    padding-top: 6vw
+
+.letraEstaremos
+  font-size: $grande
+  line-height: $grande
+  @media (min-width: 375px)
+    font-size: 23px
+    line-height: 23px
+  @media (min-width: 576px)
+    font-size: $enorme
+    line-height: $enorme
+  @media (min-width: 992px)
+    font-size: 4vw
+    line-height: 4vw
+
+.espaciado
+  line-height: $grande
+  padding-bottom: 1vw 
+  @media (min-width: 375px)
+    line-height: 23px
+  @media (min-width: 576px)
+    line-height: $enorme
+  @media (min-width: 768px)
+    padding-bottom: 2vw 
+  @media (min-width: 992px)
+    line-height: 4vw
+    padding-bottom: 2vw
+
+.inputContacto
+  border: solid
+  border-color: $rojo
+  width: 100%
+  background-color: transparent
+  color: white
+  padding-left: .5vw
+  font-weight: bold
+  &::placeholder
+    color: white
+    opacity: .9
+
+.paddingInput
+  padding-top: $muychico
+  @media (min-width: 375px)
+    padding-top: $chico
+
+// otros
+.imagenHover
+  opacity: .7
+  &:hover
+    opacity: 1
+
+.textoImagen
+  position: relative
+  text-align: center
+  color: white
+
+.centrado
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.centradoIcono
+  position: relative
+  top: 2px
+
+.centradoIconoWhatsapp
+  position: relative
+  top: -1.5px
+  margin-left: 3px
+  font-size: 19px
+
+.centradoIconoSocios
+  position: relative
+  top: -11px
+  margin-right: 15px
+
+
+
+.iconoBoton
+  opacity: .5
+  &:hover
+    opacity: 1
+  &:active
+    color: $rojo
+
+// ADMIN
+// añadirProducto
+.Manzanita
+  font-size: $mediano
+  @media (min-width: 768px)
+    font-size: $grande
+
+.Manzanita2
+  font-size: 22px
+  @media (min-width: 768px)
+    font-size: $muygrande
+
+.botonVerde2
+  background: $verde
+  border: none
+  color: $negro
+  font-weight: bold
+  &:active
+    background: $verde
+    opacity: $opacity
+  &:hover
+    background: $verdeobscuro
+
+// Responsividad en area de socios
+.tituloCard
+  font-size: 17px
+  @media (min-width: 350px)
+   font-size: $grande
+
+.centroimportante
+  margin-left: 40%
+
+.subrayado
+  text-decoration: underline
+
+.letraPantallaChica
+  font-size: 12px
+  @media (min-width: 420px)
+   font-size: $mediano
+
+// Responsividad en area de clientes
+// lista
+
+.categorias
+  &:hover
+    color: $negro
+
+.borderRAzul
+  border-right: 3px solid
+  border-color: $azul
+
+.borderLAzul
+  border-left: 3px solid
+  border-color: $azul
+
+.borderRVerde
+  border-right: 3px solid
+  border-color: $verde
+
+.borderRRojo
+  border-right: 3px solid
+  border-color: $rojo
+
+.borderRAmarillo
+  border-right: 3px solid
+  border-color: $amarillo
+
+.borderRBlanco
+  border-right: 3px solid
+  border-color: $blanco
+
+.inputComentarios
+  background-color: $blanco
+  color: $negro
+  border-bottom: 2px solid $azul 
+  border-top: none
+  border-right: none
+  border-left: none
+  &::placeholder
+    color: $negro
+    padding-left: .5vw
+
+.inputComentarios2
+  color: $negro
+  &::placeholder
+    color: $negro
+    padding-left: .5vw
+
+.inputComentarios3
+  color: $negro
+  font-weight: bold
+  &::placeholder
+    color: $negro
+    padding-left: .2vw
+
+.seleccionarLista
+  color: $rojo
+  font-size: $chico
+  font-weight: bold
+  border: 2px solid $rojo
+  padding-left: 2px
+  &:focus
+    color: $rojo
+    opacity: $opacity
+    border: 2px solid $rojo
+  &:active
+    color: $rojo
+    opacity: $opacity
+    border: 2px solid $rojo
+  &:hover
+    color: $rojo
+    border: 2px solid $rojo
+  &::placeholder
+    color: $rojo
+    padding-left: .2vw
+    border: 2px solid $rojo
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+
+
+.seleccionarLista2
+  color: $verde
+  font-size: $chico
+  font-weight: bold
+  border: 2px solid $verde
+  padding-left: 2px
+  &:focus
+    color: $verde
+    opacity: $opacity
+    border: 2px solid $verde
+  &:active
+    color: $verde
+    opacity: $opacity
+    border: 2px solid $verde
+  &:hover
+    color: $verde
+    border: 2px solid $verde
+  &::placeholder
+    color: $verde
+    padding-left: .2vw
+    border: 2px solid $verde
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+
+.seleccionarLista3
+  color: $azul
+  font-weight: bold
+  border: 2px solid $azul
+  min-width: 300px
+  &:focus
+    color: $azul
+    opacity: $opacity
+    border: 2px solid $azul
+  &:active
+    color: $azul
+    opacity: $opacity
+    border: 2px solid $azul
+  &:hover
+    color: $azul
+    border: 2px solid $azul
+  &::placeholder
+    color: $azul
+    padding-left: .2vw
+    border: 2px solid $azul
+
+.seleccionarLista4
+  color: $verde
+  font-weight: bold
+  border: 2px solid $verde
+  &:focus
+    color: $verde
+    opacity: $opacity
+    border: 2px solid $verde
+  &:active
+    color: $verde
+    opacity: $opacity
+    border: 2px solid $verde
+  &:hover
+    color: $verde
+    border: 2px solid $verde
+  &::placeholder
+    color: $verde
+    padding-left: .2vw
+    border: 2px solid $verde
+
+.seleccionarLista5
+  color: $amarillo
+  font-weight: bold
+  border: 2px solid $amarillo
+  font-size: 15px
+  &:focus
+    color: $amarillo
+    opacity: $opacity
+    border: 2px solid $amarillo
+  &:active
+    color: $amarillo
+    opacity: $opacity
+    border: 2px solid $amarillo
+  &:hover
+    color: $amarillo
+    border: 2px solid $amarillo
+  &::placeholder
+    color: $amarillo
+    padding-left: .2vw
+    border: 2px solid $amarillo
+  @media (min-width: 768px)
+    font-size: 13px
+  @media (min-width: 980px) 
+    font-size: 15px
+
+
+.InputCategorias
+  font-size: 10px
+  color: $gris
+  font-size: $mediano
+  font-weight: bold
+  border: 0px $blanco
+  padding-left: 2px
+  &:focus
+    color: $gris
+    opacity: $opacity
+    border: 2px solid $gris
+  &:active
+    color: $gris
+    opacity: $opacity
+    border: 2px solid $gris
+  &:hover
+    color: $gris
+    border: 2px solid $gris
+  &::placeholder
+    color: $gris
+    padding-left: .2vw
+    border: 2px solid $gris
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+
+.separacionChica
+  padding-left: 3vw
+  padding-right: 3vw
+
+.botonesHeader
+  width: 28px
+  height: 28px
+  
+.paddingBoton
+  padding-left: 7px
+  padding-top: 4.5px
+
+.paddingBoton2
+  padding-left: 6px
+  padding-top: 2.5px
+
+.selectRojo
+  background: $rojo
+  border: none
+  color: $blanco
+  font-weight: bold
+  &:active
+    background: $rojo
+    color: $blanco
+  &:hover
+    background: $rojo
+    color: $blanco
+  &:focus
+    color: $blanco
+
+.letraListaChica 
+  font-size: .80em
+  @media (min-width: 370px) 
+    font-size: .85em
+  @media (min-width: 768px) 
+    font-size: 13px
+  @media (min-width: 992px) 
+    font-size: 11px
+  @media (min-width: 1150px) 
+    font-size: 12px
+  @media (min-width: 1365px) 
+    font-size: 13px
+
+.fondoCalificar
+  background-color: #cccccc
+   
+.sinpaddingLista
+    padding: 0px 
+    margin: 0px 
+    
+.letraChicaInput3
+  font-size: 16px !important
+  padding: .4em !important
+  height: 2em !important
+
+.InputSeleccionar
+  font-size: 11px !important
+  padding: .4em !important
+  height: 2.4em !important
+  @media (min-width: 576px)
+    font-size: .8em !important
+    padding: .4em !important
+    height: 2.4em !important
+
+.claseCirculo
+  border-radius: 200px
+  width: 70px
+  height: 70px
+
+.letraCalificar
+  font-size: 20px
+  padding-top: 10px
+
+.camionetaSize
+  font-size: 50px
+  padding-top: 0px
+  margin-top: 0px
+
+.letraClientesInicio
+  font-size: 16px
+  padding-top: 30px
+  @media (min-width: 768px) 
+    text-align: right
+
+.letraClientesInicio2
+  padding-top: 20px
+  @media (min-width: 768px) 
+    padding-top: 11px
+
+.letraClientesInicio3
+  font-size: 13px
+  padding-left: 2px
+  @media (min-width: 576px) 
+    font-size: 14px  
+  @media (min-width: 768px) 
+    font-size: 15px  
+
+.claseHover
+  opacity: 1
+  &:hover
+    opacity: .6
+
+.claseHover2
+  opacity: .6
+  &:hover
+    opacity: 1
+
+.deinicio
+  @media (min-width: 768px) 
+    padding-right: 3vw
+
+.pizinicio
+  @media (min-width: 768px) 
+    padding-left: 3vw
+
+.parinicio
+  padding-top: 40px
+  @media (min-width: 768px) 
+    padding-top: 1px
+
+.parinicio2
+  padding-top: 40px
+  @media (min-width: 768px) 
+    padding-top: 29px
+
+.parinicio3
+  padding-top: 40px
+  @media (min-width: 768px) 
+    padding-top: 16px
+
+.estrellas
+  font-size: $muygrande
+  padding-top: 8px
+  @media (min-width: 576px) 
+    font-size: $enorme
+    padding-top: 0px
+
+.comensales
+  @media (min-width: 992px) 
+    text-align: right  
+  @media (min-width: 1250px) 
+    text-align: center
+
+.letraRecibidos
+  font-size: 13px
+  @media (min-width: 768px)
+    font-size: 12px
+  @media (min-width: 820px) 
+    font-size: 13px
+
+.tcompras
+  font-size: 16px
+  @media (min-width: 576px)
+    font-size: 20px
+  @media (min-width: 768px)
+    font-size: 16px
+  @media (min-width: 980px) 
+    font-size: 20px
+
+.tmes
+  font-size: 12px
+  @media (min-width: 576px)
+    font-size: 16px
+  @media (min-width: 768px)
+    font-size: 12px
+  @media (min-width: 980px) 
+    font-size: 16px
+
+.tletra
+  font-size: 13px
+  @media (min-width: 576px) 
+    font-size: 16px
+
+.textoImagen2
+  opacity: 0
+  &:hover
+    opacity: 1
+
+.dato 
+  color: #90949c
+
+.underline 
+  text-decoration: underline
+
+.normal 
+  text-decoration: none
+
+.bottom-right 
+  position: absolute
+  bottom: 10%
+  right: 5%
+
+.bottom-right2
+  position: absolute
+  bottom: 0%
+  right: 12px
+
+.contenedor 
+  position: relative
+  text-align: center
+
+.vertical 
+  margin: 0
+  position: absolute
+  top: 50%
+  -ms-transform: translateY(-50%)
+  transform: translateY(-50%)
+
+.letraIniciar
+  font-size: 13px
+  @media (min-width: 501px) 
+    font-size: 16px
+
+// registrate
+
+.fondoVerduras
+  background-image: url("https://static.vix.com/es/sites/default/files/l/las_frutas_y_verduras_tambien_fueron_domesticadas.jpg")
+  background-size: 100% 
+  background-repeat: no-repeat
+  background-position: 40% 12%
+
+
+
+.alturaRegistro
+  height: 91px
+  text-align: center
+
+.claseRegistro
+  font-size: 37px
+  color: $blanco
+  font-weight: bold
+  padding-top: 16px
+  @media (min-width: 576px) 
+
+.xspiz
+  padding-right: 0px
+  padding-left: $chico
+
+.xspde
+  padding-right: $muychico
+  padding-left: 0px
+
+.xsemail
+  padding-right: $muychico
+  padding-left: 0px
+  @media (min-width: 576px) 
+    padding-right: 0px
+    padding-left: $grande
+  @media (min-width: 768px) 
+    padding-right: 0px
+
+.smpiz
+  @media (min-width: 576px) 
+    padding-right: 0px
+    padding-left: $grande
+  @media (min-width: 768px) 
+    padding-right: 7px
+
+.smpce
+  @media (min-width: 576px) 
+    padding-right: 0px
+    padding-left: 0px
+  @media (min-width: 768px) 
+    padding-right: 7px
+    padding-left: 14px
+
+
+.smpde
+  @media (min-width: 576px) 
+    padding-right: $grande
+    padding-left: 0px
+  @media (min-width: 768px) 
+    padding-left: 7px
+
+.alineacionCalendario
+  text-align: center
+  @media (min-width: 576px) 
+    text-align: left
+
+.imagenProducto
+  width: 60px
+  max-height: 60px
+  @media (min-width: 650px)
+    width: 100px
+    max-height: 100px
+
+.paddingxs
+  @media (max-width: 767px) 
+    padding-top: $muygrande
+
+.paddingmd
+  @media (min-width: 768px) 
+    padding-top: $chico
+
+
+.inputZonas
+  color: $negro
+  font-weight: bold
+  border: 2px solid $verde
+  padding-left: 2px
+  &:focus
+    color: $negro
+    opacity: $opacity
+    border: 2px solid $verde
+  &:active
+    color: $negro
+    opacity: $opacity
+    border: 2px solid $verde
+  &:hover
+    color: $negro
+    border: 2px solid $verde
+  &::placeholder
+    color: $negro
+    padding-left: .2vw
+    border: 2px solid $verde
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+  @media (min-width: 992px)
+    font-size: 1em !important
+    padding: .5em !important
+
+.botonInput
+  font-size: .8em !important
+  padding: .4em !important
+  width: 75px
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+  @media (min-width: 992px)
+    font-size: 1em !important
+    padding: .5em !important
+
+.botonInput2
+  font-size: .8em !important
+  padding: .4em !important
+  height: 2.4em !important
+  width: 30px
+  @media (min-width: 420px)
+    font-size: $mediano
+    padding-top: 8px
+    padding-left: 8px
+  @media (min-width: 992px)
+    font-size: 1em !important
+    padding: .5em !important
+    height: 2.4em !important
+
+.teditarchica
+  font-size: 10px
+  @media (min-width: 500px)
+    font-size: 13px
+
+.teditarchica2
+  font-size: 10px
+  @media (min-width: 768px)
+    font-size: 13px
+
+.teditarmediana
+  font-size: 13px
+  @media (min-width: 768px)
+    font-size: 16px
+
+.noselect 
+  -webkit-touch-callout: none
+    -webkit-user-select: none
+     -khtml-user-select: none
+       -moz-user-select: none
+        -ms-user-select: none
+            user-select: none
+
+.productoLista2
+  width: 40px
+
+.productoLista3
+  width: 35px
+  @media (min-width: 576px)
+    width: 45px
+  @media (min-width: 768px)
+    width: 55px
+  @media (min-width: 992px)
+    width: 65px
+  @media (min-width: 1300px)
+    width: 75px
+
+.alturaDisplayProducto
+  min-height: 35px
+  @media (min-width: 576px)
+    min-height: 45px
+  @media (min-width: 768px)
+    min-height: 55px
+  @media (min-width: 992px)
+    min-height: 65px
+  @media (min-width: 1300px)
+    min-height: 75px
+
+.checkboxProductos
+  width: 15px
+  padding-top: 11px
+  @media (min-width: 576px)
+    padding-top: 14px
+    width: 15px
+  @media (min-width: 768px)
+    width: 15px
+  @media (min-width: 992px)
+    width: 15px
+  @media (min-width: 1300px)
+    width: 15px
+
+.checkboxProductos2
+  width: 30px
+  min-height: 30px
+  padding-top: 8px
+  @media (min-width: 576px)
+    padding-top: 14px
+    width: 30px
+    min-height: 45px
+  @media (min-width: 768px)
+    padding-top: 18px
+    width: 55px
+    min-height: 55px
+  @media (min-width: 992px)
+    padding-top: 20px
+    width: 55px
+    min-height: 55px
+  @media (min-width: 1300px)
+    padding-top: 25px
+    width: 55px
+    min-height: 55px
+
+.botonBuscador
+  padding-top: 0px
+  padding-bottom: 0px
+  padding-left: 3px
+  padding-right: 3px
+  border-radius: 0px
+
+.claseNombre
+  text-align: center
+  padding-left: 0px
+  @media (min-width: 576px)
+    padding-left: 15px
+    text-align: left
+
+.paddingCategoria
+  padding-top: 8px
+
+.paddingPendientes
+  padding-left: $mediano
+  @media (min-width: 576px)
+    padding-left: $enorme
+
+.paddingFlecha
+  padding-top: 2px
+
+.paddingconFlecha
+  padding-bottom: 2px
+
+.tamanoGuardar
+  width: 350px
+  font-size: $tmediana
+  @media (min-width: 420px)
+    width: 350px
+    font-size: $tgrande
+
+.tamanoCamion
+  font-size: 25px
+  @media (min-width: 420px)
+    font-size: $tmuygrande
+
+.tamanoBotonGuardar
+  font-size: 25px
+  @media (min-width: 420px)
+    font-size: $tmuygrande
+
+.muychicaachica
+  font-size: $tmuychica
+  @media (min-width: 576px) 
+    font-size: $tchica
+  @media (min-width: 768px)
+    font-size: $tmuychica
+  @media (min-width: 992px) 
+    font-size: 11px
+  @media (min-width: 1100px) 
+    font-size: 12px
+  @media (min-width: 1300px) 
+    font-size: 13px
+
+.chicaamediana
+  font-size: $tchica
+  @media (min-width: 576px) 
+    font-size: $tchica
+  @media (min-width: 992px) 
+    font-size: $tmediana
+  @media (min-width: 1100px) 
+    font-size: $tmediana
+  @media (min-width: 1300px) 
+    font-size: $tmediana
+
+.paddingSociosInicio
+  padding-top: 20px
+  @media (min-width: 768px) 
+    padding-top: 0px
+
+.botonCardAmarillo
+  color: $amarillo
+  font-weight: bold
+  border: 2px solid $amarillo
+  font-size: 12px
+  padding-top: 2px
+  padding-bottom: 1px
+  padding-left: 3px
+  padding-right: 3px
+  border-radius: 0px
+  &:hover
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 2px solid $amarilloobscuro
+  &:focus
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 2px solid $amarilloobscuro
+  &:active
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 2px solid $amarilloobscuro
+
+.botonCardAzul
+  color: $azul
+  font-weight: bold
+  border: 2px solid $azul
+  font-size: 12px
+  padding-top: 2px
+  padding-bottom: 1px
+  padding-left: 3px
+  padding-right: 3px
+  border-radius: 0px
+  &:hover
+    background-color: $azulclaro
+    color: $azulobscuro
+    border: 2px solid $azulobscuro
+  &:focus
+    background-color: $azulclaro
+    color: $azulobscuro
+    border: 2px solid $azulobscuro
+  &:active
+    background-color: $azulclaro
+    color: $azulobscuro
+    border: 2px solid $azulobscuro
+
+.botonCardAmarillo2
+  color: $amarillo
+  font-weight: bold
+  border: 0px solid $amarillo
+  font-size: 12px
+  padding-top: 2px
+  padding-bottom: 1px
+  padding-left: 3px
+  padding-right: 3px
+  border-radius: 0px
+  &:hover
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 0px solid $amarilloobscuro
+  &:focus
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 0px solid $amarilloobscuro
+  &:active
+    background-color: $amarilloclaro
+    color: $amarilloobscuro
+    border: 0px solid $amarilloobscuro
+
+.letraClientes
+  font-size: 14px
+  margin-top: 2px
+
+.tventas
+  font-size: 13px
+  padding-top: 15px
+  @media (min-width: 576px)
+    padding-top: 13px
+    font-size: 20px
+  @media (min-width: 768px)
+    padding-top: 14px
+    font-size: 16px
+  @media (min-width: 992px) 
+    font-size: 17px
+
+.claseBuscador
+  font-size: $tmuychica
+  @media (min-width: 576px)
+    font-size: $tchica
+  @media (min-width: 768px) 
+    font-size: $tmediana
+
+.paddingBuscadorArea
+  padding-top: 6px
+  @media (min-width: 576px)
+    padding-top: $micro
+  @media (min-width: 768px) 
+    padding-top: $chico
+
+.paddingBuscadorArea2
+  padding-top: 0px
+  @media (min-width: 576px)
+    padding-top: $micro
+  @media (min-width: 768px) 
+    padding-top: 8px
+
+.paddingTicket
+  padding-top: 7px
+  @media (min-width: 768px) 
+    padding-left: 5px
+    padding-right: 5px
+
+
+.inputClientes
+  font-size: 1.2em !important
+  padding: .4em !important
+  height: 2.45em !important
+  @media (min-width: 992px)
+    font-size: 1em !important
+    padding: .5em !important
+    height: 2.4em !important
+
+.parmanzana
+  padding-top: 0px
+  @media (min-width: 768px)
+    padding-top: $micro
+
+.parPlus
+  padding-top: $muychico
+  @media (min-width: 768px)
+    padding-top: $micro
+
+.letraBuscador
+  font-size: .8em !important
+  padding: .5em !important
+  height: 35px !important
+  @media (min-width: 576px)
+    font-size: 1em !important
+    padding: .5em !important
+    height: 2.45em !important
+  @media (min-width: 768px)
+    font-size: 1em !important
+    padding: .5em !important
+    height: 2.75em !important
+
+.botonLink
+     background: none !important
+     color: inherit
+     border: none 
+     padding: 0 !important
+     font: inherit
+     /*border is optional*/
+     border-bottom: none
+     cursor: pointer
+     &:hover
+      color: $negro
+
+.productoLista
+  width: 65px
+  max-height: 65px
+  @media (min-width: 576px)
+    width: 75px
+    max-height: 75px
+  @media (min-width: 768px)
+    width: 80px
+    max-height: 80px
+
+.tproducto
+  font-size: $tchica
+  @media (min-width: 576px)
+    font-size: 14px
+  @media (min-width: 768px)
+    font-size: 15px
+  @media (min-width: 992px)
+    font-size: 16px
+
+.parmicro2
+  padding-top: 3px
+
+.parmicro3
+  padding-top: 4px
+
+.intentoBorder
+  border-bottom: 2px $negro solid
+  border-right: 2px $negro solid
+  border-left: 2px $negro solid
+  border-radius: 0px 0px 5px 5px
+
+
+.par1
+  padding-top: 1px
+
+.par2
+  padding-top: 2px
+
+.tamanoBotonBorrar
+  width: 64.45px
+  height: 36px
+
+.claseClientes
+  border-radius: 8px 8px 0px 0px
+
+.nocentro
+  text-align: left
+  @media (min-width: 576px)
+    text-align: center 
+
+
+.my-custom-scrollbar 
+  position: relative
+  height: 85vh
+  overflow: auto
+
+.table-wrapper-scroll-y
+  display: block
+
+.paddingayuda
+  padding-top: 3px
+
+
+
+
+
+
+// MENU BURGER
+/* Position and sizing of burger button */
+.bm-burger-button
+  position: absolute
+  width: 36px
+  height: 30px
+  right: 36px
+  top: 25px
+
+
+*:focus
+  outline: 0 !important
+  
+.bm-menu
+  padding: 2em 1.5em 0
+  font-size: 0.8em
+
+@media (min-width: 375px)
+  .bm-menu
+    font-size: 1em
+
+@media (min-width: 650px)
+  .bm-menu
+    font-size: 1.1em
+
+@media (min-width: 1500px)
+  .bm-menu
+    padding: 2.5em 1.5em 0
+    font-size: 1.3em
+
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button
+  height: 24px
+  width: 24px
+
+
+/* Color/shape of close button cross */
+.bm-cross
+  background: white
+
+
+
+// Sidebar wrapper styles
+// Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+
+.bm-burger-bars
+  background: white
+
+
+.bm-menu-wrap
+  position: fixed
+  height: 100%
+
+
+/* Wrapper for item list */
+.bm-item-list
+  color: white
+  padding: 0.8em
+
+
+/* Individual item */
+.bm-item
+  display: inline-block
+
+
+.bm-item-list a
+  color: white
+  text-decoration: none
+
+.bm-item-list a:hover
+  color: #fad4d1
+  text-decoration: none
+
+/* Styling of overlay */
+.bm-overlay
+  background: rgba(0, 0, 0, 0.3)
+
+
+// PRODUCTOS
+.lineaLado
+  text-align: center
+  border-left: 2px solid $gris
+  // border-right: 2px solid $azul
+  // height: 100%
+  // position: absolute
+  margin-left: -2px
+
+.lineaLados
+  text-align: center
+  border-left: 2px solid $gris
+  border-right: 2px solid $gris
+  // border-right: 2px solid $azul
+  // height: 100%
+  // position: absolute
+  margin-left: -2px
+  margin-right: -2px
+
+.botonAmarilloComentario
+  background: $amarillo  !important
+  border-color: $amarilloclaro !important
+  color: $blanco !important
+  font-weight: bold !important
+  padding-top: 2px !important
+  padding-bottom: 4px !important
+  padding-left: 8px !important
+  padding-right: 7px !important
+  &:active
+    background: $amarillo !important
+    opacity: $opacity !important
+  &:hover
+    background: $amarilloobscuro !important
+
+.botonRojoComentario
+  background: $rojo  !important
+  border-color: $rojoclaro !important
+  color: $blanco !important
+  font-weight: bold !important
+  padding-top: 1px !important
+  padding-bottom: 3px !important
+  padding-left: 8px !important
+  padding-right: 7px !important
+  &:active
+    background: $rojo !important
+    opacity: $opacity !important
+  &:hover
+    background: $rojoobscuro !important
+
+.botonVerdeComentario
+  background: $verde  !important
+  border-color: $verdeclaro !important
+  color: $blanco !important
+  font-weight: bold !important
+  padding-top: 1px !important
+  padding-bottom: 3px !important
+  padding-left: 8px !important
+  padding-right: 7px !important
+  &:active
+    background: $verde !important
+    opacity: $opacity !important
+  &:hover
+    background: $verdeobscuro !important
+
+.botonAmarilloComentario
+  background: $amarillo  !important
+  border-color: $amarilloclaro !important
+  color: $blanco !important
+  font-weight: bold !important
+  padding-top: 1px !important
+  padding-bottom: 3px !important
+  padding-left: 8px !important
+  padding-right: 7px !important
+  &:active
+    background: $amarillo !important
+    opacity: $opacity !important
+  &:hover
+    background: $amarilloobscuro !important
+
+.lchica
+  width: 100%
+  padding-right: 0px
+  padding-left: 0px
+  height: 2px
+
+body
+  .backgroundColor
+    background-color: $grisclaro3
+    height: 100%
+    width: 100%
+    position: relative
+
+.claseCard
+  -webkit-box-shadow: 7px 7px 7px 2px rgba(125,125,125,0.57) !important
+  -moz-box-shadow: 7px 7px 7px 2px rgba(125,125,125,0.57) !important
+  box-shadow: 0px 2px 4px 1px rgba(125,125,125,0.57) !important
+
+.tIconos
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -3px
+
+.claseIconos
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -3px
+
+.claseIcono
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -3px
+
+.claseIconosBoton
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -1px
+
+.botonBlancoPedidos
+  background: $grisclaro3 !important
+  border: $gris
+  border-width: 1px !important
+  color: $negro !important
+  font-weight: bold !important
+  width: 100px
+  &:active
+    background: $grisclaro3 !important
+    border-width: 1px !important
+    border-color: $blanco !important
+    opacity: $opacity !important
+  &:hover
+    background: $grisclaro !important
+    border-width: 1px !important
+    border-color: $negro !important
+
+.botonBlancoPedidos2
+  background: $azul !important
+  border-width: 1px !important
+  border: $azulobscuro !important
+  color-color: $blanco !important
+  font-weight: normal !important
+  width: 100px
+  &:active
+    background: $blanco !important
+    border-width: 1px !important
+    border-color: $gris !important
+    opacity: $opacity !important
+  &:hover
+    background: $azulobscuro !important
+    border-width: 1px !important
+    border: $gris !important
+    color: $blanco !important
+
+.claseBotonFactura
+  padding-top: $chico
+  @media (min-width: 485px)
+    display: inline-block
+    padding-top: 0px
+    padding-left: $chico
+
+.paddingPedidos
+  padding-top: $mediano
+  @media (min-width: 485px)
+    padding-top: $muygrande
+
+.botonRojoTicket
+  background: $blanco !important
+  border-color: $rojoclaro !important
+  border-width: 2px !important
+  border-color: $rojo !important
+  color: $rojo  !important
+  font-weight: bold !important
+  &:active
+    background: $rojoclaro  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $rojoclaro  !important
+
+.tCategorias
+  font-size: 13px !important
+
+.tIconoCategorias
+  font-size: 21px
+
+.tIconoPlatano
+  font-size: 24px
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -3px !important
+
+.letraEditarDatosInput
+  font-size: 14px !important
+
+.botonEditarDatos
+  font-size: 14px !important
+  padding: 0px !important
+  height: 35px !important
+  width: 35px
+
+.pLadosEditar
+  padding-left: 10vw !important
+  padding-right: 10vw !important
+  @media (min-width: 992px)
+    padding-left: 15vw !important
+    padding-right: 15vw !important
+  @media (min-width: 1200px)
+    padding-left: 17vw !important
+    padding-right: 17vw !important
+
+.float-btn
+  position: fixed !important
+  width: 60px !important
+  height: 60px !important
+  bottom: 12px !important
+  right: 15px !important
+  background-color:  $blanco !important
+  text-align: center !important
+  border-radius: 20px !important
+  border-width: 0px !important
+  box-shadow:  1px 1px 4px $gris !important
+  z-index: 999 !important
+  &:active
+    background: $negro !important
+    opacity: $opacity !important
+  &:hover
+    background: $blanco !important
+    color: $negro !important
+  @media (min-width: 480px)
+    bottom: 20px !important
+    right: 20px !important
+  @media (min-width: 600px)
+    bottom: 30px !important
+    right: 30px !important
+
+.icono-float-btn
+  color: $negro !important
+  font-size: 27px  !important
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: 1px
+  margin-right: 2px
+
+.float-btn-total
+  position: fixed !important
+  width: 160px !important
+  height: 30px !important
+  bottom: 25px !important
+  right: 71px !important
+  background-color:  $grisclaro3 !important
+  color: $negro !important
+  text-align: center !important
+  border-top-left-radius: 20px !important
+  border-bottom-left-radius: 20px !important
+  border-width: 0px !important
+  box-shadow:  1px 1px 4px $gris !important
+  z-index: 999 !important
+  &:active
+    background: $negro !important
+    opacity: $opacity !important
+  &:hover
+    background: $blanco !important
+    color: $negro !important
+  @media (min-width: 480px)
+    bottom: 33px !important
+    right: 76px !important
+  @media (min-width: 600px)
+    bottom: 43px !important
+    right: 86px !important
+
+.float-btn-guardar
+  position: fixed !important
+  width: 60px !important
+  height: 60px !important
+  bottom: 12px !important
+  right: 15px !important
+  background-color:  $amarillo !important
+  text-align: center !important
+  border-radius: 20px !important
+  border-width: 0px !important
+  box-shadow:  1px 1px 4px $gris !important
+  z-index: 999 !important
+  &:active
+    background: $negro !important
+    opacity: $opacity !important
+  &:hover
+    background: $blanco !important
+    color: $negro !important
+  @media (min-width: 480px)
+    bottom: 20px !important
+    right: 20px !important
+  @media (min-width: 600px)
+    bottom: 30px !important
+    right: 30px !important
+
+.icono-float-btn-guardar
+  color: $negro !important
+  font-size: 27px  !important
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: 1px
+  margin-right: 2px
+
+.botonGenerarPedido
+  background: $blanco !important
+  border-width: 2px
+  border-color: $rojo !important
+  color: $rojo  !important
+  font-weight: bold !important
+  &:active
+    background: $rojoclaro  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $rojoclaro  !important
+
+.botonGenerarPedidoAzul
+  background: $blanco !important
+  border-width: 2px
+  border-color: $azul !important
+  color: $azul  !important
+  font-weight: bold !important
+  &:active
+    background: $azulclaro  !important
+    opacity: $opacity  !important
+  &:hover
+    background: $azulclaro  !important
+
+.tIconoGenerarPedido
+  font-size: 20px  !important
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -3px
+  margin-right: 3px
+  
+.divGenerarPedidoBoton
+  padding-top: 0px
+  @media (min-width: 992px)
+    padding-top: 20px
+
+.tIconoShoppingCart
+  font-size: 30px
+  margin-right: 7px
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -4px
+
+.tComentario
+  font-size: 12px
+
+.botonComprar
+  background-color: rgba(0,0,0,.3) !important
+  border: 2px solid !important
+  border-color: $blanco !important
+  color: $blanco !important
+  font-weight: bold !important
+  font-size: 20px !important
+  height: 130px
+  width: 130px
+  &:active
+    background-color: rgba(0,0,0,.5) !important
+  &:hover
+    background-color: rgba(0,0,0,.5) !important
+  
+.botonVender
+  background-color: rgba(0,0,0,.3) !important
+  border: 2px solid !important
+  border-color: $blanco !important
+  color: $blanco !important
+  font-weight: bold !important
+  font-size: 20px !important
+  height: 130px
+  width: 130px
+  &:active
+    background-color: rgba(0,0,0,.5) !important
+  &:hover
+    background-color: rgba(0,0,0,.5) !important
+
+.botonComprarImagen
+  background-image: url("https://res.cloudinary.com/mercadoalamano/image/upload/v1648508951/cz9mnwz4t2pdnpxhjt7p.jpg")
+  background-size: 170%
+  background-repeat: no-repeat
+  background-position: 40% 12%
+  border-radius: 10px
+  height: 130px !important
+  width: 130px !important
+
+.botonVenderImagen
+  background-image: url("https://res.cloudinary.com/mercadoalamano/image/upload/v1648509570/uees1wjj9vgnmvf2fh16.jpg")
+  background-size: 200% 
+  background-repeat: no-repeat
+  background-position: 50% 12%
+  border-radius: 10px
+  height: 130px !important
+  width: 130px !important
+
+
+.botonLogin
+  background: $blanco !important
+  border: none !important
+  color: $gris !important
+  font-weight: bold !important
+  &:active
+    background: $negro
+    opacity:  $opacity
+  &:hover
+    background: $negrohover
+
+.widthCardProveedor
+  width: 270px
+
+.centradoRelativo
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  padding-top: 102px
+
+
+.paddingFinalPerfil
+  padding-top: 100px
+
+.tamanoGranjero
+  width: 100%
+  @media (min-width: 768px)
+    margin-top: 50px
+  @media (min-width: 992px)
+    width: 320px
+    align-items: center
+
+.tamanoCamioneta
+  width: 90%
+  @media (min-width: 768px)
+    margin-top: 10px
+  @media (min-width: 992px)
+    width: 100%
+    width: 320px
+    align-items: center
+
+.botonContrasena
+  background-color: $blanco !important
+  color: $negro !important
+  border-left-width: 0 !important
+  border-color: $grisclaro !important
+
+.tSpinnerBoton
+  font-size: 20px
+  height: 6px
+
+.modalpadding
+  padding-right: -17px !important
+
+.botonTransparente
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  padding-right: 3px !important
+  padding-left: 3px !important
+  margin-top: -1px !important
+  &:active
+    background: rgba(255,255,255, 0.0) !important
+  &:hover
+    background: rgba(255,255,255, 0.0) !important
+
+.botonTransparentePuntos
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  padding-top: 0px !important
+  padding-bottom: 2px !important
+  padding-right: 4px !important
+  padding-left: 4px !important
+  margin-top: -3px !important
+  &:active
+    background: rgba(255,255,255, 0.0) !important
+  &:hover
+    background: rgba(255,255,255, 0.0) !important
+
+.botonTransparentePagado
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  padding-top: 0px !important
+  padding-bottom: 2px !important
+  padding-right: 4px !important
+  padding-left: 4px !important
+  margin-top: 0px !important
+  &:active
+    background: rgba(255,255,255, 0.0) !important
+  &:hover
+    background: rgba(255,255,255, 0.0) !important
+
+.botonTransparenteEntregar
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  padding-top: 0px !important
+  padding-bottom: 0px !important
+  padding-right: 4px !important
+  padding-left: 0px !important
+  margin-top: -4px !important
+  &:active
+    background: rgba(255,255,255, 0.0) !important
+  &:hover
+    background: rgba(255,255,255, 0.0) !important
+
+.botonIniciarSesion
+  background: rgba(255,255,255, 0.0) !important
+  font-weight: bold !important
+  border: none !important
+  border-radius: 10px !important
+  padding-right: 3px !important
+  padding-left: 3px !important
+  margin-top: 3px !important
+  &:active
+    background: rgba(255,255,255, 0.0) !important
+  &:hover
+    background: rgba(255,255,255, 0.0) !important
+
+.logoTerminos
+  height: 120px
+
+.tamanoMetricas
+  height: 180px
+  width: 320px
+  font-size: 14px
+
+.tamanoTerritorio
+  height: 151px
+  width: 320px
+  font-size: 14px
+
+.tamanoTerritorioEditar
+  height: 400px
+  width: 320px
+  font-size: 14px
+
+.tamanoOperacion
+  height: 176px
+  width: 320px
+  font-size: 14px
+
+.tamanoImprimir
+  height: 134px
+  width: 320px
+  font-size: 14px
+
+.tamanoFinanciamiento
+  height: 100px
+  width: 320px
+  font-size: 14px
+
+.inputMetricas
+  border: none !important
+  font-size: 12px !important
+  // height: 15px !important
+  padding-top: 0px !important
+  padding-bottom: 0px !important
+
+
+.letraMetricas
+  font-size: 13px
+  padding-top: 3px !important
+  // margin-top: -1px !important
+
+.tituloLetra
+  font-size: 19px
+  font-weight: bold
+  text-align: left
+  align-items: center !important
+  padding-left: 17px
+  padding-top: 10px
+  padding-bottom: 10px
+
+
+.botonTransparenteArriba
+  background: rgba(255,255,255, 0.0) !important
+  border-left: none !important
+  border-right: none !important
+  border-color: $grisclaro !important
+  border-radius: 0px !important
+  padding-top: 10px !important
+  padding-bottom: 10px !important
+  color: $gris !important
+  width: 100% !important
+  text-align: left !important
+  padding-left: 22px !important
+  font-size: 14px !important
+  &:active
+    background: $grisclaro !important
+  &:hover
+    background: $grisclaro !important
+
+.botonTransparenteCentro
+  background: rgba(255,255,255, 0.0) !important
+  border-left: none !important
+  border-right: none !important
+  border-top: none !important
+  border-color: $grisclaro !important
+  border-radius: 0px !important
+  padding-top: 10px !important
+  padding-bottom: 10px !important
+  color: $gris !important
+  width: 100% !important
+  text-align: left !important
+  padding-left: 22px !important
+  font-size: 14px !important
+  &:active
+    background: $grisclaro !important
+  &:hover
+    background: $grisclaro !important
+
+.botonTransparenteAbajo
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  border-top-left-radius: 0px !important
+  border-top-right-radius: 0px !important
+  padding-top: 10px !important
+  padding-bottom: 10px !important
+  width: 100% !important
+  text-align: left !important
+  padding-left: 22px !important
+  font-size: 14px !important
+  color: $azul !important
+  font-weight: bold !important
+  &:active
+    background: $grisclaro !important
+  &:hover
+    background: $grisclaro !important
+    
+.botonTransparenteAbajo2
+  background: rgba(255,255,255, 0.0) !important
+  border: none !important
+  border-top-left-radius: 0px !important
+  border-top-right-radius: 0px !important
+  padding-top: 10px !important
+  padding-bottom: 10px !important
+  color: $gris !important
+  width: 100% !important
+  text-align: left !important
+  padding-left: 22px !important
+  font-size: 14px !important
+  &:active
+    background: $grisclaro !important
+  &:hover
+    background: $grisclaro !important
+
+.t10
+  font-size: 10px
+.t11
+  font-size: 11px
+.t12
+  font-size: 12px
+.t13
+  font-size: 13px
+.t14
+  font-size: 14px
+.t15
+  font-size: 15px
+.t16
+  font-size: 16px
+.t17
+  font-size: 17px
+.t18
+  font-size: 18px
+.t19
+  font-size: 19px
+.t20
+  font-size: 20px
+.t21
+  font-size: 21px
+.t22
+  font-size: 22px
+.t23
+  font-size: 23px
+.t24
+  font-size: 24px
+.t25
+  font-size: 25px
+.t26
+  font-size: 26px
+.t27
+  font-size: 27px
+.t28
+  font-size: 28px
+.t29
+  font-size: 29px
+.t30
+  font-size: 30px
+
+.h10
+  height: 10px
+.h11
+  height: 11px
+.h12
+  height: 12px
+.h13
+  height: 13px
+.h14
+  height: 14px
+.h15
+  height: 15px
+.h16
+  height: 16px
+.h17
+  height: 17px
+.h18
+  height: 18px
+.h19
+  height: 19px
+.h20
+  height: 20px
+
+.widthBotones
+  width: 105px
+  @media (min-width: 541px)
+    width: 120px
+  @media (min-width: 1200px)
+    width: 158px
+
+.paddingArribaMetricas
+  @media (min-width: 768px)
+    padding-top: 49px
+
+.contenedorFlex
+  display: flex
+  align-items: center
+  justify-content: center
+
+.contenedorDerecha
+  display: flex
+  align-items: center
+  justify-content: right
+
+.contenedorIzquierda
+  display: flex
+  align-items: center
+  justify-content: left
+
+.centradoFlex
+  align-self: flex-end
+
+.widthPopOver
+  width: 160px !important
+
+.paddingPopOver
+  padding: 2px 2px 2px 10px !important
+
+.overflow 
+  @media (min-width: 991px)
+    height: calc(100vh - 294px)
+    overflow-y: auto
+    overflow-x: hidden
+
+.overflowCategorias
+  @media (min-width: 991px)
+    height: calc(100vh - 355px)
+    overflow-y: auto
+    overflow-x: hidden
+
+.botonInputLugarAzul
+  font-size: 14px !important
+  padding: 0px !important
+  height: 35px !important
+  width: 85px
+  background: $azul !important
+  border-color: $azul !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $azul !important
+    opacity: $opacity !important
+  &:hover
+    background: $azulobscuro !important
+
+.botonInputLugarNegro
+  font-size: 14px !important
+  padding: 0px !important
+  height: 35px !important
+  width: 85px
+  background: $negro !important
+  border-color: $negro !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    opacity: $opacity !important
+  &:hover
+    opacity: $opacity !important
+
+.botonInputAzul
+  font-size: 14px !important
+  padding: 0px !important
+  height: 35px !important
+  width: 35px
+  background: $azul !important
+  border-color: $azul !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $azul !important
+    opacity: $opacity !important
+  &:hover
+    background: $azulobscuro !important
+
+.botonInputVerde
+  font-size: 14px !important
+  padding: 0px !important
+  height: 35px !important
+  width: 35px
+  background: $verde !important
+  border-color: $verde !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    background: $verde !important
+    opacity: $opacity !important
+  &:hover
+    background: $verdeobscuro !important
+    
+.botonAprobarVerde
+  background: $verde !important
+  border-color: $verde !important
+  color: $blanco  !important
+  font-weight: bold !important
+  height: 28px
+  width: 28px
+  &:active
+    background: $verde !important
+    opacity: $opacity !important
+  &:hover
+    background: $verdeobscuro !important    
+
+.botonAprobarRojo
+  background: $rojo !important
+  border-color: $rojo !important
+  color: $blanco  !important
+  font-weight: bold !important
+  height: 28px
+  width: 28px
+  &:active
+    background: $rojo !important
+    opacity: $opacity !important
+  &:hover
+    background: $rojoobscuro !important
+
+.iconoAprobar
+  line-height: 1
+  height: 100%
+  vertical-align: middle
+  margin-top: -12px
+  margin-left: -6px
+  font-size: 15px

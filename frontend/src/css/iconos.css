@@ -1,0 +1,291 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?wxoggb');
+  src:  url('fonts/icomoon.eot?wxoggb#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?wxoggb') format('truetype'),
+    url('fonts/icomoon.woff?wxoggb') format('woff'),
+    url('fonts/icomoon.svg?wxoggb#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-level-down:before {
+  content: "\e956";
+}
+.icon-reloj-arena:before {
+  content: "\e94e";
+}
+.icon-cargando:before {
+  content: "\e951";
+}
+.icon-armado-1:before {
+  content: "\e952";
+}
+.icon-cargando-1:before {
+  content: "\e953";
+}
+.icon-camioneta-1:before {
+  content: "\e954";
+}
+.icon-armado:before {
+  content: "\e955";
+}
+.icon-contabilidad:before {
+  content: "\e948";
+}
+.icon-contabilidad-1:before {
+  content: "\e949";
+}
+.icon-contabilidad-2:before {
+  content: "\e94a";
+}
+.icon-descuento-2:before {
+  content: "\e94b";
+}
+.icon-estadistica:before {
+  content: "\e94c";
+}
+.icon-descuento-1:before {
+  content: "\e94d";
+}
+.icon-estadistica-1:before {
+  content: "\e34a";
+}
+.icon-precio:before {
+  content: "\e94f";
+}
+.icon-descuento:before {
+  content: "\e950";
+}
+.icon-contrato-2:before {
+  content: "\e945";
+}
+.icon-camioneta-2:before {
+  content: "\e946";
+}
+.icon-camioneta-tiempo:before {
+  content: "\e947";
+}
+.icon-documentos-2:before {
+  content: "\e93e";
+}
+.icon-documento:before {
+  content: "\e93f";
+}
+.icon-archivo:before {
+  content: "\e940";
+}
+.icon-archivero:before {
+  content: "\e941";
+}
+.icon-lista:before {
+  content: "\e942";
+}
+.icon-contrato:before {
+  content: "\e943";
+}
+.icon-documentos:before {
+  content: "\e944";
+}
+.icon-leaning:before {
+  content: "\e93d";
+}
+.icon-ojo:before {
+  content: "\e93c";
+}
+.icon-deal:before {
+  content: "\e938";
+}
+.icon-feliz:before {
+  content: "\e939";
+}
+.icon-high-five:before {
+  content: "\e93a";
+}
+.icon-high-five-2:before {
+  content: "\e93b";
+}
+.icon-factura:before {
+  content: "\e937";
+}
+.icon-chat:before {
+  content: "\e92b";
+}
+.icon-chat-1:before {
+  content: "\e92c";
+}
+.icon-chat-2:before {
+  content: "\e92d";
+}
+.icon-chat-3:before {
+  content: "\e92e";
+}
+.icon-chat-vacio:before {
+  content: "\e92f";
+}
+.icon-tarjeta:before {
+  content: "\e930";
+}
+.icon-info:before {
+  content: "\e931";
+}
+.icon-bolsa-dinero:before {
+  content: "\e932";
+}
+.icon-pago:before {
+  content: "\e933";
+}
+.icon-chat-vacio-2:before {
+  content: "\e934";
+}
+.icon-support-1:before {
+  content: "\e935";
+}
+.icon-support:before {
+  content: "\e936";
+}
+.icon-vision-2:before {
+  content: "\e923";
+}
+.icon-vision-3:before {
+  content: "\e924";
+}
+.icon-vision-1:before {
+  content: "\e925";
+}
+.icon-mision-4:before {
+  content: "\e926";
+}
+.icon-mision-2:before {
+  content: "\e927";
+}
+.icon-mision-3:before {
+  content: "\e928";
+}
+.icon-mision-1:before {
+  content: "\e929";
+}
+.icon-valores:before {
+  content: "\e92a";
+}
+.icon-flecha-arriba:before {
+  content: "\e921";
+}
+.icon-flecha-izquierda:before {
+  content: "\e922";
+}
+.icon-evacia:before {
+  content: "\e920";
+}
+.icon-cerrar:before {
+  content: "\e91e";
+}
+.icon-cerrar-circulo:before {
+  content: "\e91f";
+}
+.icon-flecha-arriba-vacia:before {
+  content: "\e919";
+}
+.icon-flecha-abajo-vacia:before {
+  content: "\e91a";
+}
+.icon-flecha-abajo:before {
+  content: "\e918";
+}
+.icon-flecha-derecha:before {
+  content: "\e91b";
+}
+.icon-media-estrella:before {
+  content: "\e91c";
+}
+.icon-estrella:before {
+  content: "\e91d";
+}
+.icon-manzana:before {
+  content: "\e900";
+}
+.icon-platano:before {
+  content: "\e901";
+}
+.icon-zanahoria-alt:before {
+  content: "\e902";
+}
+.icon-zanahoria:before {
+  content: "\e903";
+}
+.icon-zanahoria-2:before {
+  content: "\e904";
+}
+.icon-chile:before {
+  content: "\e905";
+}
+.icon-semillas:before {
+  content: "\e906";
+}
+.icon-monedas:before {
+  content: "\e907";
+}
+.icon-mano-dinero-alt:before {
+  content: "\e908";
+}
+.icon-mano-dinero:before {
+  content: "\e909";
+}
+.icon-descargar:before {
+  content: "\e90a";
+}
+.icon-descargar-alt:before {
+  content: "\e90b";
+}
+.icon-huevo:before {
+  content: "\e90c";
+}
+.icon-huevo-alt:before {
+  content: "\e90d";
+}
+.icon-descargas:before {
+  content: "\e90e";
+}
+.icon-hotel:before {
+  content: "\e90f";
+}
+.icon-id:before {
+  content: "\e910";
+}
+.icon-hierbas:before {
+  content: "\e911";
+}
+.icon-camioneta:before {
+  content: "\e912";
+}
+.icon-banquetera:before {
+  content: "\e913";
+}
+.icon-lechuga:before {
+  content: "\e914";
+}
+.icon-sign:before {
+  content: "\e915";
+}
+.icon-huevos-2:before {
+  content: "\e916";
+}
+.icon-abarrotes:before {
+  content: "\e917";
+}
