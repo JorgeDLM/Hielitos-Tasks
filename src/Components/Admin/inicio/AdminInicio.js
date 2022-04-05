@@ -9,8 +9,6 @@ function Admin() {
 
     const { loading, productos } = useContext(UsuarioContext)
 
-
-    console.log(productos)
     return (
         <React.Fragment>
             <Container className="pabenorme">

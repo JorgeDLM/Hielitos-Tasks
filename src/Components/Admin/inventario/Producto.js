@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, Row, Col, Button } from "reactstrap";
 
 
-function Admin(props) {
+function Producto(props) {
 
     const [ver, setVer] = useState(false)
 
@@ -18,7 +18,7 @@ function Admin(props) {
                             <div className="t20">{props.p.nombre.toUpperCase()}</div>
                             <Row className="parchico">
                                 <Col>${props.p.precio_venta}</Col>
-                                {props.p.envio && <Col className="wbold verde">Envío gratis</Col>}
+                                {props.p.envio === true && <Col className="wbold verde">Envío gratis</Col>}
                                 <Col><span className="wbold azul">{props.p.propietario}</span></Col>
                             </Row>
                         </Col>
@@ -43,4 +43,4 @@ function Admin(props) {
     );
 }
 
-export default Admin;
+export default Producto;

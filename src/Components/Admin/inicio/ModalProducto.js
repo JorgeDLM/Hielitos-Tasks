@@ -139,7 +139,7 @@ function Admin() {
                 tematica: tematica ? tematica : "",
                 precio_compra: precio_compra ? precio_compra : "",
                 precio_venta: precio_venta ? precio_venta : "",
-                envio: envio ? envio : false,
+                envio: envio === "false" ? false : envio === "true" ? true : false,
                 ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
                 medidas: medidas ? medidas : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
