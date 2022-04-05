@@ -34,8 +34,9 @@ return (
 							<Route path="catalogo" element={<Catalogo/>} />
 							<Route path="iniciar-sesion" element={<Login/>} />
 						</Route>
-						<Route path="/*" element={<Navigate to="/catalogo" />} />
 						<Route path="admin/*" element={<Navigate to="/iniciar-sesion" />} />
+						<Route path="/" element={<Navigate to="/catalogo" />} />
+						<Route path="/*" element={<Navigate to="/catalogo" />} />
 					</>}
 				</React.Fragment>
 			</Routes>
