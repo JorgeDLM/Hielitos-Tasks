@@ -11,14 +11,13 @@ const UsuarioState = (props) => {
 
 // CARGAR PRODUCTOS-------------------------------------------------------
     const fetchProductos = async() => {
-        const productosRef = collection(db, "productos")
-        const dataProductos =  await getDocs(productosRef)
-        setProductos(dataProductos.docs.map((doc) => ({id: doc.id, ...doc.data()})))
-        setLoading(false)
+        const dataProductos =  await getDocs(collection(db, "productos"))
+        const getDataProductos = dataProductos.docs.map((doc) => ({...doc.data()}))      
+        setProductos(getDataProductos)
       }
       useEffect(() => {
-          fetchProductos();
-      }, [])
+        fetchProductos();
+      }, [productos])
 // ------------------------------------------------------------------------
 
     return (

@@ -24,7 +24,7 @@ function Admin() {
     return (
         <>
 			<Menu links={links} logoNegro  />
-			<div className="noselect">
+			<div className="">
 				<Outlet/>
 			</div>
         </>
