@@ -1,6 +1,8 @@
 import React from "react";
 import Menu from "../menu/Menu";
-import { Container, Card, Row, Col } from 'reactstrap'
+import { Container, Card, Row, Col, Button } from 'reactstrap'
+import { FaUndo } from 'react-icons/fa'
+import { useNavigate } from "react-router-dom";
 
 
 function ProductoID(props) {
@@ -11,6 +13,12 @@ function ProductoID(props) {
 			path: `/catalogo`,
 		},
 	];
+
+    const navigate = useNavigate()
+    const regresar = () => {
+        navigate(`/catalogo`)
+    }
+
  
     return (
         <React.Fragment>
@@ -44,6 +52,7 @@ function ProductoID(props) {
                     </Card>
                     <Card className="t12 descripcion negro pmediano"><div className="izquierda wbold t15">Descripción:</div>{props.p.descripcion}</Card>
                     
+                <div className="parmediano"><Button onClick={() => regresar()} className="botonBlanco w100"><FaUndo className="tIconos" /> Regresar</Button></div>
                 </Card>
             </Container>
        </React.Fragment>
