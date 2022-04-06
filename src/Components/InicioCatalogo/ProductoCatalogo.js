@@ -15,7 +15,7 @@ function ProductoCatalogo(props) {
     const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ")
 
     return (
-        <Col className="pabmediano contenedor ">
+        <Col className="pabmediano contenedor widthCardProveedorCol">
             <Card className="pmediano claseCard widthCardProveedor centradoRelativo" onClick={() => irID()}>
                 <div className="contenedor">
                     <img src={props.p.imagen} className="claseImagenCatalogo" alt="" />
