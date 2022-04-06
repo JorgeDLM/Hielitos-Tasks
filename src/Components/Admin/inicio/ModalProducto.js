@@ -327,7 +327,8 @@ Tamaño: ${medidas}
 
 
 *********************************************************************************************************
-Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
+Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
+tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
 *********************************************************************************************************`)}><FaPlus className="tIconos" /></Button></div>
                         <Input placeholder="Descripción" type="textarea" rows="12" defaultValue={descripcionDefault}
                             onChange={(e) => setDescripcion(e.target.value)} invalid={descripcionInvalida} />

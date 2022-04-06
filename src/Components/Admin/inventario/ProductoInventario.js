@@ -1,15 +1,60 @@
-import React, { useState } from "react";
-import { Card, Row, Col, Button } from "reactstrap";
-import { FaCopy } from 'react-icons/fa'
-
+import React, { useContext, useState } from "react";
+import { Card, Row, Col, Button, Input, InputGroup } from "reactstrap";
+import { FaMinus, FaPlus } from 'react-icons/fa'
+import UsuarioContext from "../context/UsuarioContext";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../firebase-config";
+import swal from "sweetalert";
 
 function ProductoInventario(props) {
 
-    const [editar, setEditar] = useState(false)
+    const {productos, setProductos, loading, setLoading} = useContext(UsuarioContext)
 
-    const copiar = () => {
-        navigator.clipboard.writeText(props.p.descripcion)
-    }
+    const [cantidad, setCantidad] = useState("")
+
+
+    // AGREGAR INVENTARIO
+    const agregarInventario = async() => {
+        setLoading(true)
+        try {
+            const setInfo = [...productos.filter(p => (p.id === props.p.id) ? [p.cantidad] = [(+cantidad + p.cantidad)] : p)]
+            console.log(setInfo)
+            await updateDoc(doc(db, "productos", props.p.id), {cantidad: +cantidad + +props.p.cantidad})
+            setProductos(setInfo)
+            localStorage.setItem('productoInfo', JSON.stringify(setInfo));
+            setCantidad("")
+        } catch (error) {
+            swal({
+                title: "Error",
+                text: error.message,
+                icon: "error",
+                button: "cerrar"
+            });
+            setLoading(false)
+        }
+    }    
+
+    // RESTAR INVENTARIO
+    const restarInventario = async() => {
+        setLoading(true)
+        try {
+            const setInfo = [...productos.filter(p => (p.id === props.p.id) ? [p.cantidad] = [(p.cantidad - +cantidad)] : p)]
+            console.log(setInfo)
+            await updateDoc(doc(db, "productos", props.p.id), {cantidad: +props.p.cantidad - +cantidad})
+            setProductos(setInfo)
+            localStorage.setItem('productoInfo', JSON.stringify(setInfo));
+            setCantidad("")
+        } catch (error) {
+            swal({
+                title: "Error",
+                text: error.message,
+                icon: "error",
+                button: "cerrar"
+            });
+            setLoading(false)
+        }
+    }    
+
 
     return (
         <div className="parchico">
@@ -20,35 +65,21 @@ function ProductoInventario(props) {
                             <div className="pizchico"><img className="productoLista" src={props.p.imagen} alt="error" /></div>
                         </Col>
                         <Col>
-                            <div className="t20">{props.p.nombre.toUpperCase()}</div>
+                            <div className="t12">{props.p.nombre.toUpperCase()}</div>
                             <Row className="parchico">
-                                <Col>${props.p.precio_venta}</Col>
-                                {props.p.envio === true && <Col className="wbold verde">Envío gratis</Col>}
+                                <Col xs={6}>
+                                    <InputGroup>
+                                        <Button disabled={!cantidad} className="botonInputAmarillo" onClick={restarInventario}><FaMinus className="claseIconos" /></Button>
+                                        <Input type="text" className="letraEditarDatosInput" value={cantidad} placeholder={`Cantidad: ${props.p.cantidad > 0 ? props.p.cantidad : 0}`} onChange={(e) => setCantidad(e.target.value)} />
+                                        <Button disabled={!cantidad} className="botonInputAzul" onClick={agregarInventario}><FaPlus className="claseIconos" /></Button>
+                                    </InputGroup>
+                                </Col>
+                                {props.p.envio === true && <Col className="wbold verde t12">Envío gratis</Col>}
                                 <Col><span className="wbold azul">{props.p.propietario}</span></Col>
                             </Row>
                         </Col>
                     </Row>
-                    {editar && <hr />}
                 </div>
-                {!editar && <Button onClick={() => setEditar(!editar)} className="botonAmarillo w100">Ver más</Button>}
-                    {editar && <div className="pizchico pdechico pabchico">
-                        <div><span className="wbold azul">Temática:</span> {props.p.tematica}</div>
-                        <div><span className="wbold azul">Categoria:</span> {props.p.categoria}</div>
-                        <div><span className="wbold azul">Precio de compra:</span> {props.p.precio_compra}</div>
-                        <div><span className="wbold azul">Ganancia:</span> {props.p.precio_venta - props.p.precio_compra - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))}</div>
-                        <div><span className="wbold azul">Medidas:</span> {props.p.medidas}</div>
-                        <hr />
-                        <div className="descripcion">
-                            <Row className="wbold azul">
-                                <Col>Descripción: </Col>
-                                <Col className="derecha"><Button onClick={copiar} className="botonAzul"><FaCopy className="claseIconos" /></Button></Col>
-                            </Row>
-                         <br />{props.p.descripcion}</div>
-                        <div><span className="wbold azul">Inventario:</span> {props.p.cantidad}</div>
-                        <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
-                    </div>}
-                {editar && <Button onClick={() => setEditar(!editar)} className="botonAmarillo w100">Guardar</Button>}
-                {editar && <Button onClick={() => setEditar(!editar)} className="botonRojo w100">Cancelar</Button>}
             </Card>
         </div>
     );
