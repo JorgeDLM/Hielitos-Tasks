@@ -26,6 +26,14 @@ function Admin() {
 			nombre: "Compras",
 			path: `compras`,
 		},
+		{
+			nombre: "Faltan de subir",
+			path: `por-subir`,
+		},
+		{
+			nombre: "Editar productos",
+			path: `editar-productos`,
+		},
 
 	];
 

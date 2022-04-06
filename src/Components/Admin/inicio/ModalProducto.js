@@ -30,6 +30,7 @@ function Admin() {
     const [cantidad, setCantidad] = useState("")
     const [proveedor, setProveedor] = useState("")
     const [propietario, setPropietario] = useState("seleccione")
+    const [subido, setSubido] = useState("")
     const [loading, setLoading] = useState("")
     const [cambio, setCambio] = useState(true)
 
@@ -75,6 +76,7 @@ function Admin() {
         setProveedor("")
         setPropietario("seleccione")
         setDescripcionDefault("")
+        setSubido("")
         setModal(false)
     }
 
@@ -153,6 +155,7 @@ function Admin() {
                 cantidad: cantidad ? cantidad : 0,
                 proveedor: proveedor ? proveedor : "",
                 propietario: propietario ? propietario : "",
+                subido: subido === "false" ? false : subido === "true" ? true : false,
             }
 
             const newProduct = async () => {
@@ -355,6 +358,16 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                     <div className="wbold">Proveedor:</div>
                     <FormGroup>
                         <Input placeholder="Nombre del proveedor" type="text" onChange={(e) => setProveedor(e.target.value)} />
+                    </FormGroup>
+
+                {/* Subido */}
+                    <div className="wbold">Subido a Mercadolibre:</div>
+                    <FormGroup>
+                        <Input type="select" onChange={(e) => setSubido(e.target.value)}>
+                            <option value="" disabled={subido !== ""}>Seleccione:</option>
+                            <option value={false} >No</option>
+                            <option value={true}>Sí</option>
+                        </Input>
                     </FormGroup>
                 </div>
                 <Button onClick={() => subirProducto()} className="botonAmarillo" disabled={!dataCompleta}>{loading ? <Spinner size="sm" /> : "Subir producto"}</Button>

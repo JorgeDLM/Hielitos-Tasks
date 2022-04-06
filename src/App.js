@@ -1,15 +1,20 @@
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom"
 
+import Inicio from './Components/InicioCatalogo/InicioCatalogo'
+import Catalogo from './Components/InicioCatalogo/Catalogo'
+import ProductoID from "./Components/InicioCatalogo/ProductoID";
+
+import Login from './Components/login/Login'
+
 import Admin from './Components/Admin/Admin'
 import AdminInicio from './Components/Admin/inicio/AdminInicio'
 import Inventario from './Components/Admin/inventario/Inventario'
-import Login from './Components/login/Login'
-import Inicio from './Components/InicioCatalogo/InicioCatalogo'
-import Catalogo from './Components/InicioCatalogo/Catalogo'
+import Ventas from './Components/Admin/ventas/Ventas'
+import PorSubir from './Components/Admin/porSubir/PorSubir'
+import Compras from './Components/Admin/compras/Compras'
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
-import ProductoID from "./Components/InicioCatalogo/ProductoID";
 
 function App() {
 
@@ -24,6 +29,9 @@ return (
 						<Route path="admin/*" element={<Admin/>}  >
 							<Route path="inicio" element={<AdminInicio/>} />
 							<Route path="inventario" element={<Inventario/>} />
+							<Route path="ventas" element={<Ventas/>} />
+							<Route path="por-subir" element={<PorSubir/>} />
+							<Route path="compras" element={<Compras/>} />
 						</Route>
 						<Route path="/*" element={<Navigate to="/admin/inicio" />} />
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />

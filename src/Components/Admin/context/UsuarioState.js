@@ -9,6 +9,7 @@ const UsuarioState = (props) => {
     const [productos, setProductos] = useState([])
     const [usuario, setUsuario] = useState()
     const [usuarioLoggeado, setUsuarioLoggeado] = useState(localStorage.getItem("infoUsuario") !== null ? true : false)
+    const [productosCompra, setProductosCompra] = useState([])
 
     // USUARIO LOGGEADO
     useEffect(() => {
@@ -19,8 +20,8 @@ const UsuarioState = (props) => {
     
     // CARGAR PRODUCTOS-------------------------------------------------------
     useEffect(() => {
-          const fetchProductos = async() => {
-              const dataProductos =  await getDocs(collection(db, "productos"))
+        const fetchProductos = async() => {
+            const dataProductos =  await getDocs(collection(db, "productos"))
               const getDataProductos = dataProductos.docs.map((doc) => ({...doc.data(), id: doc.id}))      
               setProductos(getDataProductos)
               setLoading(false)
@@ -28,6 +29,15 @@ const UsuarioState = (props) => {
         fetchProductos();
       }, [])
 // ------------------------------------------------------------------------
+    // CARGAR COMPRAS-------------------------------------------------------
+    useEffect(() => {
+        const infoProductosCompras = JSON.parse(localStorage.getItem("infoProductosCompras"))
+        
+            setProductosCompra( infoProductosCompras )
+            
+        }, [setProductosCompra])
+// ------------------------------------------------------------------------
+
 
     return (
         <UsuarioContext.Provider value={{
@@ -38,7 +48,9 @@ const UsuarioState = (props) => {
             usuario, 
             setUsuario,
             usuarioLoggeado, 
-            setUsuarioLoggeado,
+            setUsuarioLoggeado, 
+            productosCompra, 
+            setProductosCompra,
         }}>
             {props.children}
         </UsuarioContext.Provider>  
