@@ -121,13 +121,14 @@ function ProductoInventario(props) {
                                     </InputGroup>
                                 </Col>
                                 <Col>
+                                    {(props.p.cantidad !== 0) && 
                                     <Button disabled={loading || (props.p.cantidad === 0)} onClick={() => swal({ 
                                         title: "Are you sure?" , 
                                         text: "You won’t be able to revert this!", 
                                         icon: "warning", 
                                         buttons: ["Cancelar", "Borrar"]
-
-                                    }).then((res) => {if(res){borrarInventario()}})} className="botonInputRojo">{loading ? <Spinner size="sm" /> : <FaTrash className="claseIconos" />}</Button> <span className="wbold azul pizchico">{props.p.propietario}</span></Col>
+                                    }).then((res) => {if(res){borrarInventario()}})} className="botonInputRojo">{loading ? <Spinner size="sm" /> : <FaTrash className="claseIconos" />}</Button>}
+                                    <span className="wbold azul pizchico">{props.p.propietario}</span></Col>
                             </Row>
                         </Col>
                     </Row>
