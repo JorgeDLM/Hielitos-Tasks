@@ -25,7 +25,7 @@ function Producto(props) {
                                 <Col>${props.p.precio_venta}</Col>
                                 {props.p.envio === true && <Col className="wbold verde">Envío gratis</Col>}
                                 <Col><span className="wbold azul">{props.p.propietario}</span></Col>
-                                {props.p.cantidad && <Col><span className="gris">{props.p.cantidad} {props.p.cantidad > 1 ? "pzas" : "pza"}</span></Col>}
+                                {props.p.cantidad !== 0 && <Col><span className="gris">{props.p.cantidad} {props.p.cantidad > 1 ? "pzas" : "pza"}</span></Col>}
                             </Row>
                         </Col>
                     </Row>

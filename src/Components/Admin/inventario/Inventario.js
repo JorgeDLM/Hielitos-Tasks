@@ -29,7 +29,7 @@ function Inventario() {
                 <div className="pargrande">
                 <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
                     {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
-                        <ProductoInventario key={i} p={p} />
+                        <ProductoInventario key={i} p={p}  cambio={query.length} />
                     )}
                     {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 

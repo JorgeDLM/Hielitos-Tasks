@@ -150,7 +150,7 @@ function Admin() {
                 ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
                 medidas: medidas ? medidas : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
-                cantidad: cantidad ? cantidad : "",
+                cantidad: cantidad ? cantidad : 0,
                 proveedor: proveedor ? proveedor : "",
                 propietario: propietario ? propietario : "",
             }
