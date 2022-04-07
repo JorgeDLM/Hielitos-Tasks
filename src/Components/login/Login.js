@@ -9,7 +9,7 @@ import { auth, db } from "../../firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 
-const Login = (props) => {
+const Login = () => {
   
   const [email, setEmail] = useState("")
   const [contrasena, setContrasena] = useState("")
@@ -46,6 +46,7 @@ const Login = (props) => {
           email: auth.currentUser.email,
           nombre: response?.nombre,
           apellidos: response?.apellidos,
+          rol: response?.rol,
           activo: response?.activo,
         }
 

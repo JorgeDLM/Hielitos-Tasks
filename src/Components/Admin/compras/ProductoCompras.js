@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Row, Col, Button, Input, InputGroup, Spinner } from "reactstrap";
 import UsuarioContext from "../context/UsuarioContext";
+import { FaTrash } from 'react-icons/fa'
 // import { doc, updateDoc } from "firebase/firestore";
 // import { db } from "../../../firebase-config";
 import swal from "sweetalert";
@@ -29,11 +30,19 @@ function ProductoCompras(props) {
     
 
     // AGREGAR INVENTARIO
-    const agregarProductosCompra = async() => {
+    const agregarProductosCompra = async(e) => {
         setLoading(true)
         try {
             const data = [{ producto: props.p.id, cantidad: cantidad, precio_compra: precio_compra }]
             const index = productosCompra.findIndex(p => p.producto === props.p.id)
+
+                if(e){
+                    productosCompra.splice(index,1)
+                    const dataProductos = [...productosCompra]
+                    await setProductosCompra(dataProductos)
+                    console.log("splice en 0")
+                    localStorage.setItem('infoProductosCompras', JSON.stringify(productosCompra));
+                }
             
                 if (index !== -1 && cantidad === "0"){
                     productosCompra.splice(index,1)
@@ -68,29 +77,7 @@ function ProductoCompras(props) {
             setLoading(false)
         }
     }    
-    // GENERAR COMPRA
-    // const generarCompra = async() => {
-    //     setLoading(true)
-    //     try {
-    //         data = {
-    //             usuario: `${usuario?.nombre} ${usuario?.apellidos}`,
-    //             productos: productosCompra,
-    //         }
-    //         await addDoc(collection(db, "compras"), data)
-    //         setProductos(setInfo)
-    //         localStorage.setItem('infoProductosCompras', JSON.stringify(setInfo));
-    //         setCantidad("")
-    //         setLoading(false)
-    //     } catch (error) {
-    //         swal({
-    //             title: "Error",
-    //             text: error.message,
-    //             icon: "error",
-    //             button: "cerrar"
-    //         });
-    //         setLoading(false)
-    //     }
-    // }    
+ 
 
     // LOS PRODUCTOS NO SE AGREGARAN A INVENTARIO SINO HASTA QUE LA COMPRA SEA MARCADA COMO ENTREGADA
 
@@ -150,6 +137,7 @@ function ProductoCompras(props) {
                                             onBlur={() => {if(cantidad !== ""){agregarProductosCompra()}}}
                                             onKeyPress={(e) => onEnter(e)}
                                         />
+                                        {productoCantidad > 0 && <Button onClick={(e) => agregarProductosCompra(e)} className="botonRojo"><FaTrash className="claseIconos t13" /></Button>}
                                         {loading && <Button className="botonAzul"><Spinner size="sm" /></Button>}
                                     </InputGroup>
                                 </Col>

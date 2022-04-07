@@ -10,6 +10,8 @@ const UsuarioState = (props) => {
     const [usuario, setUsuario] = useState()
     const [usuarioLoggeado, setUsuarioLoggeado] = useState(localStorage.getItem("infoUsuario") !== null ? true : false)
     const [productosCompra, setProductosCompra] = useState([])
+    const [productosVenta, setProductosVenta] = useState([])
+    const [compras, setCompras] = useState([])
 
     // USUARIO LOGGEADO
     useEffect(() => {
@@ -29,13 +31,32 @@ const UsuarioState = (props) => {
         fetchProductos();
       }, [])
 // ------------------------------------------------------------------------
-    // CARGAR COMPRAS-------------------------------------------------------
+    // CARGAR COMPRA STATE-------------------------------------------------------
     useEffect(() => {
         const infoProductosCompras = JSON.parse(localStorage.getItem("infoProductosCompras"))
-        
-            setProductosCompra( infoProductosCompras )
+            if (infoProductosCompras) {
+                setProductosCompra( infoProductosCompras )
+            }
             
         }, [setProductosCompra])
+// ------------------------------------------------------------------------
+    // CARGAR COMPRAS-------------------------------------------------------
+    useEffect(() => {
+        const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
+            if (infoCompras) {
+                setCompras( infoCompras )
+            }
+            
+        }, [setCompras])
+// ------------------------------------------------------------------------
+    // CARGAR VENTAS-------------------------------------------------------
+    useEffect(() => {
+        const infoProductosVentas = JSON.parse(localStorage.getItem("infoProductosVentas"))
+            if (infoProductosVentas) {
+                setProductosVenta( infoProductosVentas )
+            }
+            
+        }, [setProductosVenta])
 // ------------------------------------------------------------------------
 
 
@@ -51,6 +72,10 @@ const UsuarioState = (props) => {
             setUsuarioLoggeado, 
             productosCompra, 
             setProductosCompra,
+            productosVenta, 
+            setProductosVenta, 
+            compras, 
+            setCompras,
         }}>
             {props.children}
         </UsuarioContext.Provider>  

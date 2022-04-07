@@ -34,7 +34,7 @@ function ProductoID(props) {
                                     <div className="azul">${props.p.precio_venta}</div>
                                 {props.p.precio_venta_mayoreo >= 0 && <div className="t18">${props.p.precio_venta_mayoreo} <span className="t14">(Más de 5 piezas)</span></div>}
                                 <hr />
-                                <div className="verdeObscuro t15 wbold pabchico">{props.p.envio ? "Envío" : "Envío no incluido" }</div>
+                                <div className="verdeObscuro t15 wbold pabchico">{props.p.envio ? "Envío incluido" : "Envío no incluido" }</div>
                            </Card>
                         </Col>
                     </Row>

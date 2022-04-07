@@ -4,7 +4,6 @@ import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
-import { FaPlus } from 'react-icons/fa'
 import UsuarioContext from "../context/UsuarioContext";
 
 function Admin() {
@@ -14,6 +13,8 @@ function Admin() {
     const [modal, setModal] = useState(false)
     const [imagen, setImagen] = useState("")
     const [nombre, setNombre] = useState("")
+    const [titulo, setTitulo] = useState("")
+    const [tituloDefault, setTituloDefault] = useState("")
     const [categoria, setCategoria] = useState("seleccione")
     const [subCategoria, setSubCategoria] = useState("seleccione")
     const [categorias, setCategorias] = useState([])
@@ -25,11 +26,13 @@ function Admin() {
     const [precio_venta_mayoreo, setPrecioVentaMayoreo] = useState("")
     const [envio, setEnvio] = useState("")
     const [medidas, setMedidas] = useState("")
+    const [material, setMaterial] = useState("")
     const [descripcion, setDescripcion] = useState("")
     const [descripcionDefault, setDescripcionDefault] = useState("")
     const [cantidad, setCantidad] = useState("")
     const [proveedor, setProveedor] = useState("")
     const [propietario, setPropietario] = useState("seleccione")
+    const [codigo_producto, setCodigo] = useState("")
     const [subido, setSubido] = useState("")
     const [loading, setLoading] = useState("")
     const [cambio, setCambio] = useState(true)
@@ -38,17 +41,17 @@ function Admin() {
 
     const imagenInvalida = !imagen
     const nombreInvalido = !nombre
+    const tituloInvalido = !nombre
     const categoriaInvalida = categoria === "seleccione"
     const subCategoriaInvalida = subCategoria === "seleccione"
     const tematicaInvalida = !tematica
     const precio_compraInvalido = !precio_compra
     const precioInvalido = ((precio_venta - precio_compra) <= 0)
     const precio_ventaInvalido = !precio_venta || (precioInvalido)
-    const precio_ventaInvalidoML = !precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)
-    const precio_venta_mayoreoInvalido = !precio_venta_mayoreo || (precio_venta_mayoreo - precio_compra)
+    const precio_venta_mlInvalido = !precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)
+    const precio_venta_mayoreoInvalido = !precio_venta_mayoreo || ((precio_venta_mayoreo - precio_compra) <= 0)
     const precioEnvio = (precio_venta - precio_compra) < 70
     const envioInvalido = envio === "" || precioEnvio
-    const descripcionInvalida = !descripcion
     // const medidasInvalidas = !medidas
     // const cantidadInvalida = !cantidad
     // const proveedorInvalido = !proveedor
@@ -64,23 +67,26 @@ function Admin() {
     const clearInputs = () => {
         setImagen("")
         setNombre("")
-        setCategoria("seleccione")
+        setTitulo("")
         setTematica("")
+        setCategoria("seleccione")
         setPrecioCompra("")
         setPrecioVenta("")
         setPrecioVentaML("")
         setEnvio("")
         setMedidas("")
+        setMaterial("")
         setDescripcion("")
         setCantidad("")
         setProveedor("")
         setPropietario("seleccione")
         setDescripcionDefault("")
+        setCodigo("")
         setSubido("")
         setModal(false)
     }
 
-    const dataCompleta =  !imagenInvalida && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !descripcionInvalida && !precio_ventaInvalidoML
+    const dataCompleta =  !imagenInvalida && !tituloInvalido && !nombreInvalido && !categoriaInvalida && !tematicaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !precio_venta_mlInvalido
 
 // POST IMAGEN ---------------------------------------------------------------
     const postImagen = (img) => {
@@ -140,10 +146,12 @@ function Admin() {
             
 // SUBIR PRODUCTO firebase: ---------------------------------------------------
             const data = {
-                imagen: imagen ? imagen : "",
-                nombre: nombre ? nombre : "",
-                categoria: categoria ? categoria : "",
+                imagen: imagen,
+                nombre: nombre,
                 tematica: tematica ? tematica : "",
+                titulo: titulo,
+                codigo_universal: categorias?.filter(c => categoria === c.categoria)[0]?.codigo_universal,
+                categoria: categoria,
                 precio_compra: precio_compra ? precio_compra : "",
                 precio_venta: precio_venta ? precio_venta : "",
                 precio_venta_ml: precio_venta_ml ? precio_venta_ml : "",
@@ -151,11 +159,14 @@ function Admin() {
                 envio: envio === "false" ? false : envio === "true" ? true : false,
                 ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
                 medidas: medidas ? medidas : "",
+                material: material ? material : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
                 cantidad: cantidad ? cantidad : 0,
                 proveedor: proveedor ? proveedor : "",
                 propietario: propietario ? propietario : "",
                 subido: subido === "false" ? false : subido === "true" ? true : false,
+                codigo_producto: codigo_producto ? codigo_producto : "",
+                comentario: "",
             }
 
             const newProduct = async () => {
@@ -219,6 +230,28 @@ function Admin() {
         
         }, [categoria, categorias])
 
+    const crearTitulo = () => {
+        const tituloLength =  `${nombre}${tematica && " - " + tematica}`
+        const tematicaTrue = (tituloLength.length <= 60)
+        setTituloDefault(`${nombre}${tematicaTrue ? ` - ${tematica}` : ""}`)
+    }
+
+    const crearDescripcion = () => {
+        setDescripcionDefault(
+`*********************************************************************************************************
+¡PUBLICACIÓN POR ${nombre.toUpperCase()} DE ${tematica.toUpperCase()}!
+*********************************************************************************************************
+
+Material: ${material}
+Tipo: ${subCategoria}
+Tamaño: ${medidas}
+
+
+*********************************************************************************************************
+Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
+tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
+*********************************************************************************************************`)}
+
 
     return (
         <React.Fragment>
@@ -234,22 +267,34 @@ function Admin() {
                 <div className="pmediano">
 
                 {/* Imagen */}
-                    <div className="wbold">Imagen:</div>
+                    <div className="wbold">** Imagen:</div>
                     <FormGroup>
                         <Input type="file" nombre="img" accept="image/*" onChange={(e) => postImagen(e.target.files[0])} invalid={imagenInvalida} />
                         <FormFeedback>Ingrese una imagen</FormFeedback>
                     </FormGroup>
 
                 {/* Nombre */}
-                    <div className="wbold">Título:</div>
+                    <div className="wbold">** Nombre:</div>
                     <FormGroup>
-                        <Input placeholder="Titulo de la publicación" type="text" maxLength={60} onChange={(e) => setNombre(e.target.value)} invalid={nombreInvalido} />
+                        <Input onBlur={() => {crearTitulo(); crearDescripcion()}} placeholder="Nombre corto" type="text" maxLength={60} onChange={(e) => setNombre(e.target.value)} invalid={nombreInvalido} />
+                    </FormGroup>
+
+                {/* Temática */}
+                    <div className="wbold">Temática / película:</div>
+                    <FormGroup>
+                        <Input onBlur={() => {crearTitulo(); crearDescripcion()}} placeholder="Ej: Harry Potter" type="text" onChange={(e) => setTematica(e.target.value)} />
+                    </FormGroup>
+
+                {/* TITULO */}
+                    <div className="wbold">** Título:</div>
+                    <FormGroup>
+                        <Input placeholder="Título de la publicación" type="text" maxLength={60} defaultValue={tituloDefault} onChange={(e) => setTitulo(e.target.value)} invalid={tituloInvalido} />
                     </FormGroup>
 
                 {/* Categoria */}
-                    <div className="wbold">Categoria:</div>
+                    <div className="wbold">** Categoria:</div>
                     <FormGroup>
-                        <Input type="select" onChange={async(e) => {setCategoria(e.target.value); setLoading(true)}} invalid={categoriaInvalida} >
+                        <Input onBlur={() => {crearDescripcion()}} type="select" onChange={async(e) => {setCategoria(e.target.value); setLoading(true)}} invalid={categoriaInvalida} >
                             <option value="seleccione" disabled={categoria !== "seleccione"}>Seleccione:</option>
                             {categorias?.map((c, i) => <option key={i} id={c.id} value={c.categoria}>{c.categoria}</option>)}
                         </Input>
@@ -258,50 +303,44 @@ function Admin() {
                 {/* SubCategoria */}
                    {loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> :  
                    subCategorias.length >= 1 && <>
-                        <div className="wbold">Sub-categoria:</div>
+                        <div className="wbold">** Sub-categoria:</div>
                         <FormGroup>
-                            <Input type="select" onChange={(e) => setSubCategoria(e.target.value)} invalid={subCategoriaInvalida} >
+                            <Input onBlur={() => {crearDescripcion()}} type="select" onChange={(e) => setSubCategoria(e.target.value)} invalid={subCategoriaInvalida} >
                                 <option value="seleccione" disabled={subCategoria !== "seleccione"}>Seleccione:</option>
                                 {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
                             </Input>
                         </FormGroup>
                     </>}
 
-                {/* Temática */}
-                    <div className="wbold">Temática:</div>
-                    <FormGroup>
-                        <Input placeholder="Ej: Harry Potter" type="text" onChange={(e) => setTematica(e.target.value)} invalid={tematicaInvalida} />
-                    </FormGroup>
-
                 {/* Precio de venta */}
-                    <div className="wbold">Precio de venta Mercadolibre:</div>
+                    <div className="wbold">** Precio de venta Mercadolibre:</div>
                     <FormGroup>
-                        <Input placeholder="Precio de venta Mercadolibre" type="number" onChange={(e) => setPrecioVentaML(e.target.value)} invalid={precio_venta_ml} />
+                        <Input placeholder="Precio de venta Mercadolibre" type="number" min={0} onChange={(e) => setPrecioVentaML(e.target.value)} invalid={precio_venta_mlInvalido} />
                         {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
                     </FormGroup>
 
                 {/* Precio de venta */}
-                    <div className="wbold">Precio de retial:</div>
+                    <div className="wbold">** Precio de retial:</div>
                     <FormGroup>
-                        <Input placeholder="Precio de venta" type="number" onChange={(e) => setPrecioVenta(e.target.value)} invalid={precio_ventaInvalido} />
+                        <Input placeholder="Precio de venta" type="number" min={0} onChange={(e) => setPrecioVenta(e.target.value)} invalid={precio_ventaInvalido} />
                         {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
                     </FormGroup>
 
                 {/* Precio de venta */}
-                    <div className="wbold">Precio de mayoreo:</div>
+                    <div className="wbold">** Precio de mayoreo:</div>
                     <FormGroup>
-                        <Input placeholder="Precio de venta" type="number" onChange={(e) => setPrecioVentaMayoreo(e.target.value)} invalid={precio_venta_mayoreoInvalido} />
+                        <Input placeholder="Precio de venta" type="number" min={0} onChange={(e) => setPrecioVentaMayoreo(e.target.value)} invalid={precio_venta_mayoreoInvalido} />
                         {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
                     </FormGroup>
 
                 {/* Precio de compra */}
-                    <div className="wbold">Precio de compra:</div>
+                    <div className="wbold">** Precio de compra:</div>
                     <FormGroup>
-                        <Input placeholder="Precio de compra" type="number" onChange={(e) => setPrecioCompra(e.target.value)} invalid={precio_compraInvalido} />
+                        <Input placeholder="Precio de compra" type="number" min={0} onChange={(e) => setPrecioCompra(e.target.value)} invalid={precio_compraInvalido} />
                     </FormGroup>
 
                 {/* Envio */}
-                    <div className="wbold">Envío:</div>
+                    <div className="wbold">** Envío:</div>
                     <FormGroup>
                         <Input type="select" onChange={(e) => setEnvio(e.target.value)} invalid={envioInvalido} >
                             <option value="" disabled={envio !== ""}>Seleccione:</option>
@@ -314,31 +353,24 @@ function Admin() {
                 {/* Medidas */}
                     <div className="wbold">Medidas:</div>
                     <FormGroup>
-                        <Input placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} />
+                        <Input onBlur={() => {crearDescripcion()}}  placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} />
+                    </FormGroup>
+
+                {/* Material */}
+                    <div className="wbold">Material:</div>
+                    <FormGroup>
+                        <Input onBlur={() => {crearDescripcion()}}  placeholder="Ej: PVC" type="text" onChange={(e) => setMaterial(e.target.value)} invalid={!material} />
                     </FormGroup>
 
                 {/* Descripción */}
-                    <div className="wbold">Descripción:</div>
+                    <div className="wbold">** Descripción:</div>
                     <FormGroup>
-                        <div className="pabmuychico"><Button className="botonAmarillo" onClick={() => setDescripcionDefault(`*********************************************************************************************************
-¡PUBLICACIÓN POR ${nombre.toUpperCase()} DE ${tematica.toUpperCase()}!
-*********************************************************************************************************
-
-Material: 
-Tipo: ${subCategoria}
-Tamaño: ${medidas}
-
-
-*********************************************************************************************************
-Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
-tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
-*********************************************************************************************************`)}><FaPlus className="tIconos" /></Button></div>
                         <Input placeholder="Descripción" type="textarea" rows="12" defaultValue={descripcionDefault}
-                            onChange={(e) => setDescripcion(e.target.value)} invalid={descripcionInvalida} />
+                            onChange={(e) => setDescripcion(e.target.value)} />
                     </FormGroup>
 
                 {/* Propietario */}
-                    <div className="wbold">Propietario:</div>
+                    <div className="wbold">** Propietario:</div>
                     <FormGroup>
                         <Input type="select" onChange={(e) => setPropietario(e.target.value)} invalid={propietarioInvalida} >
                             <option value="seleccione" disabled={propietario !== "seleccione"}>Seleccione:</option>
@@ -351,13 +383,19 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                 {/* Cantidad */}
                     <div className="wbold">Cantidad en inventario:</div>
                     <FormGroup>
-                        <Input placeholder="Cantidad" type="number" onChange={(e) => setCantidad(e.target.value)} />
+                        <Input placeholder="Cantidad" type="number" onChange={(e) => setCantidad(e.target.value)} min={0} />
                     </FormGroup>
 
                 {/* Proveedor */}
                     <div className="wbold">Proveedor:</div>
                     <FormGroup>
                         <Input placeholder="Nombre del proveedor" type="text" onChange={(e) => setProveedor(e.target.value)} />
+                    </FormGroup>
+
+                {/* Código */}
+                    <div className="wbold">Código proveedor:</div>
+                    <FormGroup>
+                        <Input placeholder="Código del producto" type="text" onChange={(e) => setCodigo(e.target.value)} />
                     </FormGroup>
 
                 {/* Subido */}

@@ -19,12 +19,12 @@ function Admin() {
 			path: `inventario`,
 		},
 		{
-			nombre: "Ventas",
-			path: `ventas`,
-		},
-		{
 			nombre: "Compras",
 			path: `compras`,
+		},
+		{
+			nombre: "Ventas",
+			path: `ventas`,
 		},
 		{
 			nombre: "Faltan de subir",

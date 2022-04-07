@@ -12,6 +12,7 @@ function ModalCategorias() {
     const [categoria, setCategoria] = useState("")
     const [categorias, setCategorias] = useState([])
     const [subCategoria, setSubCategoria] = useState("")
+    const [codigo_universal, setCodigoUniversal] = useState("")
     const [loading, setLoading] = useState(true)
 
 
@@ -32,6 +33,7 @@ const agregarCategoria = async() => {
     try {
         const data = {
             categoria: categoria,
+            codigo_universal: codigo_universal,
         }
         await addDoc(collection(db, "categorias"), data)
         swal({
@@ -121,6 +123,11 @@ const agregarSubCategoria = async() => {
                 <div className="pizchico pdechico">
                     <FormGroup>
                         <Input type="text" placeholder="Categoria" onChange={(e) => setCategoria(e.target.value)} />
+                    </FormGroup>
+                </div>
+                <div className="pizchico pdechico">
+                    <FormGroup>
+                        <Input type="text" placeholder="Código universal" onChange={(e) => setCodigoUniversal(e.target.value)} />
                     </FormGroup>
                 </div>
                 <Button className="botonAmarillo w100" onClick={() => agregarCategoria()}>Crear</Button>
