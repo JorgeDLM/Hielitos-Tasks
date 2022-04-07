@@ -32,9 +32,10 @@ const UsuarioState = (props) => {
       }, [])
 // ------------------------------------------------------------------------
 // CARGAR COMPRAS-------------------------------------------------------
+// localStorage.removeItem("infoCompras")
 useEffect(() => {
     const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
-        if (infoCompras.length >= 1) {
+        if (infoCompras && (infoCompras.length >= 1)) {
             setCompras( infoCompras )
         } else {
         const fetchCompras = async() => {
@@ -49,7 +50,6 @@ useEffect(() => {
         
     }, [setCompras])
 // ------------------------------------------------------------------------
-console.log(compras)
     // CARGAR COMPRA STATE-------------------------------------------------------
     useEffect(() => {
         const infoProductosCompras = JSON.parse(localStorage.getItem("infoProductosCompras"))
