@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Button, Card, Col, Container, Input, Row, Modal } from "reactstrap";
+import { Button, Card, Col, Container, Input, Row, Modal, InputGroup } from "reactstrap";
 import ProductoCompras from "./ProductoCompras";
 import Regla3 from "./Regla3";
 import Fuse from 'fuse.js'
-import { FaExclamationTriangle, FaPlus, FaMinus, FaDollarSign } from 'react-icons/fa'
+import { FaExclamationTriangle, FaPlus, FaMinus, FaDollarSign, FaCopy } from 'react-icons/fa'
 import NumberFormat from "react-number-format";
 import TicketCompras from "./TicketCompra";
 
@@ -15,19 +15,21 @@ import swal from "sweetalert";
 
 function Compras() {
     
-    const {productos, usuario, productosCompra, setLoading, setCompras, setProductosCompra} = useContext(UsuarioContext)
+    const {productos, usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra} = useContext(UsuarioContext)
 
     console.log(productos)
 
     const [query, setQuery] = useState('')
-    const [nueva, setNueva] = useState(true)
+    const [nueva, setNueva] = useState(false)
     const [regla3, setRegla3] = useState(false)
 
     const [proveedor, setProveedor] = useState("")
     const [numero_de_orden, setNumeroOrden] = useState("")
-    const [plataforma, setPlataforma] = useState("")
+    const [plataforma, setPlataforma] = useState("Aliexpress")
+    const [propietario, setPropietario] = useState("Jorge")
+    const [falta_cobrar_ana, setFaltaCobrarAna] = useState("")
     
-    const [modal, setModal] = useState(true)
+    const [modal, setModal] = useState(false)
 
 
     const fuse = new Fuse(productos, {
@@ -42,20 +44,40 @@ function Compras() {
 
     const total = (productosCompra.length >= 1) && productosCompra?.map(m => +m.cantidad * +m.precio_compra)?.reduce((total, entrada) => (total += entrada))
 
+    const productosValidos = (productosCompra.length >= 1) 
+    const dataIncompleta = !productosValidos || (proveedor === "") || (numero_de_orden === "") || (plataforma === "") || (propietario === "")
+    console.log(dataIncompleta)
+
+    const clearInputs = () => {
+        setProveedor("")
+        setNumeroOrden("")
+        setPlataforma("Aliexpress")
+        setPropietario("Jorge")
+        setFaltaCobrarAna("")
+    }
 
     // GENERAR COMPRA
     const generarCompra = async() => {
+        if(dataIncompleta){
+            swal({
+                title: "Error",
+                text: "Faltan de llenar campos, intente nuevamente.",
+                icon: "error",
+                button: "cerrar"
+            });
+        }
         setLoading(true)
         try {
             const data = {
                 usuario: `${usuario?.nombre} ${usuario?.apellidos}`,
                 productos: productosCompra, 
-                estado: "Por recibi", 
+                estado: "Por recibir", 
                 proveedor: proveedor ? proveedor : "", 
                 numero_de_orden: numero_de_orden ? numero_de_orden : "", 
                 plataforma: plataforma ? plataforma : "Aliexpress", 
                 monto: total, 
-                propietario: usuario?.nombre, 
+                propietario: propietario,
+                falta_cobrar_ana: falta_cobrar_ana ? falta_cobrar_ana : false,
                 timestamp: new Date().getTime(),
             }
             await addDoc(collection(db, "compras"), data)
@@ -63,8 +85,15 @@ function Compras() {
             setCompras([...data, data])
             localStorage.setItem('infoCompras', JSON.stringify(data));
             localStorage.removeItem('infoProductosCompras')
-            // setCantidad("")
+            clearInputs("")
+            setModal(false)
             setLoading(false)
+            swal({
+                title: "Felicidades",
+                text: "Compra creada con exito",
+                icon: "success",
+                button: "cerrar"
+            });
         } catch (error) {
             swal({
                 title: "Error",
@@ -76,14 +105,8 @@ function Compras() {
         }
     }   
 
+    const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" ]
 
-    if(productos.length === 101) {
-        setProveedor("")
-        setNumeroOrden("")
-        setPlataforma("")
-        generarCompra()
-    }
-    
     return (
         <React.Fragment>
             <Container className="pabenorme">
@@ -98,7 +121,7 @@ function Compras() {
 
                         <div className="pargrande">
                             <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
-                            <div className="w100"><Button className="botonNegro w100" onClick={() => setModal(!modal)} >Generar compra</Button></div>
+                            {productosValidos && <div className="w100"><Button className="botonNegro w100" onClick={() => setModal(!modal)} >Generar compra</Button></div>}
                                 {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                     <ProductoCompras key={i} p={p}  cambio={query.length} />
                                 )}
@@ -121,24 +144,68 @@ function Compras() {
                 </Row>}
 
                 {/* COMPRAS */}
-                <div className="wbold pargrande pabenorme t20">Compras:</div>
-                <Card className="pmediano">
-                    <Row>
-                        <Col xs={6}>Fecha: timestamp</Col>
-                        <Col xs={6}>Propietario {usuario?.nombre} {usuario?.apellidos}</Col>
-                        <Col xs={6}>Proveedor</Col>
-                        <Col xs={6}>plataforma</Col>
-                        <Col xs={6}>articulos (prod ID, cantidad) </Col>
-                        <Col xs={6}>monto</Col>
-                        <Col xs={6}>#orden</Col>
-                        <Col xs={6}>estado (entregada, en camino, por pagar, cancelada)</Col>
-                    </Row>
-                </Card>
+               <div className="pabenorme">
+                    <div className="wbold pargrande t20">Compras:</div>
+                    {compras.map((c, i) => <div key={i} className="parchico">
+                        <Card className="pmediano claseCard">
+                            <Row className="pmediano">
+                                <Col xs={6}>
+                                    <span className="wbold">Número de orden: </span>{c.numero_de_orden} <Button onClick={() => {navigator.clipboard.writeText(c.numero_de_orden)}} className="botonAzulComentario"><FaCopy className="claseIconos" /></Button>
+                                </Col>
+                                <Col xs={6}><span className="wbold">Fecha:</span> {new Date(c.timestamp).getDay()} de {meses[((new Date(c.timestamp).getMonth()) - 1)]} de {new Date(c.timestamp).getFullYear()}</Col>
+                                <Col xs={6}><span className="wbold">Propietario:</span> {usuario?.nombre} {usuario?.apellidos}</Col>
+                                <Col xs={6}><span className="wbold">Proveedor:</span> {c.proveedor}</Col>
+                                <Col xs={6}><span className="wbold">Plataforma:</span> {c.plataforma}</Col>
+                                <Col xs={6}><span className="wbold">Productos:</span> (producto, cantidad, precio_compra) </Col>
+                                <Col xs={6}><span className="wbold">Estado:</span> <span className="wbold azul">{c.estado}</span></Col>
+                                <Col xs={6}><span className="wbold">Creada por:</span> {c.usuario}</Col>
+                                <hr />
+                                <Col xs={12} className="t20 centro"><span className="wbold">Monto:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={c.monto} /></Col>
+                                {c.falta_cobrar_ana && <Col xs={6}><span className="wbold">Aún la debe Ana.</span></Col>}
+                            </Row>
+                        </Card>
+                    </div>)}
+               </div>
             </Container>
 
                 {/* MODAL */}
                 <Modal isOpen={modal} toggle={() => setModal(!modal)}>
-                    usuario, productos, estado, proveedor, numero_de_orden, plataforma, monto, propietario, timestamp
+                    <Row className="pmediano">
+                        <Col xs={6}>
+                            <div className="wbold">Plataforma:</div>
+                            <Input type="text" className="letraChicaInput3 inputComentarios" defaultValue={"Aliexpress"} value={plataforma} placeholder="Plataforma"
+                                onChange={e => setPlataforma(e.target.value)} invalid={plataforma === ""} />
+                        </Col>
+                        <Col xs={6}>  
+                            <div className="wbold">Proveedor:</div>
+                            <Input type="text" className="letraChicaInput3 inputComentarios" value={proveedor} placeholder="Proveedor"
+                                onChange={e => setProveedor(e.target.value)} invalid={proveedor === ""} />
+                        </Col>
+                        <Col xs={6}>
+                        <div className="wbold parchico">Número de orden:</div>
+                            <Input type="number" className="letraChicaInput3 inputComentarios" value={numero_de_orden} placeholder="Número de orden"
+                                onChange={e => setNumeroOrden(e.target.value)} invalid={numero_de_orden === ""} /></Col>
+                        <Col xs={6}>
+                            <div className="wbold parchico">Propietario:</div>
+                            <InputGroup>
+                                <Input type="select" className="letraChicaInput3 inputComentarios" value={propietario} onChange={e => setPropietario(e.target.value)} invalid={propietario === ""} >
+                                    <option value="Jorge">Jorge</option>
+                                    <option value="Ana">Ana</option>
+                                </Input>
+                            </InputGroup>
+                        </Col>
+                        {propietario === "Ana" && <Col xs={{size:6, offset: 3}}>
+                            <div className="wbold parchico">Falta cobrarle a Ana:</div>
+                                <Input type="select" className="letraChicaInput3 inputComentarios" value={falta_cobrar_ana} onChange={e => setFaltaCobrarAna(e.target.value)} invalid={falta_cobrar_ana === ""} >
+                                    <option value="">Seleccione:</option>
+                                    <option value="si">Sí</option>
+                                    <option value="no">No</option>
+                                </Input>
+                        </Col>}
+                        <Col xs={12} className="parmediano pabchico centro">
+                            <Button onClick={() => generarCompra()} disabled={dataIncompleta} className="w100 botonNegro">Generar compra</Button>
+                        </Col>
+                    </Row>                                    
                 </Modal>
         </React.Fragment>
     );

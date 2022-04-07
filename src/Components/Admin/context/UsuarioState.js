@@ -31,6 +31,25 @@ const UsuarioState = (props) => {
         fetchProductos();
       }, [])
 // ------------------------------------------------------------------------
+// CARGAR COMPRAS-------------------------------------------------------
+useEffect(() => {
+    const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
+        if (infoCompras) {
+            setCompras( infoCompras )
+        } else {
+        const fetchCompras = async() => {
+            const dataCompras =  await getDocs(collection(db, "compras"))
+            const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+            setCompras( getDataCompras )
+            setLoading(false)
+            }
+            fetchCompras()
+        }
+
+        
+    }, [setCompras])
+// ------------------------------------------------------------------------
+console.log(compras)
     // CARGAR COMPRA STATE-------------------------------------------------------
     useEffect(() => {
         const infoProductosCompras = JSON.parse(localStorage.getItem("infoProductosCompras"))
@@ -39,15 +58,6 @@ const UsuarioState = (props) => {
             }
             
         }, [setProductosCompra])
-// ------------------------------------------------------------------------
-    // CARGAR COMPRAS-------------------------------------------------------
-    useEffect(() => {
-        const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
-            if (infoCompras) {
-                setCompras( infoCompras )
-            }
-            
-        }, [setCompras])
 // ------------------------------------------------------------------------
     // CARGAR VENTAS-------------------------------------------------------
     useEffect(() => {
