@@ -34,7 +34,7 @@ const UsuarioState = (props) => {
 // CARGAR COMPRAS-------------------------------------------------------
 useEffect(() => {
     const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
-        if (infoCompras) {
+        if (infoCompras.length >= 1) {
             setCompras( infoCompras )
         } else {
         const fetchCompras = async() => {

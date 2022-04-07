@@ -6,7 +6,7 @@ import NumberFormat from "react-number-format";
 import swal from "sweetalert";
 
 
-function TicketCompras(props) {
+function TicketCompraActual(props) {
     
     const {productosCompra, setProductosCompra, setLoading, loading, productos } = useContext(UsuarioContext)
 
@@ -53,4 +53,4 @@ function TicketCompras(props) {
     );
 }
 
-export default TicketCompras;
+export default TicketCompraActual;
