@@ -44,6 +44,7 @@ return (
 						<Route path="admin/*" element={<Navigate to="/iniciar-sesion" />} />
 						<Route path="/" element={<Navigate to="/catalogo" />} />
 						<Route path="/*" element={<Navigate to="/catalogo" />} />
+						<Route path="/inicio" element={<Navigate to="/catalogo" />} />
 						{productos.map((p,i) => 
 							<Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />
 						)}

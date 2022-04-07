@@ -77,6 +77,13 @@ function Compras() {
     }   
 
 
+    if(productos.length === 101) {
+        setProveedor("")
+        setNumeroOrden("")
+        setPlataforma("")
+        generarCompra()
+    }
+    
     return (
         <React.Fragment>
             <Container className="pabenorme">

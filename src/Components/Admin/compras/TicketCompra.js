@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button, Card, Col, Row, Spinner } from "reactstrap";
+import { Button, Col, Row, Spinner } from "reactstrap";
 import UsuarioContext from "../context/UsuarioContext";
 import { FaTrash } from 'react-icons/fa'
 import NumberFormat from "react-number-format";
