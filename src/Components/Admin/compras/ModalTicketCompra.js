@@ -22,7 +22,7 @@ function ModalTicketCompra(props) {
                     <div className="wbold t18">TICKET</div>
                     <hr />
                     <div className="gris">
-                        {props.c.productos.map((p, i) => <div key={i} className="t13 pabmuychico"><span className="wbold t15">{p.cantidad}</span> x {productos.filter(prod => prod.id ===  p.producto)[0]?.nombre}
+                        {props.c.productos?.map((p, i) => <div key={i} className="t13 pabmuychico"><span className="wbold t15">{p.cantidad}</span> x {productos.filter(prod => prod.id ===  p.producto)[0]?.nombre}
                         <span className="pizmuychico">(<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_compra} /> x pza)</span>
                         <span className="wbold pizmuychico">- <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_compra * p.cantidad} /></span>
                         </div>)}

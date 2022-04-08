@@ -20,7 +20,6 @@ function TicketCompraActual(props) {
                     productosCompra.splice(props.i,1)
                     const dataProductos = [...productosCompra]
                     await setProductosCompra(dataProductos)
-                    console.log("splice en 0")
                     localStorage.setItem('infoProductosCompras', JSON.stringify(productosCompra));
                 }
             setLoading(false)

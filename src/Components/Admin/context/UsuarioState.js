@@ -34,10 +34,10 @@ const UsuarioState = (props) => {
 // CARGAR COMPRAS-------------------------------------------------------
 // localStorage.removeItem("infoCompras")
 useEffect(() => {
-    const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
-        if (infoCompras && (infoCompras.length >= 1)) {
-            setCompras( infoCompras )
-        } else {
+    // const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
+    //     if (infoCompras && (infoCompras.length >= 1)) {
+    //         setCompras( infoCompras )
+    //     } else {
         const fetchCompras = async() => {
             const dataCompras =  await getDocs(collection(db, "compras"))
             const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
@@ -45,7 +45,8 @@ useEffect(() => {
             setLoading(false)
             }
             fetchCompras()
-        }
+        // }
+        // console.log(compras)
 
         
     }, [setCompras])

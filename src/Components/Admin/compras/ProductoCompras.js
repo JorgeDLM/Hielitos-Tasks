@@ -40,7 +40,6 @@ function ProductoCompras(props) {
                     productosCompra.splice(index,1)
                     const dataProductos = [...productosCompra]
                     await setProductosCompra(dataProductos)
-                    console.log("splice en 0")
                     localStorage.setItem('infoProductosCompras', JSON.stringify(productosCompra));
                 }
             
@@ -48,14 +47,12 @@ function ProductoCompras(props) {
                     productosCompra.splice(index,1)
                     const dataProductos = [...productosCompra]
                     await setProductosCompra(dataProductos)
-                    console.log("splice en 0")
                     localStorage.setItem('infoProductosCompras', JSON.stringify(productosCompra));
                 }
                 if (index !== -1 && cantidad > "0"){
                     productosCompra.splice(index,1)
                     const dataProductos = [...productosCompra, ...data]
                     await setProductosCompra(dataProductos)
-                    console.log("splice")
                     localStorage.setItem('infoProductosCompras', JSON.stringify(productosCompra));
                 }
                 if (index === -1 && cantidad > "0"){
