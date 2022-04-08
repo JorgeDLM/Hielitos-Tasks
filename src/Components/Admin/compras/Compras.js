@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { Button, Card, Col, Container, Input, Row, Modal, InputGroup, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
+import { Button, Card, Col, Container, Input, Row, Modal, InputGroup } from "reactstrap";
 import ProductoCompras from "./ProductoCompras";
 import Regla3 from "./Regla3";
 import Fuse from 'fuse.js'
-import { FaExclamationTriangle, FaPlus, FaMinus, FaDollarSign, FaCopy, FaEllipsisV } from 'react-icons/fa'
+import { FaExclamationTriangle, FaPlus, FaMinus, FaDollarSign } from 'react-icons/fa'
 import NumberFormat from "react-number-format";
 import TicketCompraActual from "./TicketCompraActual";
 
@@ -12,16 +12,14 @@ import { db } from '../../../firebase-config';
 
 import UsuarioContext from "../context/UsuarioContext";
 import swal from "sweetalert";
-import ModalTicketCompra from "./ModalTicketCompra";
-import Comentario from "./ComentarioCompra";
-import EstadoCompra from "./EstadoCompra";
+import CardCompra from "./CardCompra";
 
 function Compras() {
     
     const {productos, usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra} = useContext(UsuarioContext)
 
     const [query, setQuery] = useState('')
-    const [nueva, setNueva] = useState(false)
+    const [nueva, setNueva] = useState(compras?.filter(c => c.activa)?.length >= 1 ? false : true)
     const [regla3, setRegla3] = useState(false)
 
     const [proveedor, setProveedor] = useState("")
@@ -29,7 +27,6 @@ function Compras() {
     const [plataforma, setPlataforma] = useState("Aliexpress")
     const [propietario, setPropietario] = useState("Jorge")
     const [falta_cobrar_ana, setFaltaCobrarAna] = useState("")
-    const [dropdown, setDropdown] = useState(false)
 
     
     const [modal, setModal] = useState(false)
@@ -81,6 +78,7 @@ function Compras() {
                 propietario: propietario,
                 falta_cobrar_ana: falta_cobrar_ana ? falta_cobrar_ana : false,
                 comentario: "",
+                activa: true,
                 timestamp: new Date().getTime(),
             }
             await addDoc(collection(db, "compras"), data)
@@ -109,7 +107,6 @@ function Compras() {
     }   
    
 
-    const meses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre" ]
 
     return (
         <React.Fragment>
@@ -155,52 +152,14 @@ function Compras() {
                 </>}
 
                 {/* COMPRAS */}
-               <div className="pabenorme">
+               {compras?.filter(c => c.activa)?.length >= 1 && <div className="pabenorme">
                     <div className="wbold pargrande t20">Compras:</div>
                     <div className="overflowCompras">
-                        {compras.length >= 1 && compras?.sort((a,b) => a.timestamp > b.timestamp)?.map((c, i) => <div key={i} className="parchico">
-                            <Card className="pmediano claseCard">
-                                <Row className="pmediano">
-                                    <Col xs={6}><span className="wbold">Fecha:</span> {new Date(c.timestamp).getDay()} de {meses[((new Date(c.timestamp).getMonth()) - 1)]} de {new Date(c.timestamp).getFullYear()}</Col>
-                                    <Col xs={5}>
-                                        <span className="wbold">Número de orden: </span>{c.numero_de_orden} <Button onClick={() => {navigator.clipboard.writeText(c.numero_de_orden)}} className="botonAzulComentario"><FaCopy className="claseIconos" /></Button>
-                                    </Col>
-                                    <Col xs={1}><div>
-                                        <Dropdown isOpen={dropdown} toggle={() => setDropdown(!dropdown)}>
-                                            <DropdownToggle data-toggle="dropdown" tag="span">
-                                                <FaEllipsisV style={{cursor:"pointer"}} onClick={() => {}} />
-                                            </DropdownToggle>
-                                            <DropdownMenu>
-                                                <DropdownItem onClick={() => {}}>
-                                                    Eliminar publicación
-                                                </DropdownItem>
-                                                <DropdownItem onClick={() => {}}>
-                                                    Action 2
-                                                </DropdownItem>
-                                                <DropdownItem onClick={() => {}}>
-                                                    Action 3
-                                                </DropdownItem>
-                                            </DropdownMenu>
-                                        </Dropdown>
-                                        </div>
-                                    </Col>
-                                    <Col xs={6} className="parmuychico"><span className="wbold">Plataforma:</span> {c.plataforma}</Col>
-                                    <Col xs={6}><span className="wbold">Proveedor:</span> {c.proveedor}</Col>
-                                    <Col xs={6} className="parmuychico"><span className="wbold">Productos:</span> <ModalTicketCompra c={c} /> </Col>
-                                    <Col xs={6}><span className="wbold">Propietario:</span> {c.propietario}</Col>
-                                    <Col xs={6} className={`parmuychico`}><EstadoCompra i={i} c={c} /></Col>
-                                    <Col xs={6} className={`parmuychico`}><span className="wbold">Creada por:</span> {c.usuario}</Col>
-                                    <Col xs={12} className={`${!c.falta_cobrar_ana && "pabchico"} parmuychico`}>
-                                        <Comentario c={c} i={i} />
-                                    </Col>
-                                    {c.falta_cobrar_ana && <Col xs={12} className="centro pabchico parchico"><span className="wbold rojo">Aún la debe Ana.</span></Col>}
-                                    <hr />
-                                    <Col xs={12} className="t20 centro"><span className="wbold">Monto:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={c.monto} /></Col>
-                                </Row>
-                            </Card>
+                        {compras.length >= 1 && compras?.filter(c => c.activa)?.sort((a,b) => a.timestamp > b.timestamp)?.map((c, i) => <div key={i} className="parchico">
+                            <CardCompra key={i} c={c} i={i} />
                         </div>)}
                     </div>
-               </div>
+               </div>}
                 {/* MODAL COMPRA */}
                 <Modal isOpen={modal} toggle={() => setModal(!modal)}>
                     <Row className="pmediano">
