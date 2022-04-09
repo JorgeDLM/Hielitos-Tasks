@@ -3506,6 +3506,11 @@ body
   overflow-y: auto
   overflow-x: hidden
 
+.overflowModal
+  height: calc(85vh - 294px)
+  overflow-y: auto
+  overflow-x: hidden
+
 .overflowTicket
   height: calc(102vh - 355px)
   overflow-y: auto
@@ -3646,3 +3651,9 @@ body
   width: 300px
   @media (min-width: 500px)
     width: 350px
+
+input::-webkit-outer-spin-button
+input::-webkit-inner-spin-button
+    -webkit-appearance: none !important
+    -moz-appearance: none !important
+    appearance: none !important 
