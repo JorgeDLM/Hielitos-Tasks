@@ -60,7 +60,7 @@ function Menu(props) {
                 {/* MAPEADO DE LINKS: */}
                 {props.links.map((link, i) => (
                   <NavItem key={i} className="pabItemsMenu">
-                    <NavLink className="navHighlightBlancoMenu" to={`${link.path}`}  onClick={() => toggleNavbar()}>
+                    <NavLink className={(window.location.pathname === `${link.path}`) ? "navHighlightAzulMenu" : "navHighlightBlancoMenu"} to={`${link.path}`}  onClick={() => toggleNavbar()}>
                       {link.nombre}
                     </NavLink>
                   </NavItem>
