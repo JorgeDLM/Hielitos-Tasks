@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Container, Card, Row, Col, Button, Input, FormGroup, FormFeedback, Spinner } from 'reactstrap'
 import { FaChevronLeft } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
@@ -7,12 +7,13 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase-config";
 // import swal from "sweetalert";
 import MenuAdmin from "../MenuAdmin";
+import swal from "sweetalert";
 
 
 function ProductoEditarID(props) {
     
     const {loading, setLoading} = useContext(UsuarioContext)
-    // const [imagen, setImagen] = useState("")
+    const [imagen, setImagen] = useState(props.p.imagen)
     const [nombre, setNombre] = useState(props.p.nombre)
     const [titulo, setTitulo] = useState(props.p.titulo)
     const [categoria, setCategoria] = useState(props.p.categoria)
@@ -145,7 +146,54 @@ function ProductoEditarID(props) {
         <hr />
         <div className="verdeObscuro t15 wbold pabchico">{props.p.envio ? "Envío incluido" : "Envío no incluido" }</div>
                         </Card>)
- 
+    
+
+// POST IMAGEN ---------------------------------------------------------------
+    const postImagen = (img) => {
+        setLoading(true)
+
+        if(img === undefined){
+            swal({
+                title: "Te falto la imagen",
+                text: "Checa de nuevo",
+                icon: "warning",
+                button: "Cerrar"
+            })
+        }
+
+        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg"){
+            const data = new FormData();
+            data.append("file", img);
+            data.append("upload_preset", "mercadoalamano");
+            data.append("cloud_name",  "mercadoalamano");
+            fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
+            {method: 'post', body: data}).then((res) => res.json())
+            .then(data => {
+                setImagen(data.url.toString());
+                setLoading(false)
+            })
+            .catch((err) => {
+                console.log(err);
+                setLoading(false)
+            })
+        } else {
+            swal({
+                title: "Error al subir la imagen",
+                text: "Intenta de nuevo",
+                icon: "error",
+                button: "Cerrar"
+            });
+            setLoading(false)
+        }
+    }
+
+    
+    
+    const inputFile = useRef(null) 
+    const onButtonClick = () => {
+        inputFile.current.click()
+    }
+
     return (
         <React.Fragment>
             <MenuAdmin />
@@ -157,7 +205,24 @@ function ProductoEditarID(props) {
                 <div className="pabmuygrande">
                     <Card className="pizgrande pdegrande claseCard">
                         <Row>
-                            <Col className="pmediano"><img src={props.p.imagen} className="tImagenEditar" alt="error imagen" /></Col>
+                            <Col onClick={onButtonClick} className="pmediano">
+                                <>
+                                    {loading ? <div className="parenorme pizenorme"><Spinner className="azul" /></div> : 
+                                    <img src={imagen} className="tImagenEditar" alt="error imagen" />}
+                                    <FormGroup>
+                                        <input 
+                                            type="file" 
+                                            nombre="img" 
+                                            ref={inputFile}
+                                            accept="image/*" 
+                                            onChange={(e) => postImagen(e.target.files[0])} 
+                                            invalid={!imagen} 
+                                            style={{display: "none"}}
+                                            />
+                                        <FormFeedback>Ingrese una imagen</FormFeedback>
+                                    </FormGroup>
+                                </>
+                            </Col>
                         {/* PANTALLA MEDIANA */}
                             <Col md={4} className="parenorme izquierda t26 d-none d-md-block">
                                 {cardPrecio}
@@ -284,7 +349,7 @@ function ProductoEditarID(props) {
 
                         {/* Codigo universal */}
                             <Col>
-                                <div className="wbold">Código<span className="d-none d-md-inline"> universal</span><span className="d-inline d-md-none"> UPC</span>:</div>
+                                <div className="wbold"><span className="d-none d-md-inline">Código universal</span><span className="d-inline d-md-none">UPC</span>:</div>
                                 <FormGroup>
                                     <Input 
                                         value={codigo_universal}
