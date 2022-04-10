@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Card, Row, Col, ButtonGroupProps } from "reactstrap";
+import { Card, Row, Col, Button } from "reactstrap";
 import { FaCopy } from 'react-icons/fa'
-import UsuarioContext from "../context/UsuarioContext";
+// import UsuarioContext from "../context/UsuarioContext";
 // import { doc, updateDoc } from "firebase/firestore";
 // import { db } from "../../../firebase-config";
 // import swal from "sweetalert";
