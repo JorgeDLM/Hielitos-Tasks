@@ -13,6 +13,8 @@ import Inventario from './Components/Admin/inventario/Inventario'
 import Ventas from './Components/Admin/ventas/Ventas'
 import PorSubir from './Components/Admin/porSubir/PorSubir'
 import Compras from './Components/Admin/compras/Compras'
+import EditarProductos from "./Components/Admin/editarProductos/EditarProductos";
+import ProductoEditarID from "./Components/Admin/editarProductos/ProductoEditarID";
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
 
@@ -32,9 +34,15 @@ return (
 							<Route path="ventas" element={<Ventas/>} />
 							<Route path="por-subir" element={<PorSubir/>} />
 							<Route path="compras" element={<Compras/>} />
+							<Route path="editar-productos" element={<EditarProductos/>} />
 						</Route>
-						<Route path="/*" element={<Navigate to="/admin/inicio" />} />
+						{productos.map((p,i) => 
+							<Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />
+						)}
+						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />
+						<Route path="/iniciar-sesion" element={<Navigate to="/admin/inicio" />} />
+						<Route path="/catalogo" element={<Navigate to="/admin/inicio" />} />
 					</>}
 					{!usuarioLoggeado && <>
 						<Route path="/*" element={<Inicio/>}>

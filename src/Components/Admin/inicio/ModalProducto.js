@@ -19,8 +19,8 @@ function ModalProducto() {
     const [nombre, setNombre] = useState("")
     const [titulo, setTitulo] = useState("")
     const [tituloDefault, setTituloDefault] = useState("")
-    const [categoria, setCategoria] = useState("seleccione")
-    const [subCategoria, setSubCategoria] = useState("seleccione")
+    const [categoria, setCategoria] = useState("")
+    const [subCategoria, setSubCategoria] = useState("")
     const [categorias, setCategorias] = useState([])
     const [subCategorias, setSubCategorias] = useState([])
     const [tematica, setTematica] = useState("")
@@ -35,7 +35,7 @@ function ModalProducto() {
     const [descripcionDefault, setDescripcionDefault] = useState("")
     const [cantidad, setCantidad] = useState("")
     const [proveedor, setProveedor] = useState("")
-    const [propietario, setPropietario] = useState("seleccione")
+    const [propietario, setPropietario] = useState("")
     const [codigo_producto, setCodigo] = useState("")
     const [subido, setSubido] = useState("")
     const [loading, setLoading] = useState("")
@@ -52,8 +52,8 @@ function ModalProducto() {
     const imagenInvalida = !imagen
     const nombreInvalido = !nombre
     const tituloInvalido = !nombre
-    const categoriaInvalida = categoria === "seleccione"
-    const subCategoriaInvalida = subCategoria === "seleccione"
+    const categoriaInvalida = categoria === ""
+    const subCategoriaInvalida = subCategoria === ""
     const precio_compraInvalido = !precio_compra
     const precioInvalido = !isCompuesto ? ((precio_venta - precio_compra) <= 0) : false
     const precio_ventaInvalido = !isCompuesto ? (!precio_venta || (precioInvalido)) : !precio_venta
@@ -61,7 +61,7 @@ function ModalProducto() {
     const precio_venta_mayoreoInvalido = !isCompuesto ? (!precio_venta_mayoreo || ((precio_venta_mayoreo - precio_compra) <= 0)) : false
     const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 70) : false
     const envioInvalido = envio === "" || precioEnvio
-    const propietarioInvalida = propietario === "seleccione"
+    const propietarioInvalida = propietario === ""
     const productoCompuestoInvalido = isCompuesto ? compuesto?.length === 0 : false
 
     if (precio_venta >= 299 && cambio){
@@ -76,7 +76,8 @@ function ModalProducto() {
         setNombre("")
         setTitulo("")
         setTematica("")
-        setCategoria("seleccione")
+        setCategoria("")
+        setSubCategoria("")
         setPrecioCompra("")
         setPrecioVenta("")
         setPrecioVentaML("")
@@ -86,7 +87,7 @@ function ModalProducto() {
         setDescripcion("")
         setCantidad("")
         setProveedor("")
-        setPropietario("seleccione")
+        setPropietario("")
         setDescripcionDefault("")
         setCodigo("")
         setSubido("")
@@ -159,12 +160,13 @@ function ModalProducto() {
                 titulo: titulo,
                 codigo_universal: categorias?.filter(c => categoria === c.categoria)[0]?.codigo_universal,
                 categoria: categoria,
+                sub_categoria: subCategoria ? subCategoria : "",
                 precio_compra: !isCompuesto ? precio_compra : "",
                 precio_venta: precio_venta ? precio_venta : "",
                 precio_venta_ml: precio_venta_ml ? precio_venta_ml : "",
                 precio_venta_mayoreo: precio_venta_mayoreo ? precio_venta_mayoreo : "",
                 envio: envio === "false" ? false : envio === "true" ? true : false,
-                ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
+                // ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
                 medidas: medidas ? medidas : "",
                 material: material ? material : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
@@ -231,7 +233,7 @@ function ModalProducto() {
             setLoading(false)
             setSubCategorias(data)
         }
-        if(categoria !== "seleccione"){
+        if(categoria !== ""){
             set()
         }
         setLoading(false)
@@ -247,11 +249,11 @@ function ModalProducto() {
     const crearDescripcion = () => {
         setDescripcionDefault(
 `*********************************************************************************************************
-¡PUBLICACIÓN POR ${nombre.toUpperCase()} DE ${tematica.toUpperCase()}!
+¡PUBLICACIÓN POR ${nombre.toUpperCase()} ${tematica && "DE "}${tematica.toUpperCase()}!
 *********************************************************************************************************
 
 Material: ${material}
-Tipo: ${subCategoria}
+Tipo: ${!subCategoria ? categoria : subCategoria}
 Tamaño: ${medidas}
 
 
@@ -322,7 +324,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                         <div className="wbold">** Categoria:</div>
                         <FormGroup>
                             <Input onBlur={() => {crearDescripcion()}} type="select" onChange={async(e) => {setCategoria(e.target.value); setLoading(true)}} invalid={categoriaInvalida} >
-                                <option value="seleccione" disabled={categoria !== "seleccione"}>Seleccione:</option>
+                                <option value="" disabled={categoria !== ""}>Seleccione:</option>
                                 {categorias?.map((c, i) => <option key={i} id={c.id} value={c.categoria}>{c.categoria}</option>)}
                             </Input>
                         </FormGroup>
@@ -335,7 +337,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                             <div className="wbold">** Sub-categoria:</div>
                             <FormGroup>
                                 <Input onBlur={() => {crearDescripcion()}} type="select" onChange={(e) => setSubCategoria(e.target.value)} invalid={subCategoriaInvalida} >
-                                    <option value="seleccione" disabled={subCategoria !== "seleccione"}>Seleccione:</option>
+                                    <option value="" disabled={subCategoria !== ""}>Seleccione:</option>
                                     {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
                                 </Input>
                             </FormGroup>
@@ -437,7 +439,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     <>
                         <div className="wbold">Medidas:</div>
                         <FormGroup>
-                            <Input onBlur={() => {crearDescripcion()}}  placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} />
+                            <Input onBlur={() => {crearDescripcion()}}  placeholder="Ej: 14cm x 20cm" type="text" onChange={(e) => setMedidas(e.target.value)} invalid={!medidas} />
                         </FormGroup>
                     </>
 
@@ -463,7 +465,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                         <div className="wbold">** Propietario:</div>
                         <FormGroup>
                             <Input type="select" onChange={(e) => setPropietario(e.target.value)} invalid={propietarioInvalida} >
-                                <option value="seleccione" disabled={propietario !== "seleccione"}>Seleccione:</option>
+                                <option value="" disabled={propietario !== ""}>Seleccione:</option>
                                 <option value="Jorge">Jorge</option>
                                 <option value="Ana">Ana</option>
                             </Input>

@@ -1,45 +1,14 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Menu from "../menu/Menu";
-// import UsuarioContext from "./context/UsuarioContext";
+import MenuAdmin from "./MenuAdmin";
 
 
 function Admin() {
-	
-	// const { loading } = useContext(UsuarioContext)
 
-
-	const links = [
-		{
-			nombre: "Inicio",
-			path: `inicio`,
-		},
-		{
-			nombre: "Inventario",
-			path: `inventario`,
-		},
-		{
-			nombre: "Compras",
-			path: `compras`,
-		},
-		{
-			nombre: "Ventas",
-			path: `ventas`,
-		},
-		{
-			nombre: "Faltan de subir",
-			path: `por-subir`,
-		},
-		{
-			nombre: "Editar productos",
-			path: `editar-productos`,
-		},
-
-	];
 
     return (
         <>
-			<Menu links={links} logoNegro  />
+			<MenuAdmin  />
 			<>
 				<Outlet/>
 			</>

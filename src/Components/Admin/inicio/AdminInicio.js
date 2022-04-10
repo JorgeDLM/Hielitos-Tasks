@@ -28,7 +28,7 @@ function Admin() {
     return (
         <React.Fragment>
             <Container className="pabenorme">
-                <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                <div className="pabmediano pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
                         <div className="pargrande">
