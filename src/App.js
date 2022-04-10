@@ -42,7 +42,9 @@ return (
 						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />
 						<Route path="/iniciar-sesion" element={<Navigate to="/admin/inicio" />} />
+						<Route path="/inicio" element={<Navigate to="/admin/inicio" />} />
 						<Route path="/catalogo" element={<Navigate to="/admin/inicio" />} />
+						<Route path="/catalogo/*" element={<Navigate to="/admin/inicio" />} />
 					</>}
 					{!usuarioLoggeado && <>
 						<Route path="/*" element={<Inicio/>}>
