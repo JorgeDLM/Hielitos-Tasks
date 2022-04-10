@@ -1,18 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Card, Row, Col, Button, Input, FormGroup, FormFeedback, Spinner } from 'reactstrap'
-import { FaUndo, FaChevronLeft } from 'react-icons/fa'
+import { FaChevronLeft } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 import UsuarioContext from "../context/UsuarioContext";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase-config";
-import swal from "sweetalert";
+// import swal from "sweetalert";
 import MenuAdmin from "../MenuAdmin";
 
 
 function ProductoEditarID(props) {
     
-    const {productos, setProductos, loading, setLoading} = useContext(UsuarioContext)
-    const [imagen, setImagen] = useState("")
+    const {loading, setLoading} = useContext(UsuarioContext)
+    // const [imagen, setImagen] = useState("")
     const [nombre, setNombre] = useState(props.p.nombre)
     const [titulo, setTitulo] = useState(props.p.titulo)
     const [categoria, setCategoria] = useState(props.p.categoria)
@@ -20,26 +20,25 @@ function ProductoEditarID(props) {
     const [categorias, setCategorias] = useState([])
     const [subCategorias, setSubCategorias] = useState([])
     const [tematica, setTematica] = useState(props.p.tematica ? props.p.tematica : "")
-    const [precio_compra, setPrecioCompra] = useState(props.p.precio_compra ? props.p.precio_compra : "")
+    const [precio_compra] = useState(props.p.precio_compra ? props.p.precio_compra : "")
     const [precio_venta, setPrecioVenta] = useState(props.p.precio_venta ? props.p.precio_venta : "")
     const [precio_venta_ml, setPrecioVentaML] = useState(props.p.precio_venta_ml ? props.p.precio_venta_ml : "")
     const [precio_venta_mayoreo, setPrecioVentaMayoreo] = useState(props.p.precio_venta_mayoreo ? props.p.precio_venta_mayoreo : "")
-    const [envio, setEnvio] = useState(props.p.envio ? true : false)
+    // const [envio, setEnvio] = useState(props.p.envio ? true : false)
     const [medidas, setMedidas] = useState(props.p.medidas ? props.p.medidas : "")
     const [material, setMaterial] = useState(props.p.material ? props.p.material : "")
     const [descripcion, setDescripcion] = useState(props.p.descripcion ? props.p.descripcion : "")
-    const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
-    const [proveedor, setProveedor] = useState(props.p.proveedor ? props.p.proveedor : "")
-    const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
-    const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
+    // const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
+    // const [proveedor, setProveedor] = useState(props.p.proveedor ? props.p.proveedor : "")
+    // const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
+    // const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
     const [codigo_universal, setCodigoUniversal] = useState(props.p.codigo_universal ? props.p.codigo_universal : "")
-    const [subido, setSubido] = useState(props.p.subido ? props.p.subido : "")
-    const [cambio, setCambio] = useState(true)
+    // const [subido, setSubido] = useState(props.p.subido ? props.p.subido : "")
+    // const [cambio, setCambio] = useState(true)
 
-    const [isCompuesto, setIsCompuesto] = useState(false)
+    const [isCompuesto] = useState(false)
 
     
-    const precio_compraInvalido = !precio_compra
     const precioInvalido = !isCompuesto ? ((precio_venta - precio_compra) <= 0) : false
     const precio_ventaInvalido = !isCompuesto ? (!precio_venta || (precioInvalido)) : !precio_venta
     const precio_venta_mlInvalido = !isCompuesto ? (!precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)) : false
@@ -59,14 +58,13 @@ function ProductoEditarID(props) {
             }
             fetchCategorias();
             setLoading(false)
-        }, [])
+        }, [setLoading])
     
         
         
         // FETCH SUBCATEGORIAS
         useEffect(() => {
             const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
-            console.log(categoriaID)
             if(categoriaID){
                 const set = async () => {
                     const dataSubCategoria =  await getDocs(collection(db, "categorias", categoriaID, "sub_categorias"))
@@ -80,25 +78,25 @@ function ProductoEditarID(props) {
             }
             setLoading(false)
             
-            }, [categoria, categorias])
+            }, [categoria, categorias, setLoading])
     
 
     // Editar producto
-    const actualizarProducto = async() => {
-        setLoading(true)
-        const data = {...props.p}
-        try {
-            await updateDoc(doc(db, "productos", props.p.id), {data})
-        } catch (error) {
-            swal({
-                title: "Error",
-                text: error.message,
-                icon: "error",
-                button: "cerrar"
-            });
-            setLoading(false)
-        }
-    }    
+    // const actualizarProducto = async() => {
+    //     setLoading(true)
+    //     const data = {...props.p}
+    //     try {
+    //         await updateDoc(doc(db, "productos", props.p.id), {data})
+    //     } catch (error) {
+    //         swal({
+    //             title: "Error",
+    //             text: error.message,
+    //             icon: "error",
+    //             button: "cerrar"
+    //         });
+    //         setLoading(false)
+    //     }
+    // }    
  
     return (
         <React.Fragment>

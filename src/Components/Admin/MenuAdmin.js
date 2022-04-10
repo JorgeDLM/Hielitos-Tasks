@@ -7,27 +7,27 @@ function MenuAdmin() {
 	const links = [
 		{
 			nombre: "Inicio",
-			path: `inicio`,
+			path: `/admin/inicio`,
 		},
 		{
 			nombre: "Inventario",
-			path: `inventario`,
+			path: `/admin/inventario`,
 		},
 		{
 			nombre: "Compras",
-			path: `compras`,
+			path: `/admin/compras`,
 		},
 		{
 			nombre: "Ventas",
-			path: `ventas`,
+			path: `/admin/ventas`,
 		},
 		{
 			nombre: "Faltan de subir",
-			path: `por-subir`,
+			path: `/admin/por-subir`,
 		},
 		{
 			nombre: "Editar productos",
-			path: `editar-productos`,
+			path: `/admin/editar-productos`,
 		},
 
 	];
