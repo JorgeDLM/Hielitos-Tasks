@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Card, Row, Col, Button, Input, InputGroup, Spinner } from "reactstrap";
+import React, { useState } from "react";
+import { Card, Row, Col, ButtonGroupProps } from "reactstrap";
 import { FaCopy } from 'react-icons/fa'
 import UsuarioContext from "../context/UsuarioContext";
 // import { doc, updateDoc } from "firebase/firestore";
@@ -8,17 +8,14 @@ import UsuarioContext from "../context/UsuarioContext";
 
 function ProductoPorSubir(props) {
 
-    const {productos, setProductos, loading, setLoading} = useContext(UsuarioContext)
+    // const {productos, setProductos, loading, setLoading} = useContext(UsuarioContext)
 
-    const [cantidad, setCantidad] = useState("")
     const [ver, setVer] = useState(false)
 
 
     const copiar = () => {
         navigator.clipboard.writeText(props.p.descripcion)
     }
-
-
 
 
     // AGREGAR INVENTARIO
