@@ -46,7 +46,7 @@ function ProductoEditarID(props) {
 
     const navigate = useNavigate()
     const regresar = () => {
-        navigate(`/admin/editar-productos`)
+        navigate(`/admin/inicio`)
     }
 
         // FETCH CATEGORIAS
@@ -97,6 +97,54 @@ function ProductoEditarID(props) {
     //         setLoading(false)
     //     }
     // }    
+
+    const cardPrecio = (<Card className="pchico">
+                                
+                    
+    {/* Precio de venta */}
+        <>
+            <div className="gris t14">*Precio de venta Mercadolibre:</div>
+            <FormGroup>
+                <Input
+                    value={precio_venta_ml} 
+                    placeholder="Precio de venta Mercadolibre" 
+                    type="number" min={0} 
+                    onChange={(e) => setPrecioVentaML(e.target.value)} 
+                    invalid={precio_venta_mlInvalido} />
+                {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
+            </FormGroup>
+        </>
+
+    {/* Precio de venta */}
+        <>
+            <div className="gris t14">*Precio de retial:</div>
+            <FormGroup>
+                <Input
+                    value={precio_venta} 
+                    placeholder="Precio de venta" 
+                    type="number" min={0} 
+                    onChange={(e) => setPrecioVenta(e.target.value)} 
+                    invalid={precio_ventaInvalido} />
+                {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
+            </FormGroup>
+        </>
+
+    {/* Precio de venta */}
+        <>
+            <div className="gris t14">*Precio de mayoreo:</div>
+            <FormGroup>
+                <Input
+                    value={precio_venta_mayoreo} 
+                    placeholder="Precio de venta" 
+                    type="number" min={0} 
+                    onChange={(e) => setPrecioVentaMayoreo(e.target.value)} 
+                    invalid={precio_venta_mayoreoInvalido} />
+                {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
+            </FormGroup>
+        </>
+        <hr />
+        <div className="verdeObscuro t15 wbold pabchico">{props.p.envio ? "Envío incluido" : "Envío no incluido" }</div>
+                        </Card>)
  
     return (
         <React.Fragment>
@@ -107,65 +155,19 @@ function ProductoEditarID(props) {
 
     {/* AREA 1 */}
                 <div className="pabmuygrande">
-                    <Card className="pabgrande pizgrande pdegrande claseCard">
+                    <Card className="pizgrande pdegrande claseCard">
                         <Row>
                             <Col className="pmediano"><img src={props.p.imagen} className="tImagenEditar" alt="error imagen" /></Col>
-                            <Col xs={12} md={4} className="parenorme izquierda t26 d-md-block d-none">
-                                {/* PANTALLA MEDIANA */}
-                                <Card className="pchico">
-                                
-                    
-                                {/* Precio de venta */}
-                                    <>
-                                        <div className="gris t14">*Precio de venta Mercadolibre:</div>
-                                        <FormGroup>
-                                            <Input
-                                                value={precio_venta_ml} 
-                                                placeholder="Precio de venta Mercadolibre" 
-                                                type="number" min={0} 
-                                                onChange={(e) => setPrecioVentaML(e.target.value)} 
-                                                invalid={precio_venta_mlInvalido} />
-                                            {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
-                                        </FormGroup>
-                                    </>
-                    
-                                {/* Precio de venta */}
-                                    <>
-                                        <div className="gris t14">*Precio de retial:</div>
-                                        <FormGroup>
-                                            <Input
-                                                value={precio_venta} 
-                                                placeholder="Precio de venta" 
-                                                type="number" min={0} 
-                                                onChange={(e) => setPrecioVenta(e.target.value)} 
-                                                invalid={precio_ventaInvalido} />
-                                            {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
-                                        </FormGroup>
-                                    </>
-                    
-                                {/* Precio de venta */}
-                                    <>
-                                        <div className="gris t14">*Precio de mayoreo:</div>
-                                        <FormGroup>
-                                            <Input
-                                                value={precio_venta_mayoreo} 
-                                                placeholder="Precio de venta" 
-                                                type="number" min={0} 
-                                                onChange={(e) => setPrecioVentaMayoreo(e.target.value)} 
-                                                invalid={precio_venta_mayoreoInvalido} />
-                                            {precioInvalido && <FormFeedback>El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
-                                        </FormGroup>
-                                    </>
-                                    <hr />
-                                    <div className="verdeObscuro t15 wbold pabchico">{props.p.envio ? "Envío incluido" : "Envío no incluido" }</div>
-                               </Card>
+                        {/* PANTALLA MEDIANA */}
+                            <Col md={4} className="parenorme izquierda t26 d-none d-md-block">
+                                {cardPrecio}
                             </Col>
                         </Row>
-                        <div className="parmediano pabmediano">                        
+                        <div className="parmediano pabmediano">       
+
                         {/* Nombre */}
                             <>
                                 <div className="wbold">*Nombre:</div>
-                                <FormGroup>
                                     <Input 
                                         value={nombre} 
                                         placeholder="Nombre corto" 
@@ -173,14 +175,12 @@ function ProductoEditarID(props) {
                                         maxLength={60} 
                                         onChange={(e) => setNombre(e.target.value)}
                                         invalid={!nombre} />
-                                </FormGroup>
+                                    <div className="derecha pdemediano">{nombre?.length}/60</div>
                             </>
-                    
                     
                         {/* TITULO */}
                             <>
                                 <div className="wbold">*Título Mercadolibre:</div>
-                                <FormGroup>
                                     <Input 
                                         value={titulo} 
                                         placeholder="Título de la publicación" 
@@ -188,11 +188,15 @@ function ProductoEditarID(props) {
                                         maxLength={60} 
                                         onChange={(e) => setTitulo(e.target.value)} 
                                         invalid={!titulo} />
-                                </FormGroup>
-                            </>
-                            <hr />
-                    
+                                    <div className="derecha pdemediano">{titulo?.length}/60</div>
+                            </>                    
                         </div>
+                        {/* PANTALLA CHICA */}
+                            <div className="d-block d-md-none pabmediano">
+                                <hr />
+                                
+                                {cardPrecio}
+                            </div>
                     </Card>
                 </div>
 
@@ -219,7 +223,7 @@ function ProductoEditarID(props) {
                             <Col>
                                 {loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> :  
                                 subCategorias.length >= 1 && <>
-                                        <div className="wbold">*Sub-categoria: </div>
+                                        <div className="wbold">*Sub<span className="d-none d-md-inline">-categoria</span><span className="d-inline d-md-none"></span>:</div>
                                         <FormGroup>
                                             <Input 
                                             value={subCategoria}
@@ -235,7 +239,7 @@ function ProductoEditarID(props) {
                     
                             {/* Temática */}
                                 <Col>
-                                    <div className="wbold">Temática / película:</div>
+                                    <div className="wbold">Temática<span className="d-none d-md-inline"> / película</span>:</div>
                                     <FormGroup>
                                         <Input  
                                             value={tematica}
@@ -244,21 +248,7 @@ function ProductoEditarID(props) {
                                             onChange={(e) => setTematica(e.target.value)} />
                                     </FormGroup>
                                 </Col>
-                        </Row>
-                    
-                    
-                        {/* PANTALLA CHICA */}
-                        <Card className="pchico d-md-none d-block fondoAmarilloClaro">
-                            <Row>
-                                <Col className="verdeObscuro t15 wbold pabchico contenedor"><span className="centradoRelativo2">{props.p.envio ? "Envío incluido" : "Envío no incluido" }</span></Col>
-                                <Col>
-                                        {props.p.precio_venta_ml >= 0 && <div className="lineaEnmedio d-inline t20">${props.p.precio_venta_ml}</div>}
-                                            <div className="t22 azul d-inline pizchico">${props.p.precio_venta}</div>
-                                        {props.p.precio_venta_mayoreo >= 0 && <div className="t18">${props.p.precio_venta_mayoreo} <span className="t14">(Más de 5 piezas)</span></div>}
-                                </Col>
-                            </Row>
-                        </Card>
-                    
+                        </Row>                    
                     </Card>
                 </div>
 
@@ -294,7 +284,7 @@ function ProductoEditarID(props) {
 
                         {/* Codigo universal */}
                             <Col>
-                                <div className="wbold">Código universal:</div>
+                                <div className="wbold">Código<span className="d-none d-md-inline"> universal</span><span className="d-inline d-md-none"> UPC</span>:</div>
                                 <FormGroup>
                                     <Input 
                                         value={codigo_universal}

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Container, Spinner, Input } from "reactstrap";
+import { Container, Spinner, Input, Row } from "reactstrap";
 import ModalProducto from './ModalProducto'
 import ModalCategorias from "./ModalCategorias";
-import Producto from "../inventario/Producto";
 import UsuarioContext from "../context/UsuarioContext";
 import Fuse from 'fuse.js'
 import { FaExclamationTriangle } from 'react-icons/fa'
+import ProductoEditar from "./ProductoEditar";
 
 function Admin() {
     
@@ -37,9 +37,11 @@ function Admin() {
                         </div>
                         <div>
                             <div className="pargrande">
-                                {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
-                                    <Producto key={i} p={p} />
-                                )}
+                                <Row className="parchico">
+                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                        <ProductoEditar key={i} p={p}  cambio={query.length} />
+                                    )}
+                                </Row>
                                 {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                                     (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                 )}

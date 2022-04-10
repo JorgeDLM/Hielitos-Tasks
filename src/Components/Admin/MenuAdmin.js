@@ -25,10 +25,6 @@ function MenuAdmin() {
 			nombre: "Faltan de subir",
 			path: `/admin/por-subir`,
 		},
-		{
-			nombre: "Editar productos",
-			path: `/admin/editar-productos`,
-		},
 
 	];
 
