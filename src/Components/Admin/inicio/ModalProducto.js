@@ -236,7 +236,7 @@ function ModalProducto() {
             clearInputs()
             setLoading(false);
 
-            window.location.reload()
+            // window.location.reload()
 
             } catch (error){
                 swal({
