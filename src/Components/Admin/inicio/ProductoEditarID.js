@@ -319,7 +319,7 @@ function ProductoEditarID(props) {
         activo: props.p?.activo,
     }
     console.log(dataFinal)
-    console.log(dataCompleta)
+    // console.log(dataCompleta)
 
 
     return (
