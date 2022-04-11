@@ -11,7 +11,7 @@ import swal from "sweetalert";
 import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
-import {FaSearch, FaExclamationTriangle, FaTrash} from 'react-icons/fa'
+import {FaSearch, FaExclamationTriangle, FaTrash, FaCamera} from 'react-icons/fa'
 
 
 function ProductoEditarID(props) {
@@ -295,7 +295,7 @@ function ProductoEditarID(props) {
         precio_venta: precio_venta ? precio_venta : props.p?.precio_venta,
         precio_venta_ml: precio_venta_ml ? precio_venta_ml : props.p?.precio_venta_ml,
         precio_venta_mayoreo: precio_venta_mayoreo ? precio_venta_mayoreo : props.p?.precio_venta_mayoreo,
-        // envio: envio === "false" ? false : envio === "true" ? true  : props.p?.envio,
+        envio: envio === "false" ? false : envio === "true" ? true  : props.p?.envio,
         medidas: medidas ? medidas : props.p?.medidas,
         material: material ? material : props.p?.material,
         descripcion: descripcion ? descripcion : props.p?.descripcion,
@@ -322,10 +322,16 @@ function ProductoEditarID(props) {
                 <div className="pabmuygrande">
                     <Card className="pizgrande pdegrande claseCard">
                         <Row>
-                            <Col className="pmediano">
+                            <Col md={7} lg={5} className="pmediano alineacionImagenEditar">
                                 <>
-                                    {loading ? <div className="parenorme pizenorme"><Spinner className="azul" /></div> : 
-                                    <img onClick={onButtonClick} src={imagen} className="tImagenEditar" alt="error imagen" />}
+                                    <div className="contenedor">
+                                        {loading ? <div className="parenorme pizenorme"><Spinner className="azul" /></div> : 
+                                        <>
+                                            <div onClick={onButtonClick} className="overlayImagenEditar"></div>
+                                            <FaCamera onClick={onButtonClick} className="posicionCamara" />
+                                            <img onClick={onButtonClick} src={imagen} className="tImagenEditar" alt="error imagen" />
+                                        </>}
+                                    </div>
                                     <FormGroup>
                                         <input 
                                             ref={inputFile}
@@ -341,7 +347,7 @@ function ProductoEditarID(props) {
                                 </>
                             </Col>
                         {/* PANTALLA MEDIANA */}
-                            <Col md={4} className="parenorme izquierda t26 d-none d-md-block">
+                            <Col md={5} lg={7} className="parenorme izquierda t26 d-none d-md-block">
                                 {cardPrecio}
                             </Col>
                         </Row>
@@ -566,6 +572,7 @@ function ProductoEditarID(props) {
     {/* AREA 7 -  Comentario*/}
                 <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
+                            <div><span className="wbold azul">Subido:</span> {props.p.subido}</div>
                             <div><span className="wbold azul">Comentario:</span> {props.p.comentario}</div>
                     </Card>
                 </div>

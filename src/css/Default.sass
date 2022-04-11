@@ -3177,6 +3177,7 @@ body
   height: 370px !important
 
 .claseImagenCatalogo
+  border-radius: 5px
   object-fit: cover
   width: 210px
   height: 210px
@@ -3668,6 +3669,7 @@ body
   object-fit: cover
   width: 300px
   height: 300px
+  border-radius: 10px
   @media (min-width: 500px)
     width: 350px
     height: 350px
@@ -3676,9 +3678,8 @@ body
   object-fit: cover
   width: 300px
   height: 300px
-  // width: 100%
+  border-radius: 10px
   @media (min-width: 500px)
-    // width: 100%
     width: 300px
     height: 300px
   @media (min-width: 768px)
@@ -3690,3 +3691,85 @@ input::-webkit-inner-spin-button
     -webkit-appearance: none !important
     -moz-appearance: none !important
     appearance: none !important 
+
+
+.alineacionImagenEditar
+  text-align: center
+  align-items: center
+  @media (min-width: 768px)
+    position: relative
+    padding-top: 32px
+    left: -1%
+  @media (min-width: 992px)
+    left: 0%
+  @media (min-width: 1200px)
+    left: -3%
+  @media (min-width: 1400px)
+    left: -5%
+
+.posicionCamara
+  position: absolute
+  color: $blanco
+  top: 9px
+  font-size: 30px
+  right: 9%
+  @media (min-width: 500px)
+    right: 11%
+  @media (min-width: 550px)
+    right: 14%
+  @media (min-width: 600px)
+    right: 20%
+  @media (min-width: 650px)
+    right: 20%
+  @media (min-width: 768px)
+    font-size: 50px
+    right: 8%
+  @media (min-width: 992px)
+    right: 5%
+  @media (min-width: 1200px)
+    right: 13%
+  @media (min-width: 1400px)
+    right: 18%
+    
+.overlayImagenEditar
+  background: black
+  opacity: 10%
+  border-radius: 10px
+  position: absolute
+  left: 3%
+  width: 300px
+  height: 300px
+  @media (min-width: 370px)
+    left: 2%
+  @media (min-width: 390px)
+    left: 4%
+  @media (min-width: 400px)
+    left: 7%
+  @media (min-width: 450px)
+    left: 9%
+  @media (min-width: 500px)
+    left: 18%
+  @media (min-width: 550px)
+    left: 19%
+  @media (min-width: 600px)
+    left: 18%
+  @media (min-width: 650px)
+    left: 18%
+  @media (min-width: 700px)
+    left: 18%
+  @media (min-width: 768px)
+    left: 10px
+    width: 350px
+    height: 350px
+  @media (min-width: 992px)
+    left: 4px
+    width: 350px
+    height: 350px
+  @media (min-width: 1200px)
+    left: 42px
+    width: 350px
+    height: 350px
+  @media (min-width: 1400px)
+    left: 79px
+    width: 350px
+    height: 350px
