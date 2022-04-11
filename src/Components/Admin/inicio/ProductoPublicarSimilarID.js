@@ -691,7 +691,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
                         {/* Subido */}
                         <>
-                            <div className="wbold">Subido:</div>
+                            <div className="wbold">¿Subido en Mercadolibre?</div>
                             <FormGroup>
                                 <Input value={subido} type="select" onChange={(e) => setSubido(e.target.value)} >
                                     <option value="" disabled={subido !== ""}>Seleccione:</option>
