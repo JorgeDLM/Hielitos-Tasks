@@ -8,6 +8,7 @@ function ProductoCatalogo(props) {
     const navigate = useNavigate()
     const irID = () => {
         navigate(`/catalogo/${props.p.id}`)
+        window.scrollTo(0, 0); 
     }
 
     

@@ -51,7 +51,6 @@ function ProductoPublicarSimilarID(props) {
     const [query, setQuery] = useState("")
 
 
-
 // Setear compuesto
     if(isCompuesto && !cambioCompuesto){
         setCambioCompuesto(true)
@@ -105,8 +104,7 @@ function ProductoPublicarSimilarID(props) {
             fetchCategorias();
             setLoading(false)
         }, [setLoading])
-    
-        
+
         
         // FETCH SUBCATEGORIAS
         useEffect(() => {

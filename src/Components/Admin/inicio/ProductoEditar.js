@@ -8,6 +8,7 @@ function ProductoEditar(props) {
     const navigate = useNavigate()
     const irID = () => {
         navigate(`/editar/${props.p.id}`)
+        window.scrollTo(0, 0); 
     }    
     const palabras = props.p.nombre.split(" ");
     const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ")

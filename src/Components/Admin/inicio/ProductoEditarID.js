@@ -773,7 +773,7 @@ function ProductoEditarID(props) {
                             <Button disabled={!dataCompleta} onClick={() => {actualizarProducto()}} className="botonAmarillo w100">Guardar cambios</Button>
                         </div>
                         <div className="pabchico">
-                            <Button onClick={() => {navigate(`/publicar-similar/${props.p.id}`)}} className="botonAzul w100">Publicar similar</Button>
+                            <Button onClick={() => {window.scrollTo(0, 0); navigate(`/publicar-similar/${props.p.id}`)}} className="botonAzul w100">Publicar similar</Button>
                         </div>
                         {/* funcion de inactivar directamente sin state */}
                         <Button onClick={() => swal({ 
