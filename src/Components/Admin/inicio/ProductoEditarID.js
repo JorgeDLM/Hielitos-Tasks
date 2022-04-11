@@ -11,6 +11,7 @@ import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
 import {FaSearch, FaExclamationTriangle, FaTrash, FaCamera} from 'react-icons/fa'
+import Resizer from "react-image-file-resizer";
 
 
 function ProductoEditarID(props) {
@@ -237,8 +238,26 @@ function ProductoEditarID(props) {
         }
     }
 
+    // PROMESA IMAGEN RESIZE
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            700,
+            700,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+    
+
 // POST IMAGEN ---------------------------------------------------------------
-    const postImagen = (img) => {
+    const postImagen = async(img) => {
         setLoading(true)
 
         if(img === undefined){
@@ -250,9 +269,11 @@ function ProductoEditarID(props) {
             })
         }
 
-        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/webp"){
+        const image = await resizeFile(img)
+
+        if (image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg" || image.type === "image/webp"){
             const data = new FormData();
-            data.append("file", img);
+            data.append("file", image);
             data.append("upload_preset", "mercadoalamano");
             data.append("cloud_name",  "mercadoalamano");
             fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
@@ -319,7 +340,6 @@ function ProductoEditarID(props) {
         comentario: comentario,
         activo: props.p?.activo,
     }
-    console.log(dataFinal)
     
 // ACTUALIZAR PRODUCTO ------------------------------------------------------------
     const actualizarProducto = async() => {

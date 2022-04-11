@@ -11,6 +11,7 @@ import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
 import {FaSearch, FaExclamationTriangle, FaCamera} from 'react-icons/fa'
+import Resizer from "react-image-file-resizer";
 
 
 function ProductoPublicarSimilarID(props) {
@@ -84,8 +85,9 @@ function ProductoPublicarSimilarID(props) {
     const productoCompuestoInvalido = isCompuesto ? compuesto?.length === 0 : false
     const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 70) : false
     const envioInvalido = envio === "" || precioEnvio
+    const imagenInvalida = imagen === "https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg"
 
-    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && titulo !== ""
+    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && titulo !== "" && !imagenInvalida
 
 
 
@@ -219,8 +221,26 @@ function ProductoPublicarSimilarID(props) {
         }
     }
 
+    // PROMESA IMAGEN RESIZE
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            700,
+            700,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+
+
 // POST IMAGEN ---------------------------------------------------------------
-    const postImagen = (img) => {
+    const postImagen = async(img) => {
         setLoading(true)
 
         if(img === undefined){
@@ -232,9 +252,11 @@ function ProductoPublicarSimilarID(props) {
             })
         }
 
-        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/webp"){
+        const image = await resizeFile(img)
+
+        if (image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg" || image.type === "image/webp"){
             const data = new FormData();
-            data.append("file", img);
+            data.append("file", image);
             data.append("upload_preset", "mercadoalamano");
             data.append("cloud_name",  "mercadoalamano");
             fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
@@ -371,6 +393,11 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
 *********************************************************************************************************`)
 }
 
+
+    // FETCH CATEGORIAS
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
 
     return (

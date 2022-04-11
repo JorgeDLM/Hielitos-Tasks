@@ -9,6 +9,7 @@ import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
 import {FaSearch, FaExclamationTriangle, FaPlus} from 'react-icons/fa'
+import Resizer from "react-image-file-resizer";
 
 function ModalProducto() {
 
@@ -108,8 +109,26 @@ function ModalProducto() {
 
     const dataCompleta =  !imagenInvalida && !tituloInvalido && !nombreInvalido && !categoriaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido
 
+    // PROMESA IMAGEN RESIZE
+    const resizeFile = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            700,
+            700,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+
+
 // POST IMAGEN ---------------------------------------------------------------
-    const postImagen = (img) => {
+    const postImagen = async(img) => {
         setLoading(true)
 
         if(img === undefined){
@@ -120,10 +139,13 @@ function ModalProducto() {
                 button: "Cerrar"
             })
         }
+        
+        const image = await resizeFile(img)
 
-        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/webp"){
+        if (image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg" || image.type === "image/webp"){
             const data = new FormData();
-            data.append("file", img);
+            data.append("file", image);
+            console.log("subida")
             data.append("upload_preset", "mercadoalamano");
             data.append("cloud_name",  "mercadoalamano");
             fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
@@ -290,6 +312,7 @@ const fuse = new Fuse(productos, {
 const busqueda = fuse.search(query) 
 const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
+
     return (
         <React.Fragment>
             <Button onClick={() => setModal(!modal)} className="botonNegro"><FaPlus className="t14 pabmuychico" /> Producto</Button>
@@ -307,6 +330,9 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     <>
                         <div className="wbold">** Imagen:</div>
                         <FormGroup>
+                            {/* <Image publicId="/foksrvlbfpxaoz5kn446" cloud_name="mercadoalamano" version="1649698988" secure="true" width="350" crop="fill" alt="error">
+                                <Transformation width="350" crop="fill" />
+                            </Image> */}
                             <Input type="file" nombre="img" accept="image/*" onChange={(e) => postImagen(e.target.files[0])} invalid={imagenInvalida} />
                             <FormFeedback>Ingrese una imagen</FormFeedback>
                         </FormGroup>
