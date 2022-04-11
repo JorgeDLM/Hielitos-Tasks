@@ -16,6 +16,7 @@ import Compras from './Components/Admin/compras/Compras'
 import ProductoEditarID from "./Components/Admin/inicio/ProductoEditarID";
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
+import ProductoPublicarSimilarID from "./Components/Admin/inicio/ProductoPublicarSimilarID";
 
 function App() {
 
@@ -36,6 +37,9 @@ return (
 						</Route>
 						{productos.map((p,i) => 
 							<Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />
+						)}
+						{productos.map((p,i) => 
+							<Route key={i} path={`publicar-similar/${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />
 						)}
 						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />

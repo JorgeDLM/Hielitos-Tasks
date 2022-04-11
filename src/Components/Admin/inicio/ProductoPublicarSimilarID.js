@@ -3,21 +3,21 @@ import { Container, Card, Row, Col, Button, Input, FormGroup, FormFeedback, Spin
 import { FaChevronLeft } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 import UsuarioContext from "../context/UsuarioContext";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase-config";
 import MenuAdmin from "../MenuAdmin";
 import swal from "sweetalert";
 import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
-import {FaSearch, FaExclamationTriangle, FaTrash, FaCamera} from 'react-icons/fa'
+import {FaSearch, FaExclamationTriangle, FaCamera} from 'react-icons/fa'
 
 
-function ProductoEditarID(props) {
+function ProductoPublicarSimilarID(props) {
     
     const {loading, setLoading, productos} = useContext(UsuarioContext)
 
-    const [imagen, setImagen] = useState(props.p.imagen)
+    const [imagen, setImagen] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
     const [nombre, setNombre] = useState(props.p.nombre)
     const [titulo, setTitulo] = useState(props.p.titulo)
     const [categoria, setCategoria] = useState(props.p.categoria)
@@ -33,7 +33,7 @@ function ProductoEditarID(props) {
     const [costo_envio, setCostoEnvio] = useState(props.p.costo_envio ? props.p.costo_envio : "")
     const [medidas, setMedidas] = useState(props.p.medidas ? props.p.medidas : "")
     const [material, setMaterial] = useState(props.p.material ? props.p.material : "")
-    const [descripcion, setDescripcion] = useState(props.p.descripcion ? props.p.descripcion : "")
+    const [descripcion, setDescripcion] = useState("")
     const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
     const [proveedor, setProveedor] = useState(props.p.proveedor ? props.p.proveedor : "")
     const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
@@ -42,6 +42,7 @@ function ProductoEditarID(props) {
     const [subido, setSubido] = useState(props.p.subido ? props.p.subido : false)
     const [cambio, setCambio] = useState(true)
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
+    const [descripcionDefault, setDescripcionDefault] = useState("")
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -126,27 +127,10 @@ function ProductoEditarID(props) {
             }, [categoria, categorias, setLoading])
     
 
-    // Editar producto
-    // const actualizarProducto = async() => {
-    //     setLoading(true)
-    //     const data = {...props.p}
-    //     try {
-    //         await updateDoc(doc(db, "productos", props.p.id), {data})
-    //     } catch (error) {
-    //         swal({
-    //             title: "Error",
-    //             text: error.message,
-    //             icon: "error",
-    //             button: "cerrar"
-    //         });
-    //         setLoading(false)
-    //     }
-    // }    
-
     const cardPrecio = (<Card className="pchico">
                                 
                     
-    {/* Precio de venta */}
+    {/* Precio de venta ML*/}
         <>
             <div className="gris t14">*Precio de venta Mercadolibre:</div>
             <FormGroup>
@@ -176,7 +160,7 @@ function ProductoEditarID(props) {
             </FormGroup>
         </>
 
-    {/* Precio de venta */}
+    {/* Precio de venta mayoreo*/}
         <>
             <div className="gris t14">*Precio de mayoreo:</div>
             <FormGroup>
@@ -309,7 +293,7 @@ function ProductoEditarID(props) {
         costo_envio: costo_envio,
         medidas: medidas,
         material: material,
-        descripcion: descripcion,
+        descripcion: descripcion ? descripcion : descripcionDefault,
         cantidad: cantidad,
         proveedor: !isCompuesto ? proveedor : "",
         propietario: propietario,
@@ -321,8 +305,8 @@ function ProductoEditarID(props) {
     }
     console.log(dataFinal)
     
-// ACTUALIZAR PRODUCTO ------------------------------------------------------------
-    const actualizarProducto = async() => {
+// CREAR PRODUCTO SIMILAR ------------------------------------------------------------
+    const crearProductoSimilar = async() => {
         setLoading(true);
         if(!dataCompleta){
             swal({
@@ -336,19 +320,14 @@ function ProductoEditarID(props) {
         }
         try {
 
-            await updateDoc(doc(db, "productos", props.p.id), dataFinal)
+            await addDoc(collection(db, "productos"), dataFinal)
             
             swal({
-                title: "Producto actualizado",
+                title: "Producto creado con exito",
                 text: "",
                 icon: "success",
                 button: "cerrar"
             })
-            // const dataSplice = productos.splice(props.i, 1)
-            // console.log(dataSplice)
-            
-            // localStorage.setItem('productoInfo', JSON.stringify([...productos, dataFinal]))
-            // setProductos([...productos, dataFinal])
             navigate(`/admin/inicio`)
             window.location.reload()
             setLoading(false);
@@ -363,45 +342,6 @@ function ProductoEditarID(props) {
             }
         }
     
-// ELIMINAR PRODUCTO (INACTIVAR) ------------------------------------------------------------
-    const eliminarProducto = async() => {
-        setLoading(true);
-        if(!dataCompleta){
-            swal({
-                title: "Error",
-                text: "Intente nuevamente",
-                icon: "error",
-                button: "cerrar"
-            });
-            setLoading(false);
-            return
-        }
-        try {
-            await updateDoc(doc(db, "productos", props.p.id), {...props.p, activo: false})
-
-            swal({
-                title: "Producto eliminado",
-                text: "Has eliminado el producto",
-                icon: "success",
-                button: "cerrar"
-            })
-            // const dataSplice = productos.splice(props.i, 1)
-            // console.log(dataSplice)
-            // localStorage.setItem('productoInfo', JSON.stringify(productos))
-            // setProductos([...productos])
-            navigate(`/admin/inicio`)
-            window.location.reload()
-            setLoading(false);
-            } catch (error){
-                swal({
-                    title: "Error",
-                    text: `No se ha podido borrar el producto, ${error.message}`,
-                    icon: "error",
-                    button: "cerrar"
-                });
-                setLoading(false);
-        }
-    }
 
 // FETCH CATEGORIAS
     useEffect(() => {
@@ -416,13 +356,31 @@ function ProductoEditarID(props) {
 
     const ganancia = precio_venta_ml - costo_envio - (isCompuesto ? total : precio_compra)
 
+    const crearDescripcion = () => {
+        setDescripcionDefault(
+`*********************************************************************************************************
+¡PUBLICACIÓN POR ${nombre.toUpperCase()} ${tematica && "DE "}${tematica.toUpperCase()}!
+*********************************************************************************************************
+
+Material: ${material}
+Tipo: ${!subCategoria ? categoria : subCategoria}
+Tamaño: ${medidas}
+
+
+*********************************************************************************************************
+Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
+tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
+*********************************************************************************************************`)
+}
+
+
 
     return (
         <React.Fragment>
             <MenuAdmin />
             <Container className="parmediano pabenorme noselect">
             <div className="parmediano pabmediano"><Button onClick={() => regresar()} className="botonTransparente azul"><FaChevronLeft className="tIconos" /> Volver</Button></div>
-            <div className="wbold t25 pabgrande">{props.p.nombre}</div>
+            <div className="wbold t25 pabgrande">{nombre}</div>
 
     {/* AREA 0 - Imagen - Nombre - Titulo - Precio Venta - Precio Venta ML - Precio Mayoreo - Envio */}
                 <div className="pabmuygrande">
@@ -464,6 +422,7 @@ function ProductoEditarID(props) {
                                 <div className="wbold">*Nombre:</div>
                                     <Input 
                                         value={nombre} 
+                                        onBlur={() => {crearDescripcion()}}
                                         placeholder="Nombre corto" 
                                         type="text" 
                                         maxLength={60} 
@@ -477,6 +436,7 @@ function ProductoEditarID(props) {
                                 <div className="wbold">*Título Mercadolibre:</div>
                                     <Input 
                                         value={titulo} 
+                                        onBlur={() => {crearDescripcion()}}
                                         placeholder="Título de la publicación" 
                                         type="text" 
                                         maxLength={60} 
@@ -520,6 +480,7 @@ function ProductoEditarID(props) {
                                     <FormGroup>
                                         <Input 
                                         value={categoria}
+                                        onBlur={() => {crearDescripcion()}}
                                         type="select" 
                                         onChange={(e) => {setCategoria(e.target.value); setLoading(true)}} 
                                         invalid={!categoria} >
@@ -537,6 +498,7 @@ function ProductoEditarID(props) {
                                         <FormGroup>
                                             <Input 
                                             value={subCategoria}
+                                            onBlur={() => {crearDescripcion()}}
                                             type="select" 
                                             onChange={(e) => setSubCategoria(e.target.value)} 
                                             invalid={!subCategoria} >
@@ -553,6 +515,7 @@ function ProductoEditarID(props) {
                                     <FormGroup>
                                         <Input  
                                             value={tematica}
+                                            onBlur={() => {crearDescripcion()}}
                                             placeholder="Ej: Harry Potter" 
                                             type="text" 
                                             onChange={(e) => setTematica(e.target.value)} />
@@ -572,6 +535,7 @@ function ProductoEditarID(props) {
                                 <FormGroup>
                                     <Input 
                                         value={medidas}
+                                        onBlur={() => {crearDescripcion()}}
                                         placeholder="Ej: 14cm x 20cm" 
                                         type="text" 
                                         onChange={(e) => setMedidas(e.target.value)} 
@@ -585,6 +549,7 @@ function ProductoEditarID(props) {
                                 <FormGroup>
                                     <Input 
                                         value={material}
+                                        onBlur={() => {crearDescripcion()}}
                                         placeholder="Ej: PVC" 
                                         type="text" 
                                         onChange={(e) => setMaterial(e.target.value)} 
@@ -617,11 +582,12 @@ function ProductoEditarID(props) {
                             <div className="wbold parchico">*Descripción:</div>
                             <FormGroup>
                                 <Input 
-                                    value={descripcion}
                                     placeholder="Descripción" 
                                     type="textarea" 
                                     rows="13"
-                                    onChange={(e) => setDescripcion(e.target.value)} />
+                                    onChange={(e) => setDescripcion(e.target.value)} 
+                                    defaultValue={descripcionDefault}
+                                    />
                             </FormGroup>
                         </>
                     </Card>
@@ -770,18 +736,8 @@ function ProductoEditarID(props) {
                 <div className="pabmuygrande">
                     <Card className="pmuygrande claseCard">
                         <div className="pabchico">
-                            <Button disabled={!dataCompleta} onClick={() => {actualizarProducto()}} className="botonAmarillo w100">Guardar cambios</Button>
+                            <Button disabled={!dataCompleta} onClick={() => {crearProductoSimilar()}} className="botonAmarillo w100">Crear producto</Button>
                         </div>
-                        <div className="pabchico">
-                            <Button onClick={() => {navigate(`/publicar-similar/${props.p.id}`)}} className="botonAzul w100">Publicar similar</Button>
-                        </div>
-                        {/* funcion de inactivar directamente sin state */}
-                        <Button onClick={() => swal({ 
-                                    title: "¿Estás segur@?" , 
-                                    text: "No podrás revertirlo!", 
-                                    icon: "warning", 
-                                    buttons: ["Cancelar", "Borrar"]
-                                }).then((res) => {if(res){eliminarProducto()}})} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
                     </Card>
                 </div>
             </Container>
@@ -789,4 +745,4 @@ function ProductoEditarID(props) {
     );
 }
 
-export default ProductoEditarID;
+export default ProductoPublicarSimilarID;
