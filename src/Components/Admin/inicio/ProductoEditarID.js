@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoEditarID(props) {
     
-    const {loading, setLoading, productos} = useContext(UsuarioContext)
+    const {loading, setLoading, productos, setProductos} = useContext(UsuarioContext)
 
     const [imagen, setImagen] = useState(props.p.imagen)
     const [nombre, setNombre] = useState(props.p.nombre)
@@ -364,13 +364,13 @@ function ProductoEditarID(props) {
                 icon: "success",
                 button: "cerrar"
             })
-            // const dataSplice = productos.splice(props.i, 1)
-            // console.log(dataSplice)
+            const dataSplice = productos.splice(props.i, 1)
+            console.log(dataSplice)
             
-            // localStorage.setItem('productoInfo', JSON.stringify([...productos, dataFinal]))
-            // setProductos([...productos, dataFinal])
-            navigate(`/admin/inicio`)
-            window.location.reload()
+            localStorage.setItem('productoInfo', JSON.stringify([...productos, dataFinal]))
+            setProductos([...productos, dataFinal])
+            // navigate('/admin/inicio')
+            window.close()
             setLoading(false);
         } catch (error){
             swal({
@@ -789,19 +789,21 @@ function ProductoEditarID(props) {
     {/* AREA 9 -  Activo - Borrar - Guardar*/}
                 <div className="pabmuygrande">
                     <Card className="pmuygrande claseCard">
-                        <div className="pabchico">
-                            <Button disabled={!dataCompleta} onClick={() => {actualizarProducto()}} className="botonAmarillo w100">Guardar cambios</Button>
-                        </div>
-                        <div className="pabchico">
-                            <Button onClick={() => {window.scrollTo(0, 0); navigate(`/publicar-similar/${props.p.id}`)}} className="botonAzul w100">Publicar similar</Button>
-                        </div>
-                        {/* funcion de inactivar directamente sin state */}
-                        <Button onClick={() => swal({ 
-                                    title: "¿Estás segur@?" , 
-                                    text: "No podrás revertirlo!", 
-                                    icon: "warning", 
-                                    buttons: ["Cancelar", "Borrar"]
-                                }).then((res) => {if(res){eliminarProducto()}})} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
+                        {loading ? <div className="azul penorme centro"><Spinner /></div> : <>
+                            <div className="pabchico">
+                                <Button disabled={!dataCompleta} onClick={() => {actualizarProducto()}} className="botonAmarillo w100">Guardar cambios</Button>
+                            </div>
+                            <div className="pabchico">
+                                <Button onClick={() => {window.scrollTo(0, 0); navigate(`/publicar-similar/${props.p.id}`)}} className="botonAzul w100">Publicar similar</Button>
+                            </div>
+                            {/* funcion de inactivar directamente sin state */}
+                            <Button onClick={() => swal({ 
+                                        title: "¿Estás segur@?" , 
+                                        text: "No podrás revertirlo!", 
+                                        icon: "warning", 
+                                        buttons: ["Cancelar", "Borrar"]
+                                    }).then((res) => {if(res){eliminarProducto()}})} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
+                        </>}
                     </Card>
                 </div>
             </Container>

@@ -17,7 +17,7 @@ function ProductoCatalogo(props) {
 
     return (
         <Col className="pabmediano contenedor widthCardProveedorCol">
-            <Card className="pmediano claseCard widthCardProveedor centradoRelativo" onClick={() => irID()}>
+            <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick" onClick={() => irID()}>
                 <div className="contenedor">
                     <img src={props.p.imagen} className="claseImagenCatalogo" alt="" />
                     <div className="gris centro parmediano">{nombre}</div>
