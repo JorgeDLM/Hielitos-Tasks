@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Modal, Input, FormGroup } from "reactstrap";
 import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
+import { FaPlus } from 'react-icons/fa'
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
 
@@ -114,8 +115,8 @@ const agregarSubCategoria = async() => {
 
     return (
         <React.Fragment>
-            <div className="d-inline pizchico"><Button onClick={() => setModal(!modal)} className="botonAmarillo">Agregar categoria</Button></div>
-            <div className="d-inline pizchico"><Button onClick={() => setModal2(!modal2)} className="botonAzul" disabled={loading}>Agregar sub-categoria</Button></div>
+            <div className="d-inline pizchico"><Button onClick={() => setModal(!modal)} className="botonAmarillo"><FaPlus className="t14 pabmuychico" /> Categoria</Button></div>
+            <div className="d-inline pizchico"><Button onClick={() => setModal2(!modal2)} className="botonAzul" disabled={loading}><FaPlus className="t14 pabmuychico" /> <span className="d-none d-md-inline">Sub-categoria</span><span className="d-inline d-md-none">Sub</span></Button></div>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
             <div className="pargrande azul wbolder centro tmuygrande">
                 <div className="pabmediano"><img className="productoLista" src={logo} alt="Error" /></div>

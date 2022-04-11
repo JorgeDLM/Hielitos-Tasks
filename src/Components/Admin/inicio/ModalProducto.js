@@ -8,7 +8,7 @@ import UsuarioContext from "../context/UsuarioContext";
 import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
-import {FaSearch, FaExclamationTriangle} from 'react-icons/fa'
+import {FaSearch, FaExclamationTriangle, FaPlus} from 'react-icons/fa'
 
 function ModalProducto() {
 
@@ -291,7 +291,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
 
     return (
         <React.Fragment>
-            <Button onClick={() => setModal(!modal)} className="botonNegro">Agregar producto</Button>
+            <Button onClick={() => setModal(!modal)} className="botonNegro"><FaPlus className="t14 pabmuychico" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
                     {imagen === "" ? 

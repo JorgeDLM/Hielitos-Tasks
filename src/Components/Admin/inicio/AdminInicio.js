@@ -31,7 +31,7 @@ function Admin() {
                 <div className="pabmediano pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
-                        <div className="pargrande">
+                        <div className="pargrande centro">
                             <ModalProducto />
                             <ModalCategorias />
                         </div>

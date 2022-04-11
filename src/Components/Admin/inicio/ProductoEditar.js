@@ -8,7 +8,10 @@ function ProductoEditar(props) {
     const navigate = useNavigate()
     const irID = () => {
         navigate(`/editar/${props.p.id}`)
-    }
+    }    
+    const palabras = props.p.nombre.split(" ");
+    const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ")
+
 
     return (
                     
@@ -16,7 +19,7 @@ function ProductoEditar(props) {
             <Card className="pmediano claseCard widthCardProveedor centradoRelativo" onClick={() => irID()}>
                 <div className="contenedor">
                     <img src={props.p.imagen} className="claseImagenCatalogo" alt="error" />
-                    <div className="gris centro parmediano">{props.p.nombre}</div>
+                    <div className="gris centro parmediano">{nombre}</div>
                 </div>
             </Card>
             <div className="centro parmediano t20 bottom">

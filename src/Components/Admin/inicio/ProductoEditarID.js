@@ -11,7 +11,7 @@ import swal from "sweetalert";
 import Fuse from 'fuse.js'
 import ProductoCompuesto from "./ProductoCompuesto";
 import NumberFormat from "react-number-format";
-import {FaSearch, FaExclamationTriangle} from 'react-icons/fa'
+import {FaSearch, FaExclamationTriangle, FaTrash} from 'react-icons/fa'
 
 
 function ProductoEditarID(props) {
@@ -41,6 +41,7 @@ function ProductoEditarID(props) {
     const [codigo_universal, setCodigoUniversal] = useState(props.p.codigo_universal ? props.p.codigo_universal : "")
     // const [subido, setSubido] = useState(props.p.subido ? props.p.subido : "")
     const [cambio, setCambio] = useState(true)
+    const [activo, setActivo] = useState(props.p.activo ? props.p.activo : false)
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -572,7 +573,10 @@ function ProductoEditarID(props) {
     {/* AREA 7 -  Activo - Borrar - Guardar*/}
                 <div className="pabmuygrande">
                     <Card className="pabgrande pizgrande pdegrande claseCard">
-                        <div><span className="wbold azul">Activo:</span> {props.p.avtivo}</div>
+                        <div><span className="wbold azul">Activo:</span> {props.p.activo ? "Activo" : "Inactivo"}</div>
+                        <div className="pabchico">
+                            <Button onClick={() => setActivo(!activo)} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
+                        </div>
                         <Button onClick={() => {}} className="botonAmarillo w100">Guardar</Button>
                     </Card>
                 </div>
