@@ -36,7 +36,7 @@ function ModalProducto() {
     const [cantidad, setCantidad] = useState("")
     const [proveedor, setProveedor] = useState("")
     const [propietario, setPropietario] = useState("")
-    const [codigo_producto, setCodigo] = useState("")
+    const [codigo_producto, setCodigoProducto] = useState("")
     const [subido, setSubido] = useState("")
     const [loading, setLoading] = useState("")
     const [cambio, setCambio] = useState(true)
@@ -44,9 +44,21 @@ function ModalProducto() {
     const [query, setQuery] = useState("")
     const [isCompuesto, setIsCompuesto] = useState(false)
     const [compuesto, setCompuesto] = useState([])
+    const [cambioCompuesto, setCambioCompuesto] = useState(false)
 
     const total = (compuesto.length >= 1) && compuesto?.map(c => +c.cantidad * +productos.filter(p=> p.id === c.producto)[0].precio_compra)?.reduce((total, entrada) => (total += entrada))
 
+
+    if(isCompuesto && !cambioCompuesto){
+        setCambioCompuesto(true)
+        setPrecioCompra("")
+        setProveedor("")
+        setCodigoProducto("")
+    } 
+    if(!isCompuesto && cambioCompuesto){
+        setCambioCompuesto(false)
+        setCompuesto([])
+    }
 
 
     const imagenInvalida = !imagen
@@ -89,7 +101,7 @@ function ModalProducto() {
         setProveedor("")
         setPropietario("")
         setDescripcionDefault("")
-        setCodigo("")
+        setCodigoProducto("")
         setSubido("")
         setModal(false)
     }
@@ -109,7 +121,7 @@ function ModalProducto() {
             })
         }
 
-        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg"){
+        if (img.type === "image/png" || img.type === "image/jpeg" || img.type === "image/jpg" || img.type === "image/webp"){
             const data = new FormData();
             data.append("file", img);
             data.append("upload_preset", "mercadoalamano");
@@ -120,8 +132,13 @@ function ModalProducto() {
                 setImagen(data.url.toString());
                 setLoading(false)
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                swal({
+                    title: "Error al subir la imagen",
+                    text: error.message,
+                    icon: "error",
+                    button: "Cerrar"
+                });
                 setLoading(false)
             })
         } else {
@@ -136,7 +153,6 @@ function ModalProducto() {
     }
 
 
-    
 // SUBIR PRODUCTO ------------------------------------------------------------
     const subirProducto = async() => {
         setLoading(true);
@@ -315,7 +331,14 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     <>
                         <div className="wbold">** Título:</div>
                         <FormGroup>
-                            <Input placeholder="Título de la publicación" type="text" maxLength={60} defaultValue={tituloDefault} onChange={(e) => setTitulo(e.target.value)} invalid={tituloInvalido} />
+                            <Input 
+                                defaultValue={tituloDefault}
+                                // value={titulo}
+                                placeholder="Título de la publicación" 
+                                type="text" 
+                                maxLength={60} 
+                                onChange={(e) => setTitulo(e.target.value)} 
+                                invalid={tituloInvalido} />
                         </FormGroup>
                     </>
 
@@ -493,7 +516,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     {!isCompuesto && <div>
                         <div className="wbold">Código proveedor:</div>
                         <FormGroup>
-                            <Input placeholder="Código del producto" type="text" onChange={(e) => setCodigo(e.target.value)} />
+                            <Input placeholder="Código del producto" checked={isCompuesto} type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
                         </FormGroup>
                     </div>}
 
