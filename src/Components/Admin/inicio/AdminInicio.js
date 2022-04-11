@@ -28,13 +28,13 @@ function Admin() {
     return (
         <React.Fragment>
             <Container className="pabenorme">
-                <div className="pabmediano pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
-                    {loading ? <div className="centro parmediano azul"><Spinner /></div> :
-                    <>
                         <div className="pargrande centro">
                             <ModalProducto />
                             <ModalCategorias />
                         </div>
+                <div className="pabmediano pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                    {loading ? <div className="centro parmediano azul"><Spinner /></div> :
+                    <>
                         <div>
                             <div className="pargrande">
                                 <Row className="parchico">
@@ -42,9 +42,13 @@ function Admin() {
                                         <ProductoEditar key={i} p={p}  cambio={query.length} />
                                     )}
                                 </Row>
-                                {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
-                                    (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                                )}
+
+                                {loading ? <div className="centro parmediano azul"><Spinner /></div> :
+                                <>
+                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                        (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                                    )}
+                                </>}
                             </div>
                         </div>
                     </>}

@@ -182,7 +182,7 @@ function ModalProducto() {
                 precio_venta_ml: precio_venta_ml ? precio_venta_ml : "",
                 precio_venta_mayoreo: precio_venta_mayoreo ? precio_venta_mayoreo : "",
                 envio: envio === "false" ? false : envio === "true" ? true : false,
-                // ganancia: precio_venta - precio_compra - (precio_venta >= 299 ? (envio === true ? 72 : 0) : (envio === true ? 100 : 0)),
+                costo_envio: envio === "true" ? 100 : 0,
                 medidas: medidas ? medidas : "",
                 material: material ? material : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
@@ -193,6 +193,7 @@ function ModalProducto() {
                 codigo_producto: !isCompuesto ? codigo_producto : "",
                 compuesto: isCompuesto ? compuesto : [],
                 comentario: "",
+                activo: true,
             }
 
             const newProduct = async () => {
@@ -451,8 +452,8 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                         <FormGroup>
                             <Input type="select" onChange={(e) => setEnvio(e.target.value)} invalid={envioInvalido} >
                                 <option value="" disabled={envio !== ""}>Seleccione:</option>
-                                {precio_venta < 299 && <option value={false} >No</option>}
-                                {precio_venta >= 250 && <option value={true}>Sí</option>}
+                                {precio_venta_ml < 299 && <option value={false} >No</option>}
+                                {precio_venta_ml >= 250 && <option value={true}>Sí</option>}
                             </Input>
                             <FormFeedback>{`${precioEnvio ? "Muy poca ganancia valide nuevamente." : "¿Envío incluido en precio de venta?"}`}</FormFeedback>
                         </FormGroup>
