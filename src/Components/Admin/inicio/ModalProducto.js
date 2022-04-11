@@ -173,7 +173,7 @@ function ModalProducto() {
                 imagen: imagen,
                 nombre: nombre,
                 tematica: tematica ? tematica : "",
-                titulo: titulo,
+                titulo: titulo ? titulo : tituloDefault,
                 codigo_universal: categorias?.filter(c => categoria === c.categoria)[0]?.codigo_universal,
                 categoria: categoria,
                 sub_categoria: subCategoria ? subCategoria : "",
@@ -373,7 +373,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     <>
                         <div className="wbold">** ¿Es producto compuesto?</div>
                         <FormGroup>
-                            <span className="pdemuychico wbold pizmediano">Sí </span> <Input type="checkbox" onChange={() => setIsCompuesto(!isCompuesto)} />
+                            <span className="pdemuychico wbold pizmediano">Sí </span> <Input type="checkbox"  checked={isCompuesto} onChange={() => setIsCompuesto(!isCompuesto)} />
                         </FormGroup>
                         
                         {isCompuesto && <div className="parchico pabchico">
@@ -398,12 +398,12 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                             <span className="wbold">Costo total:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} />
                             <Card className="pmediano">
                                 <div className="overflowModal">
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).filter(producto => !producto.compuesto?.length).map((p, i) =>
+                                    {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).filter(producto => !producto.compuesto?.length).map((p, i) =>
                                         <div key={i}>
                                             <ProductoCompuesto p={p} compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
                                         </div>
                                     )}
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                     )}
                                 </div>
@@ -517,7 +517,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                     {!isCompuesto && <div>
                         <div className="wbold">Código proveedor:</div>
                         <FormGroup>
-                            <Input placeholder="Código del producto" checked={isCompuesto} type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
+                            <Input placeholder="Código del producto" type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
                         </FormGroup>
                     </div>}
 

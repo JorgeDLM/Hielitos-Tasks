@@ -3,9 +3,8 @@ import { Container, Card, Row, Col, Button, Input, FormGroup, FormFeedback, Spin
 import { FaChevronLeft } from 'react-icons/fa'
 import { useNavigate } from "react-router-dom";
 import UsuarioContext from "../context/UsuarioContext";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase-config";
-// import swal from "sweetalert";
 import MenuAdmin from "../MenuAdmin";
 import swal from "sweetalert";
 import Fuse from 'fuse.js'
@@ -35,13 +34,14 @@ function ProductoEditarID(props) {
     const [medidas, setMedidas] = useState(props.p.medidas ? props.p.medidas : "")
     const [material, setMaterial] = useState(props.p.material ? props.p.material : "")
     const [descripcion, setDescripcion] = useState(props.p.descripcion ? props.p.descripcion : "")
-    // const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
+    const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
     const [proveedor, setProveedor] = useState(props.p.proveedor ? props.p.proveedor : "")
-    // const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
+    const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
     const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
     const [codigo_universal, setCodigoUniversal] = useState(props.p.codigo_universal ? props.p.codigo_universal : "")
-    // const [subido, setSubido] = useState(props.p.subido ? props.p.subido : "")
+    const [subido, setSubido] = useState(props.p.subido ? props.p.subido : false)
     const [cambio, setCambio] = useState(true)
+    const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -53,15 +53,12 @@ function ProductoEditarID(props) {
 
 // Setear compuesto
     if(isCompuesto && !cambioCompuesto){
-        console.log("true")
         setCambioCompuesto(true)
-
         setPrecioCompra("")
         setProveedor("")
         setCodigoProducto("")
         setCompuesto(props.p.compuesto ? props.p.compuesto : [])
     } else if (!isCompuesto && cambioCompuesto){
-        console.log("false")
         setCambioCompuesto(false)
         setCompuesto([])
         setPrecioCompra(props.p.precio_compra)
@@ -88,7 +85,7 @@ function ProductoEditarID(props) {
     const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 70) : false
     const envioInvalido = envio === "" || precioEnvio
 
-    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido
+    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && titulo !== ""
 
 
 
@@ -156,7 +153,8 @@ function ProductoEditarID(props) {
                 <Input
                     value={precio_venta_ml} 
                     placeholder="Precio de venta Mercadolibre" 
-                    type="number" min={0} 
+                    type="number" 
+                    min={0}
                     onChange={(e) => setPrecioVentaML(e.target.value)} 
                     invalid={precio_venta_mlInvalido} />
                 {precioInvalido && <FormFeedback className="t14">El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
@@ -170,7 +168,8 @@ function ProductoEditarID(props) {
                 <Input
                     value={precio_venta} 
                     placeholder="Precio de venta" 
-                    type="number" min={0} 
+                    type="number" 
+                    min={0}
                     onChange={(e) => setPrecioVenta(e.target.value)} 
                     invalid={precio_ventaInvalido} />
                 {precioInvalido && <FormFeedback className="t14">El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
@@ -184,7 +183,8 @@ function ProductoEditarID(props) {
                 <Input
                     value={precio_venta_mayoreo} 
                     placeholder="Precio de venta" 
-                    type="number" min={0} 
+                    type="number" 
+                    min={0}
                     onChange={(e) => setPrecioVentaMayoreo(e.target.value)} 
                     invalid={precio_venta_mayoreoInvalido} />
                 {precioInvalido && <FormFeedback className="t14">El precio de venta debe ser mayor al precio de compra.</FormFeedback>}
@@ -205,12 +205,17 @@ function ProductoEditarID(props) {
                         <FormFeedback className="t14">{`${precioEnvio ? "Muy poca ganancia valide nuevamente." : "¿Envío incluido en precio de venta?"}`}</FormFeedback>
                     </FormGroup>
                 </Col>
-                {precio_venta_ml >= 250 && envio && <Col>
+                <Col>
                     <div className="wbold t15 verdeObscuro">*Costo envío:</div>
                     <FormGroup>
-                        <Input value={costo_envio} type="number" placeholder="Mercadolibre" onChange={(e) => setCostoEnvio(e.target.value)} />
+                        <Input 
+                            value={costo_envio} 
+                            type="number" 
+                            min={0}
+                            placeholder="Mercadolibre" 
+                            onChange={(e) => setCostoEnvio(e.target.value)} />
                     </FormGroup>
-                </Col>}
+                </Col>
             </Row>
         </Card>)
    
@@ -276,11 +281,6 @@ function ProductoEditarID(props) {
         }
     }
 
-    console.log(envio)
-
-    
-    
-
     
     const fuse = new Fuse(productos, {
         keys: [{name:"nombre", weight: 0.7}, {name:"categoria", weight: 0.15}, {name:"sub-categoria", weight: 0.1}, {name:"propietario", weight: 0.05}],
@@ -294,32 +294,127 @@ function ProductoEditarID(props) {
 
 
     const dataFinal = {
-        imagen: imagen ? imagen : props.p?.imagen,
-        nombre: nombre ? nombre : props.p?.nombre,
-        tematica: tematica ? tematica : props.p?.tematica,
+        imagen: imagen,
+        nombre: nombre,
+        tematica: tematica,
+        titulo: titulo,
         codigo_universal: categorias?.filter(c => categoria === c.categoria)[0]?.codigo_universal,
-        categoria: categoria ? categoria : props.p?.categoria,
-        sub_categoria: subCategoria ? subCategoria : props.p?.sub_categoria,
+        categoria: categoria,
+        sub_categoria: subCategoria,
         precio_compra: !isCompuesto ? precio_compra : "",
-        precio_venta: precio_venta ? precio_venta : props.p?.precio_venta,
-        precio_venta_ml: precio_venta_ml ? precio_venta_ml : props.p?.precio_venta_ml,
-        precio_venta_mayoreo: precio_venta_mayoreo ? precio_venta_mayoreo : props.p?.precio_venta_mayoreo,
+        precio_venta_ml: precio_venta_ml,
+        precio_venta: precio_venta,
+        precio_venta_mayoreo: precio_venta_mayoreo,
         envio: envio === "false" ? false : envio === "true" ? true  : props.p?.envio,
-        costo_envio: props.p.costo_envio,
-        medidas: medidas ? medidas : props.p?.medidas,
-        material: material ? material : props.p?.material,
-        descripcion: descripcion ? descripcion : props.p?.descripcion,
-        // cantidad: cantidad ? cantidad : props.p?.cantidad,
+        costo_envio: costo_envio,
+        medidas: medidas,
+        material: material,
+        descripcion: descripcion,
+        cantidad: cantidad,
         proveedor: !isCompuesto ? proveedor : "",
-        // propietario: propietario ? propietario : props.p?.propietario,
-        // subido: subido === "false" ? false : subido === "true" ? true : false,
+        propietario: propietario,
+        subido: subido === "false" ? false : subido === "true" ? true : subido,
         codigo_producto: !isCompuesto ? codigo_producto : "",
         compuesto: isCompuesto ? compuesto : [],
-        // comentario: comentario ? comentario : props.p?.comentario,
+        comentario: comentario,
         activo: props.p?.activo,
     }
     console.log(dataFinal)
-    console.log(dataCompleta)
+    
+// ACTUALIZAR PRODUCTO ------------------------------------------------------------
+    const actualizarProducto = async() => {
+        setLoading(true);
+        if(!dataCompleta){
+            swal({
+                title: "Error",
+                text: "Intente nuevamente",
+                icon: "error",
+                button: "cerrar"
+            });
+            setLoading(false);
+            return
+        }
+        try {
+
+            await updateDoc(doc(db, "productos", props.p.id), dataFinal)
+            
+            swal({
+                title: "Producto actualizado",
+                text: "",
+                icon: "success",
+                button: "cerrar"
+            })
+            // const dataSplice = productos.splice(props.i, 1)
+            // console.log(dataSplice)
+            
+            // localStorage.setItem('productoInfo', JSON.stringify([...productos, dataFinal]))
+            // setProductos([...productos, dataFinal])
+            navigate(`/admin/inicio`)
+            window.location.reload()
+            setLoading(false);
+        } catch (error){
+            swal({
+                    title: "Error",
+                    text: `No se ha podido actualizar el producto, ${error.message}`,
+                    icon: "error",
+                    button: "cerrar"
+                });
+                setLoading(false);
+            }
+        }
+    
+// ELIMINAR PRODUCTO (INACTIVAR) ------------------------------------------------------------
+    const eliminarProducto = async() => {
+        setLoading(true);
+        if(!dataCompleta){
+            swal({
+                title: "Error",
+                text: "Intente nuevamente",
+                icon: "error",
+                button: "cerrar"
+            });
+            setLoading(false);
+            return
+        }
+        try {
+            await updateDoc(doc(db, "productos", props.p.id), {...props.p, activo: false})
+
+            swal({
+                title: "Producto eliminado",
+                text: "Has eliminado el producto",
+                icon: "success",
+                button: "cerrar"
+            })
+            // const dataSplice = productos.splice(props.i, 1)
+            // console.log(dataSplice)
+            // localStorage.setItem('productoInfo', JSON.stringify(productos))
+            // setProductos([...productos])
+            navigate(`/admin/inicio`)
+            window.location.reload()
+            setLoading(false);
+            } catch (error){
+                swal({
+                    title: "Error",
+                    text: `No se ha podido borrar el producto, ${error.message}`,
+                    icon: "error",
+                    button: "cerrar"
+                });
+                setLoading(false);
+        }
+    }
+
+// FETCH CATEGORIAS
+    useEffect(() => {
+        const fetchCategorias = async() => {
+            const dataCategoria =  await getDocs(collection(db, "categorias"))
+            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setCategorias(data)
+        }
+        fetchCategorias();
+        setLoading(false)
+    }, [setLoading])
+
+    const ganancia = precio_venta_ml - costo_envio - (isCompuesto ? total : precio_compra)
 
 
     return (
@@ -329,7 +424,7 @@ function ProductoEditarID(props) {
             <div className="parmediano pabmediano"><Button onClick={() => regresar()} className="botonTransparente azul"><FaChevronLeft className="tIconos" /> Volver</Button></div>
             <div className="wbold t25 pabgrande">{props.p.nombre}</div>
 
-    {/* AREA 1 - Imagen - Nombre - Titulo - Precio Venta - Precio Venta ML - Precio Mayoreo - Envio */}
+    {/* AREA 0 - Imagen - Nombre - Titulo - Precio Venta - Precio Venta ML - Precio Mayoreo - Envio */}
                 <div className="pabmuygrande">
                     <Card className="pizgrande pdegrande claseCard">
                         <Row>
@@ -396,6 +491,22 @@ function ProductoEditarID(props) {
                                 
                                 {cardPrecio}
                             </div>
+                    </Card>
+                </div>
+
+    {/* AREA 1 - Cantidad */}
+                <div className="pabmuygrande">
+                    <Card className="parmediano pdegrande pizgrande pabgrande claseCard">
+                        {/* Cantidad */}
+                        <>
+                            <div className="wbold">Cantidad en inventario:</div>
+                            <Input 
+                                value={cantidad} 
+                                placeholder="0" 
+                                type="number" 
+                                min={0}
+                                onChange={(e) => setCantidad(e.target.value)} />
+                        </>      
                     </Card>
                 </div>
 
@@ -489,6 +600,8 @@ function ProductoEditarID(props) {
                                         value={codigo_universal}
                                         placeholder="Ej: 20394902" 
                                         type="number" 
+                                        min={0}
+
                                         onChange={(e) => setCodigoUniversal(e.target.value)} 
                                         invalid={!codigo_universal} />
                                 </FormGroup>
@@ -547,7 +660,7 @@ function ProductoEditarID(props) {
                                 <span className="wbold">Costo total:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} />
                                 <Card className="pmediano">
                                     <div className="overflowModal">
-                                        {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).filter(a => a.activo).filter(producto => !producto.compuesto?.length).map((p, i) =>
+                                        {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).filter(a => a.activo).filter(producto => producto.id !== props.p.id).filter(producto => !producto.compuesto?.length).map((p, i) =>
                                             <div key={i}>
                                                 <ProductoCompuesto p={p} compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
                                             </div>
@@ -562,7 +675,7 @@ function ProductoEditarID(props) {
                     </Card>
                 </div>
 
-    {/* AREA 6 -  Precio Compra - Ganancia - Propietario*/}
+    {/* AREA 6 -  Precio Compra - Ganancia*/}
                 <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
                         {!isCompuesto && <>
@@ -570,44 +683,105 @@ function ProductoEditarID(props) {
                     {/* Precio de compra */}
                             <div className="wbold">*Precio de compra:</div>
                             <FormGroup>
-                                <Input value={precio_compra} placeholder="Precio de compra" type="number" min={0} onChange={(e) => setPrecioCompra(e.target.value)} invalid={!precio_compra} />
+                                <Input 
+                                    value={precio_compra} 
+                                    placeholder="Precio de compra" 
+                                    type="number" 
+                                    min={0}
+                                    onChange={(e) => setPrecioCompra(e.target.value)} 
+                                    invalid={!precio_compra} />
                             </FormGroup>
-                            <div><span className="wbold azul">Ganancia:</span> <NumberFormat className={`wbold ${(props.p.precio_venta - precio_compra - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))) <= 0 ? "rojo" : "verdeObscuro"}`} displayType={'text'} thousandSeparator={true} prefix={'$'} value={props.p.precio_venta - precio_compra - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))} />.</div>
                         </>}
                         {isCompuesto && <div><span className="wbold azul">Precio compra:</span> <NumberFormat className="wbold amarilloObscuro" displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} /></div>}
-                        {isCompuesto && <div><span className="wbold azul">Ganancia:</span> <NumberFormat className={`wbold ${(props.p.precio_venta - total - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))) <= 0 ? "rojo" : "verdeObscuro"}`} displayType={'text'} thousandSeparator={true} prefix={'$'} value={props.p?.precio_venta - total - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))} /></div>}
-                        <div><span className="wbold azul">Propietario:</span> {props.p.envio}</div>
+                        <div><span className="wbold azul">Ganancia esperada:</span> <NumberFormat className={`wbold ${ganancia <= 0 ? "rojo" : "verdeObscuro"}`} displayType={'text'} thousandSeparator={true} prefix={'$'} value={ganancia} /></div>
+             
                     </Card>
                 </div>
 
     {/* AREA 7 -  Proveedor - Codigo producto*/}
                 {!isCompuesto && <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
-                            <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
-                            <div><span className="wbold azul">Codigo Producto:</span> {props.p.codigo_producto}</div>
+
+                    {/* Proveedor */}
+                        {!isCompuesto && <>
+                            <div className="wbold">Proveedor:</div>
+                            <FormGroup>
+                                <Input value={proveedor} placeholder="Nombre del proveedor" type="text" onChange={(e) => setProveedor(e.target.value)} />
+                            </FormGroup>
+                        </>} 
+
+                    {/* Código */}
+                        {!isCompuesto && <div>
+                            <div className="wbold">Código del producto:</div>
+                            <FormGroup>
+                                <Input value={codigo_producto} placeholder="(del proveedor)" type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
+                            </FormGroup>
+                        </div>}
+
                     </Card>
                 </div>}
 
 
-    {/* AREA 7 -  Comentario*/}
+    {/* AREA 8 -  Comentario - Subido - Propietario*/}
                 <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
-                            <div><span className="wbold azul">Subido:</span> {props.p.subido}</div>
-                            <div><span className="wbold azul">Comentario:</span> {props.p.comentario}</div>
+                        {/* Subido */}
+                        <>
+                            <div className="wbold">Subido:</div>
+                            <FormGroup>
+                                <Input value={subido} type="select" onChange={(e) => setSubido(e.target.value)} >
+                                    <option value="" disabled={subido !== ""}>Seleccione:</option>
+                                    <option value={true}>Sí</option>
+                                    <option value={false}>No</option>
+                                </Input>
+                                <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
+                            </FormGroup>
+                        </>
+                            
+                        {/* COMENTARIO */}
+                            <>
+                                <div className="wbold parchico">Comentario:</div>
+                                <FormGroup>
+                                    <Input 
+                                        value={comentario}
+                                        placeholder="Comentario" 
+                                        type="textarea" 
+                                        rows="3"
+                                        onChange={(e) => setComentario(e.target.value)} />
+                                </FormGroup>
+                            </>
+                    {/* Propietario */}
+                    <>
+                            <div className="wbold">*Propietario:</div>
+                            <FormGroup>
+                                <Input value={propietario} type="select" onChange={(e) => setPropietario(e.target.value)} invalid={!propietario} >
+                                    <option value="" disabled={propietario !== ""}>Seleccione:</option>
+                                    <option value="Jorge">Jorge</option>
+                                    <option value="Ana">Ana</option>
+                                </Input>
+                                <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
+                            </FormGroup>
+                        </>
                     </Card>
                 </div>
+                
 
-    {/* AREA 7 -  Activo - Borrar - Guardar*/}
+    {/* AREA 9 -  Activo - Borrar - Guardar*/}
                 <div className="pabmuygrande">
                     <Card className="pmuygrande claseCard">
                         <div className="pabchico">
-                            <Button onClick={() => {}} className="botonAzul w100">Publicar similar</Button>
+                            <Button disabled={!dataCompleta} onClick={() => {actualizarProducto()}} className="botonAmarillo w100">Guardar cambios</Button>
                         </div>
                         <div className="pabchico">
-                            {/* funcion de inactivar directamente sin state */}
-                            <Button onClick={() => {}} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
+                            <Button onClick={() => {}} className="botonAzul w100">Publicar similar</Button>
                         </div>
-                        <Button onClick={() => {}} className="botonAmarillo w100">Guardar</Button>
+                        {/* funcion de inactivar directamente sin state */}
+                        <Button onClick={() => swal({ 
+                                    title: "¿Estás segur@?" , 
+                                    text: "No podrás revertirlo!", 
+                                    icon: "warning", 
+                                    buttons: ["Cancelar", "Borrar"]
+                                }).then((res) => {if(res){eliminarProducto()}})} className="botonRojo w100"><FaTrash className="tIconos" /> Borrar producto</Button>
                     </Card>
                 </div>
             </Container>

@@ -38,14 +38,14 @@ function Admin() {
                         <div>
                             <div className="pargrande">
                                 <Row className="parchico">
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                    {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                         <ProductoEditar key={i} p={p}  cambio={query.length} />
                                     )}
                                 </Row>
 
                                 {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                                 <>
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                     )}
                                 </>}

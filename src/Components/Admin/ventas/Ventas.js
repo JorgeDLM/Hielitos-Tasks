@@ -39,7 +39,7 @@ function Ventas() {
                         <div className="pargrande">
                             <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
                             <div className="w100"><Button className="botonNegro w100" >Generar venta</Button></div>
-                                {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                     <ProductoVentas key={i} p={p}  cambio={query.length} />
                                 )}
                                 {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
@@ -50,7 +50,7 @@ function Ventas() {
                     {productosVenta.length >= 1 && <Col xs={4} className="pargrande">
                         <Card className="pmediano">
                             <div className="wbold">Venta:</div>
-                            {productosVenta.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
+                            {productosVenta.filter(a => a.activo).sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
                                 <div><span className="wbold t15 negro">{p.cantidad}</span> x {productos.find(prod => (prod.id === p.producto))?.nombre}
                                 {' '}(<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_venta_ml} />/pza) 
                                 <div className="wbold t14 azul parmuychico">TOTAL: <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_venta_ml * p.cantidad} /></div></div>

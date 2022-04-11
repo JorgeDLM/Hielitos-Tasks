@@ -125,11 +125,11 @@ function Compras() {
                                 <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
                                 {productosValidos && <div className="w100"><Button className="botonNegro w100" onClick={() => setModal(!modal)} >Generar compra</Button></div>}
                                     <div className="overflow">
-                                        {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                        {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                             <ProductoCompras key={i} p={p}  cambio={query.length} />
                                         )}
                                     </div>
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                     )}
                             </div>
@@ -138,7 +138,7 @@ function Compras() {
                             <Card className="pmediano">
                                 <div className="wbold">Compra:</div>
                                 <div className={productosCompra?.length >= 7 && "overflowTicket"}>
-                                    {productosCompra.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
+                                    {productosCompra.filter(a => a.activo).sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
                                         <TicketCompraActual p={p} i={i} />
                                     </div>)}
                                 </div>

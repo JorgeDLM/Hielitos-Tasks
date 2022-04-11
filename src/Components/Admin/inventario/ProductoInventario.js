@@ -123,8 +123,8 @@ function ProductoInventario(props) {
                                 <Col>
                                     {(props.p.cantidad !== 0) && 
                                     <Button disabled={loading || (props.p.cantidad === 0)} onClick={() => swal({ 
-                                        title: "Are you sure?" , 
-                                        text: "You won’t be able to revert this!", 
+                                        title: "¿Estás segur@?" , 
+                                        text: "No podrás revertirlo!", 
                                         icon: "warning", 
                                         buttons: ["Cancelar", "Borrar"]
                                     }).then((res) => {if(res){borrarInventario()}})} className="botonInputRojo">{loading ? <Spinner size="sm" /> : <FaTrash className="claseIconos" />}</Button>}
