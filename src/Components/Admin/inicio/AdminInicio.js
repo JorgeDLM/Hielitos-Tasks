@@ -15,8 +15,8 @@ function Admin() {
     const [query, setQuery] = useState('')
 
     const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.4}, {name:"categoria", weight: 0.25}, {name:"sub-categoria", weight: 0.25}, {name:"propietario", weight: 0.1}],
-        threshold: 0.5,
+        keys: [{name:"nombre", weight: 0.25}, {name:"titulo", weight: 0.25}, {name:"categoria", weight: 0.20}, {name:"sub-categoria", weight: 0.20}, {name:"propietario", weight: 0.1}],
+        threshold: 0.4,
         includeScore: true,
         shouldSort: true,
       })
@@ -32,7 +32,8 @@ function Admin() {
                             <ModalProducto />
                             <ModalCategorias />
                         </div>
-                <div className="pabmediano pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                <div className="pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                <div className="pabmediano derecha pdechico gris t14">{productosFuse.length} resultados</div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
                         <div>
