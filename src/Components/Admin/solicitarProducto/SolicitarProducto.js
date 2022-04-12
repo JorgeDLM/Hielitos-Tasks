@@ -116,7 +116,7 @@ const SolicitarProducto = () => {
             <Modal isOpen={modal} toggle={() => setModal(!modal)}>
                 <div className='pgrande'>
                     <Input type="text" placeholder='Nombre' value={nombre} onChange={e => setNombre(e.target.value)} />
-                    <Input type="number" placeholder='Cantidad inventario' value={inventario} onChange={e => setInventario(e.target.value)} />
+                    <Input type="number" placeholder='Cantidad en inventario' value={inventario} onChange={e => setInventario(e.target.value)} />
                     <Input type="number" placeholder='Cantidad solicitada' value={cantidad} onChange={e => setCantidad(e.target.value)} />
                 </div>
                 <Button disabled={!nombre || !inventario || !cantidad}className="botonAzul" onClick={() => {crearSolicitud()}}>Solicitar</Button>
