@@ -6,6 +6,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore'
 import { db } from '../../../firebase-config';
 import swal from 'sweetalert';
 import UsuarioContext from '../context/UsuarioContext';
+import MenuAdmin from '../MenuAdmin';
 
 const SolicitarProducto = () => {
 
@@ -84,7 +85,8 @@ const SolicitarProducto = () => {
 
   return (
     <div>
-        <Menu links={links} logoNegro  />
+        {usuarioLoggeado && <MenuAdmin />}
+        {!usuarioLoggeado && <Menu links={links} logoNegro  />}
         <Container className="pargrande pabepico">
             <div className='centro pabmediano'>
                 <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Solicitar producto</Button>
