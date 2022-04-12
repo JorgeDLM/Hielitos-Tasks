@@ -17,6 +17,7 @@ import ProductoEditarID from "./Components/Admin/inicio/ProductoEditarID";
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
 import ProductoPublicarSimilarID from "./Components/Admin/inicio/ProductoPublicarSimilarID";
+import SolicitarProducto from "./Components/Admin/solicitarProducto/SolicitarProducto";
 
 function App() {
 
@@ -61,6 +62,9 @@ return (
 							<Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />
 						)}
 					</>}
+					<>
+						<Route path="solicitar" element={<SolicitarProducto/>} />
+					</>
 				</React.Fragment>
 			</Routes>
 		</React.Fragment>

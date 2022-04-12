@@ -33,7 +33,7 @@ function Admin() {
                             <ModalCategorias />
                         </div>
                 <div className="pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
-                <div className="pabmediano derecha pdechico gris t14">{productosFuse.length} resultados</div>
+                <div className="derecha pdechico gris t14">{productosFuse.length} resultados</div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
                         <div>

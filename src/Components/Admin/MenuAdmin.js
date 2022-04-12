@@ -25,6 +25,10 @@ function MenuAdmin() {
 			nombre: "Faltan de subir",
 			path: `/admin/por-subir`,
 		},
+		{
+			nombre: "Producto solicitado",
+			path: `/solicitar`,
+		},
 
 	];
 
