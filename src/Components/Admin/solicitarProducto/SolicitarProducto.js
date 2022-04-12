@@ -85,13 +85,13 @@ const SolicitarProducto = () => {
   return (
     <div>
         <Menu links={links} logoNegro  />
-        <Container className="pargrande pabenorme">
+        <Container className="pargrande pabepico">
             <div className='centro pabmediano'>
                 <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Solicitar producto</Button>
             </div>
             <div>
-                {loading ? <div className="centro"><Spinner className='gris' /></div> : <>
-                    <div className='contenedor pabenorme'>
+                {loading ? <div className="centro pabenorme"><Spinner className='gris' /></div> : <>
+                    <div className='contenedor'>
                         <Card className="claseCard productosSolicitados pchico centradoEnmedio" >
                             {productosSolicitados.map((p,i) => (
                                 <div className='pabmuychico izquierda'>
