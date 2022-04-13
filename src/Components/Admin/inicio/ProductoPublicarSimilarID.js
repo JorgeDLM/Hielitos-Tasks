@@ -20,7 +20,7 @@ function ProductoPublicarSimilarID(props) {
 
     const [imagen, setImagen] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
     const [nombre, setNombre] = useState(props.p.nombre)
-    const [titulo, setTitulo] = useState(props.p.titulo)
+    const [titulo, setTitulo] = useState("")
     const [categoria, setCategoria] = useState(props.p.categoria)
     const [subCategoria, setSubCategoria] = useState(props.p.sub_categoria ? props.p.sub_categoria : "")
     const [categorias, setCategorias] = useState([])
@@ -87,7 +87,7 @@ function ProductoPublicarSimilarID(props) {
     const envioInvalido = envio === "" || precioEnvio
     const imagenInvalida = imagen === "https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg"
 
-    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && titulo !== "" && !imagenInvalida
+    const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && !(titulo === "" && tituloDefault === "") && !imagenInvalida
 
 
 
@@ -468,9 +468,8 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                         placeholder="Título de la publicación" 
                                         type="text" 
                                         maxLength={60} 
-                                        onChange={(e) => setTitulo(e.target.value)} 
-                                        invalid={!titulo} />
-                                    <div className="derecha pdemediano">{titulo?.length}/60</div>
+                                        onChange={(e) => setTitulo(e.target.value)}/>
+                                    <div className="derecha pdemediano">{titulo?.length !== 0 ? titulo?.length : tituloDefault.length}/60</div>
                             </>                    
                         </div>
                         {/* PANTALLA CHICA */}
