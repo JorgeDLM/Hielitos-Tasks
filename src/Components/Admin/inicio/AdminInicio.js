@@ -52,7 +52,7 @@ function Admin() {
                                 </>}
                             </div>
                         </div>
-                        <div><Button className="botonAzul w100" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button></div>
+                        {loading ? <div className="centro azul"><Spinner /></div> : <>{productosFuse.length >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>}
                     </>}
             </Container>
         </React.Fragment>
