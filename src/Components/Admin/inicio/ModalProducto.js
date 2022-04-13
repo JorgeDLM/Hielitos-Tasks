@@ -315,7 +315,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
 
     return (
         <React.Fragment>
-            <Button onClick={() => setModal(!modal)} className="botonNegro"><FaPlus className="t14 pabmuychico" /> Producto</Button>
+            <Button onClick={() => setModal(!modal)} className="botonNegro w100"><FaPlus className="t14 pabmuychico" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
                     {imagen === "" ? 

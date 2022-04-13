@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Modal, Input, FormGroup } from "reactstrap";
+import { Button, Modal, Input, FormGroup, Col } from "reactstrap";
 import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
 import { FaPlus } from 'react-icons/fa'
@@ -115,8 +115,8 @@ const agregarSubCategoria = async() => {
 
     return (
         <React.Fragment>
-            <div className="d-inline pizchico"><Button onClick={() => setModal(!modal)} className="botonAmarillo"><FaPlus className="t14 pabmuychico" /> Categoria</Button></div>
-            <div className="d-inline pizchico"><Button onClick={() => setModal2(!modal2)} className="botonAzul" disabled={loading}><FaPlus className="t14 pabmuychico" /> <span className="d-none d-md-inline">Sub-categoria</span><span className="d-inline d-md-none">Sub</span></Button></div>
+            <Col className="pizchico"><Button onClick={() => setModal(!modal)} className="botonAmarillo w100"><FaPlus className="t14 pabmuychico" /> Categoria</Button></Col>
+            <Col className="pizchico"><Button onClick={() => setModal2(!modal2)} className="botonAzul w100" disabled={loading}><FaPlus className="t14 pabmuychico" /> <span className="d-none d-md-inline">Sub-categoria</span><span className="d-inline d-md-none">Sub</span></Button></Col>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
             <div className="pargrande azul wbolder centro tmuygrande">
                 <div className="pabmediano"><img className="productoLista" src={logo} alt="Error" /></div>

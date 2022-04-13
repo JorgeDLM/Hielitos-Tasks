@@ -25,7 +25,7 @@ const UsuarioState = (props) => {
     // CARGAR PRODUCTOS-------------------------------------------------------
     useEffect(() => {
         const fetchProductos = async() => {
-            const dataProductos = query(collection(db, "productos"), where("activo", "==", true), limit(20+loadMore))
+            const dataProductos = query(collection(db, "productos"), where("activo", "==", true), limit(20+(loadMore >= 5000 ? 5000 : loadMore)))
 
             const querySnapshot = await getDocs(dataProductos);
             const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
@@ -42,9 +42,9 @@ const UsuarioState = (props) => {
             
             localStorage.setItem('productosCache', JSON.stringify([...unico]))    
             setProductos(getDataProductos)
-            setLoading(false)
         }
         fetchProductos();
+        setLoading(false)
         console.log("cargar más")
     }, [loadMore, productosCache])
     console.log(productosCache)

@@ -1,21 +1,62 @@
-import React, { useContext, useState } from "react";
-import { Container, Spinner, Input, Row, Button } from "reactstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Container, Spinner, Input, Row, Button, Col } from "reactstrap";
 import ModalProducto from './ModalProducto'
 import ModalCategorias from "./ModalCategorias";
 import UsuarioContext from "../context/UsuarioContext";
 import Fuse from 'fuse.js'
-import { FaExclamationTriangle } from 'react-icons/fa'
+import { FaExclamationTriangle, FaTrash } from 'react-icons/fa'
 import ProductoEditar from "./ProductoEditar";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase-config";
 
 function Admin() {
     
-    const { productos, loading, setLoadMore, loadMore } = useContext(UsuarioContext)
+    const { productos, loading, setLoadMore, loadMore, setLoading } = useContext(UsuarioContext)
 
 
+    const [categoria, setCategoria] = useState("")
+    const [categorias, setCategorias] = useState([])
+    // const [categoriasCache, setCategoriasCache] = useState([])
+    const [subCategoria, setSubCategoria] = useState("")
+    const [subCategorias, setSubCategorias] = useState([])
     const [query, setQuery] = useState('')
 
+
+
+    
+    // FETCH CATEGORIAS
+    useEffect(() => {
+        const fetchCategorias = async() => {
+            const dataCategoria =  await getDocs(collection(db, "categorias"))
+            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setCategorias(data)
+        }
+        fetchCategorias();
+        setLoading(false)
+        console.log("a")
+    }, [setLoading])
+    
+    
+    
+    // FETCH SUBCATEGORIAS
+    useEffect(() => {
+        const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
+        const set = async () => {
+            const dataSubCategoria =  await getDocs(collection(db, "categorias", categoriaID, "sub_categorias"))
+            const data = dataSubCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setLoading(false)
+            setSubCategorias(data)
+        }
+        if(categoria !== ""){
+            set()
+        }
+        setLoading(false)
+        
+        console.log("b")
+    }, [categoria, categorias, setLoading])
+    
     const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.25}, {name:"titulo", weight: 0.25}, {name:"categoria", weight: 0.20}, {name:"sub-categoria", weight: 0.20}, {name:"propietario", weight: 0.1}],
+        keys: [{name:"nombre", weight: 0.25}, {name:"titulo", weight: 0.25}, {name:"categoria", weight: 0.20}, {name:"sub_categoria", weight: 0.20}, {name:"propietario", weight: 0.1}],
         threshold: 0.4,
         includeScore: true,
         shouldSort: true,
@@ -28,25 +69,43 @@ function Admin() {
     return (
         <React.Fragment>
             <Container className="pabenorme">
-                        <div className="pargrande centro">
-                            <ModalProducto />
+                        <Row className="pargrande centro">
+                            <Col>
+                                <ModalProducto />
+                            </Col>
                             <ModalCategorias />
-                        </div>
-                <div className="pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(3000)}} /></div>
-                <div className="derecha pdechico gris t14">{productosFuse.length} resultados</div>
+                        </Row>
+
+                <Row className="pargrande">
+                    <Col>
+                        <Input type="select" value={categoria} onChange={e => {setCategoria(e.target.value); setLoadMore(5000); setLoading(true); setSubCategoria("")}} >
+                            <option value="">Categoria:</option>
+                            {categorias?.map((c, i) => <option key={i}>{c.categoria}</option>)}
+                        </Input>
+                    </Col>
+                    <Col>{loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> : 
+                        <Input type="select" value={subCategoria} onChange={e => {setSubCategoria(e.target.value); setLoadMore(5000)}} >
+                            <option value="">Sub categoria:</option>
+                            {subCategorias?.map((c, i) => <option key={i}>{c.sub_categoria}</option>)}
+                        </Input>}
+                    </Col>
+                </Row>
+                <div className="parchico"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} /></div>
+                <div className="derecha pdechico gris t14">{productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).length} resultados</div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
                         <div>
+                            {(categoria !== "" || subCategoria !== "") && <div><Button onClick={() => {setCategoria(""); setSubCategoria("")}} className="botonAmarilloComentario"><FaTrash className="tIconos" /></Button><span className="pizchico wbold">Filtros:</span> {categoria}{subCategoria && ` - ${subCategoria}`}</div>}
                             <div className="pargrande">
                                 <Row className="parchico">
-                                    {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                         <ProductoEditar key={i} p={p}  cambio={query.length} />
                                     )}
                                 </Row>
 
                                 {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                                 <>
-                                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                    {productosFuse.length <= 0 && 
                                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                     )}
                                 </>}
