@@ -14,7 +14,10 @@ function ProductoEditar(props) {
     return (
                     
         <Col className="pabmediano contenedor widthCardProveedorCol">
-            <Link to={`/editar/${props.p.id}`} target="_blank" className="linkSF">
+            <Link 
+                to={`/editar/${props.p.id}`} 
+                target="_blank" 
+                className="linkSF">
                 <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick" onClick={() => {irID()}}>
                     <div className="contenedor">
                         <img src={props.p.imagen} className="claseImagenCatalogo" alt="error" />

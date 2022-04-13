@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container, Spinner, Input, Row } from "reactstrap";
+import { Container, Spinner, Input, Row, Button } from "reactstrap";
 import ModalProducto from './ModalProducto'
 import ModalCategorias from "./ModalCategorias";
 import UsuarioContext from "../context/UsuarioContext";
@@ -9,7 +9,7 @@ import ProductoEditar from "./ProductoEditar";
 
 function Admin() {
     
-    const { productos, loading } = useContext(UsuarioContext)
+    const { productos, loading, setLoadMore, loadMore } = useContext(UsuarioContext)
 
 
     const [query, setQuery] = useState('')
@@ -32,7 +32,7 @@ function Admin() {
                             <ModalProducto />
                             <ModalCategorias />
                         </div>
-                <div className="pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                <div className="pargrande"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(3000)}} /></div>
                 <div className="derecha pdechico gris t14">{productosFuse.length} resultados</div>
                     {loading ? <div className="centro parmediano azul"><Spinner /></div> :
                     <>
@@ -52,6 +52,7 @@ function Admin() {
                                 </>}
                             </div>
                         </div>
+                        <div><Button className="botonAzul w100" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button></div>
                     </>}
             </Container>
         </React.Fragment>

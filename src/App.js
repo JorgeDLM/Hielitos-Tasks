@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Routes, Route, Navigate } from "react-router-dom"
+import { Routes, Route, Navigate} from "react-router-dom"
 
 import Inicio from './Components/InicioCatalogo/InicioCatalogo'
 import Catalogo from './Components/InicioCatalogo/Catalogo'
@@ -21,7 +21,10 @@ import SolicitarProducto from "./Components/Admin/solicitarProducto/SolicitarPro
 
 function App() {
 
-    const { usuarioLoggeado, productos } = useContext(Usuario)
+    const { usuarioLoggeado, productosCache } = useContext(Usuario)
+
+	const productoEditar = productosCache?.map((p,i) => <Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />)
+
 
 return (
 		<React.Fragment>
@@ -36,11 +39,11 @@ return (
 							<Route path="por-subir" element={<PorSubir/>} />
 							<Route path="compras" element={<Compras/>} />
 						</Route>
-						{productos.map((p,i) => 
-							<Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />
-						)}
-						{productos.map((p,i) => 
-							<Route key={i} path={`publicar-similar/${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />
+						{productoEditar}
+						{productosCache?.map((p,i) => 
+							<Route key={i} path={`publicar-similar`} element={<ProductoPublicarSimilarID p={p} i={i} />} >
+								<Route path={`:${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />
+							</Route>
 						)}
 						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />
@@ -58,7 +61,7 @@ return (
 						<Route path="/" element={<Navigate to="/catalogo" />} />
 						<Route path="/*" element={<Navigate to="/catalogo" />} />
 						<Route path="/inicio" element={<Navigate to="/catalogo" />} />
-						{productos.map((p,i) => 
+						{productosCache?.map((p,i) => 
 							<Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />
 						)}
 					</>}

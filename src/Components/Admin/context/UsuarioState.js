@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react"
 import UsuarioContext from './UsuarioContext'
-import { collection, getDocs } from "firebase/firestore"
+import { collection, getDocs, limit, query, where  } from "firebase/firestore"
 import { db } from "../../../firebase-config"
 
 const UsuarioState = (props) => {
     
     const [loading, setLoading] = useState(true)
     const [productos, setProductos] = useState([])
+    const [productosCache, setProductosCache] = useState(JSON.parse(localStorage.getItem("productosCache"))  ? JSON.parse(localStorage.getItem("productosCache")) : [])
     const [usuario, setUsuario] = useState()
     const [usuarioLoggeado, setUsuarioLoggeado] = useState(localStorage.getItem("infoUsuario") !== null ? true : false)
     const [productosCompra, setProductosCompra] = useState([])
     const [productosVenta, setProductosVenta] = useState([])
     const [compras, setCompras] = useState([])
+    const [loadMore, setLoadMore] = useState(0)
 
     // USUARIO LOGGEADO
     useEffect(() => {
@@ -23,14 +25,40 @@ const UsuarioState = (props) => {
     // CARGAR PRODUCTOS-------------------------------------------------------
     useEffect(() => {
         const fetchProductos = async() => {
-            const dataProductos =  await getDocs(collection(db, "productos"))
-              const getDataProductos = dataProductos.docs.map((doc) => ({...doc.data(), id: doc.id}))      
-              setProductos(getDataProductos)
-              setLoading(false)
-            }
+            const dataProductos = query(collection(db, "productos"), where("activo", "==", true), limit(20+loadMore))
+
+            const querySnapshot = await getDocs(dataProductos);
+            const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+            
+
+            const ifProductosCache = productosCache ? productosCache : []
+            const setCache = [ ...getDataProductos, ...ifProductosCache ]
+            // const unico = setCache.filter((value, index, self) => index === self.findIndex((p) => {p.id === value.id && p.nombre === value.nombre}))
+            const unico = setCache.filter((value, index, self) =>
+                index === self.findIndex((t) => (
+                    t.id === value.id
+                ))
+            )
+            
+            localStorage.setItem('productosCache', JSON.stringify([...unico]))    
+            setProductos(getDataProductos)
+            setLoading(false)
+        }
         fetchProductos();
-      }, [])
+        console.log("cargar más")
+    }, [loadMore, productosCache])
+    console.log(productosCache)
+    
+    // localStorage.removeItem('productosCache')      
+
+    // CARGAR PRODUCTOSCACHE-------------------------------------------------------
+    useEffect(() => {
+        const productosCacheData = JSON.parse(localStorage.getItem("productosCache"))    
+        setProductosCache(productosCacheData)
+    }, [loadMore])
 // ------------------------------------------------------------------------
+
+
 // CARGAR COMPRAS-------------------------------------------------------
 // localStorage.removeItem("infoCompras")
 useEffect(() => {
@@ -77,6 +105,8 @@ useEffect(() => {
             setLoading,
             productos, 
             setProductos,
+            productosCache, 
+            setProductosCache,
             usuario, 
             setUsuario,
             usuarioLoggeado, 
@@ -87,6 +117,8 @@ useEffect(() => {
             setProductosVenta, 
             compras, 
             setCompras,
+            setLoadMore,
+            loadMore
         }}>
             {props.children}
         </UsuarioContext.Provider>  
