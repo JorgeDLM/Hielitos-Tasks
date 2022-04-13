@@ -44,6 +44,7 @@ function ProductoPublicarSimilarID(props) {
     const [cambio, setCambio] = useState(true)
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
     const [descripcionDefault, setDescripcionDefault] = useState("")
+    const [tituloDefault, setTituloDefault] = useState("")
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -394,6 +395,9 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
 *********************************************************************************************************`)
 }
 
+    const crearTituloDefault = () => {
+        setTituloDefault(`${nombre} - ${tematica}`)
+    }
 
     // FETCH CATEGORIAS
     useEffect(() => {
@@ -448,7 +452,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                 <div className="wbold">*Nombre:</div>
                                     <Input 
                                         value={nombre} 
-                                        onBlur={() => {crearDescripcion()}}
+                                        onBlur={() => {crearDescripcion(); crearTituloDefault()}}
                                         placeholder="Nombre corto" 
                                         type="text" 
                                         maxLength={60} 
@@ -461,7 +465,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                             <>
                                 <div className="wbold">*Título Mercadolibre:</div>
                                     <Input 
-                                        value={titulo} 
+                                        defaultValue={tituloDefault}
                                         onBlur={() => {crearDescripcion()}}
                                         placeholder="Título de la publicación" 
                                         type="text" 
