@@ -52,8 +52,6 @@ function ProductoPublicarSimilarID(props) {
     const [cambioCompuesto, setCambioCompuesto] = useState(false)
     const [query, setQuery] = useState("")
 
-    console.log("id", props.p.id)
-
 // Setear compuesto
     if(isCompuesto && !cambioCompuesto){
         setCambioCompuesto(true)
@@ -303,7 +301,7 @@ function ProductoPublicarSimilarID(props) {
         imagen: imagen,
         nombre: nombre,
         tematica: tematica,
-        titulo: titulo,
+        titulo: titulo ? titulo : tituloDefault,
         codigo_universal: categorias?.filter(c => categoria === c.categoria)[0]?.codigo_universal,
         categoria: categoria,
         sub_categoria: subCategoria,
@@ -396,7 +394,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
 }
 
     const crearTituloDefault = () => {
-        setTituloDefault(`${nombre} - ${tematica}`)
+        setTituloDefault((`${nombre} - ${tematica}`).length <= 60 ? `${nombre} - ${tematica}` : `${nombre}`)
     }
 
     // FETCH CATEGORIAS
