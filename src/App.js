@@ -24,6 +24,7 @@ function App() {
     const { usuarioLoggeado, productosCache } = useContext(Usuario)
 
 	const productoEditar = productosCache?.map((p,i) => <Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />)
+	const productoSimilar = productosCache?.map((p,i) => <Route key={i} path={`publicar-similar/${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />)
 
 
 return (
@@ -40,11 +41,7 @@ return (
 							<Route path="compras" element={<Compras/>} />
 						</Route>
 						{productoEditar}
-						{productosCache?.map((p,i) => 
-							<Route key={i} path={`publicar-similar`} element={<ProductoPublicarSimilarID p={p} i={i} />} >
-								<Route path={`:${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />
-							</Route>
-						)}
+						{productoSimilar}
 						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />
 						<Route path="/iniciar-sesion" element={<Navigate to="/admin/inicio" />} />

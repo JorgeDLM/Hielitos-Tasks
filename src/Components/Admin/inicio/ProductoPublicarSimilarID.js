@@ -51,6 +51,7 @@ function ProductoPublicarSimilarID(props) {
     const [cambioCompuesto, setCambioCompuesto] = useState(false)
     const [query, setQuery] = useState("")
 
+    console.log("id", props.p.id)
 
 // Setear compuesto
     if(isCompuesto && !cambioCompuesto){
