@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 
 function ProductoEditar(props) {
 
-    const irID = () => {
-        window.scrollTo(0, 0); 
-    }    
+    // const irID = () => {
+    //     window.scrollTo(0, 0); 
+    // }    
     const palabras = props.p.nombre.split(" ");
     const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ")
 
@@ -17,8 +17,8 @@ function ProductoEditar(props) {
             <Link 
                 to={`/editar/${props.p.id}`} 
                 target="_blank" 
-                className="linkSF">
-                <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick" onClick={() => {irID()}}>
+                className="linkSF widthCardProveedor centradoRelativo fondoRojo">
+                <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick">
                     <div className="contenedor">
                         <img src={props.p.imagen} className="claseImagenCatalogo" alt="error" />
                         <div className="gris centro parmediano">{nombre}</div>

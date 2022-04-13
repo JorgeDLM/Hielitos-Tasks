@@ -47,7 +47,7 @@ const UsuarioState = (props) => {
         setLoading(false)
         console.log("cargar más")
     }, [loadMore, productosCache])
-    console.log(productosCache)
+    // console.log(productosCache)
     
     // localStorage.removeItem('productosCache')      
 

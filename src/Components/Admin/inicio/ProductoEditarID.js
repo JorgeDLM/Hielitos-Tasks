@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoEditarID(props) {
     
-    const {loading, setLoading, productos, setProductos} = useContext(UsuarioContext)
+    const {loading, setLoading, productos, setProductos, setProductosCache, productosCache} = useContext(UsuarioContext)
 
     const [imagen, setImagen] = useState(props.p.imagen)
     const [nombre, setNombre] = useState(props.p.nombre)
@@ -315,6 +315,7 @@ function ProductoEditarID(props) {
 
 
     const dataFinal = {
+        id: props.p?.id,
         imagen: imagen,
         nombre: nombre,
         tematica: tematica,
@@ -365,11 +366,19 @@ function ProductoEditarID(props) {
                 button: "cerrar"
             })
             const dataSplice = productos.splice(props.i, 1)
+
+            const setCache = [ dataFinal, ...productosCache ]
+            const unico = setCache.filter((value, index, self) =>
+                index === self.findIndex((t) => (
+                    t.id === value.id
+                ))
+            )
             console.log(dataSplice)
+            console.log(unico)
             
             localStorage.setItem('productoInfo', JSON.stringify([...productos, dataFinal]))
             setProductos([...productos, dataFinal])
-            // navigate('/admin/inicio')
+            localStorage.setItem('productosCache', JSON.stringify([...unico])) 
             window.close()
             setLoading(false);
         } catch (error){
