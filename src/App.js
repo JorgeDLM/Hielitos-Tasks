@@ -25,6 +25,7 @@ function App() {
 
 	const productoEditar = productosCache?.map((p,i) => <Route key={i} path={`editar/${p.id}`} element={<ProductoEditarID p={p} i={i} />} />)
 	const productoSimilar = productosCache?.map((p,i) => <Route key={i} path={`publicar-similar/${p.id}`} element={<ProductoPublicarSimilarID p={p} i={i} />} />)
+	const productoCatalogo = productosCache?.map((p,i) => <Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />)
 
 
 return (
@@ -39,9 +40,9 @@ return (
 							<Route path="ventas" element={<Ventas/>} />
 							<Route path="por-subir" element={<PorSubir/>} />
 							<Route path="compras" element={<Compras/>} />
+							{productoEditar}
+							{productoSimilar}
 						</Route>
-						{productoEditar}
-						{productoSimilar}
 						{/* <Route path="/*" element={<Navigate to="/admin/inicio" />} /> */}
 						<Route path="/" element={<Navigate to="/admin/inicio" />} />
 						<Route path="/iniciar-sesion" element={<Navigate to="/admin/inicio" />} />
@@ -58,9 +59,7 @@ return (
 						<Route path="/" element={<Navigate to="/catalogo" />} />
 						<Route path="/*" element={<Navigate to="/catalogo" />} />
 						<Route path="/inicio" element={<Navigate to="/catalogo" />} />
-						{productosCache?.map((p,i) => 
-							<Route key={i} path={`/catalogo/${p.id}`} element={<ProductoID p={p} />} />
-						)}
+						{productoCatalogo}
 					</>}
 					<>
 						<Route path="solicitar" element={<SolicitarProducto/>} />

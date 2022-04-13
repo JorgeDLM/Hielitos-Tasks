@@ -15,7 +15,7 @@ function ProductoEditar(props) {
                     
         <Col className="pabmediano contenedor widthCardProveedorCol">
             <Link 
-                to={`/editar/${props.p.id}`} 
+                to={`/admin/editar/${props.p.id}`} 
                 target="_blank" 
                 className="linkSF widthCardProveedor centradoRelativo fondoRojo">
                 <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick">
