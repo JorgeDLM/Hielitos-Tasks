@@ -18,7 +18,7 @@ function ProductoEditar(props) {
                 to={`/admin/editar/${props.p.id}`} 
                 target="_blank" 
                 className="linkSF widthCardProveedor centradoRelativo fondoRojo">
-                <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick">
+                <Card className={`pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick ${props.p.propietario === "Ana" && "fondoRojoClaro"}`}>
                     <div className="contenedor">
                         <img src={props.p.imagen} className="claseImagenCatalogo" alt="error" />
                         <div className="gris centro parmediano">{nombre}</div>

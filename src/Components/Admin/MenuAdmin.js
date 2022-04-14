@@ -22,11 +22,11 @@ function MenuAdmin() {
 			path: `/admin/ventas`,
 		},
 		{
-			nombre: "Faltan de subir",
+			nombre: "Por subir",
 			path: `/admin/por-subir`,
 		},
 		{
-			nombre: "Producto solicitado",
+			nombre: "Solicitudes",
 			path: `/solicitar`,
 		},
 

@@ -43,6 +43,7 @@ function ProductoEditarID(props) {
     const [subido, setSubido] = useState(props.p.subido ? props.p.subido : false)
     const [cambio, setCambio] = useState(true)
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
+    const [linkCompra, setLinkCompra] = useState(props.p.link_compra ? props.p.link_compra : "")
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -334,6 +335,7 @@ function ProductoEditarID(props) {
         descripcion: descripcion,
         cantidad: cantidad,
         proveedor: !isCompuesto ? proveedor : "",
+        link_compra: linkCompra,
         propietario: propietario,
         subido: subido === "false" ? false : subido === "true" ? true : subido,
         codigo_producto: !isCompuesto ? codigo_producto : "",
@@ -744,6 +746,14 @@ function ProductoEditarID(props) {
                             <div className="wbold">Código del producto:</div>
                             <FormGroup>
                                 <Input value={codigo_producto} placeholder="(del proveedor)" type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
+                            </FormGroup>
+                        </div>}
+
+                    {/* Link de Compra */}
+                        {!isCompuesto && <div>
+                            <div className="wbold">Link de compra:</div>
+                            <FormGroup>
+                                <Input value={linkCompra} placeholder="URL" type="text" onChange={(e) => setLinkCompra(e.target.value)} />
                             </FormGroup>
                         </div>}
 

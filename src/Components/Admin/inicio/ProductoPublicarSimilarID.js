@@ -45,6 +45,7 @@ function ProductoPublicarSimilarID(props) {
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
     const [descripcionDefault, setDescripcionDefault] = useState("")
     const [tituloDefault, setTituloDefault] = useState("")
+    const [linkCompra, setLinkCompra] = useState(props.p.link_compra ? props.p.link_compra : "")
     
     
     const [compuesto, setCompuesto] = useState(props.p.compuesto ? props.p.compuesto : [])
@@ -316,6 +317,7 @@ function ProductoPublicarSimilarID(props) {
         descripcion: descripcion ? descripcion : descripcionDefault,
         cantidad: cantidad,
         proveedor: !isCompuesto ? proveedor : "",
+        link_compra: linkCompra,
         propietario: propietario,
         subido: subido === "false" ? false : subido === "true" ? true : subido,
         codigo_producto: !isCompuesto ? codigo_producto : "",
@@ -542,7 +544,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                     <FormGroup>
                                         <Input  
                                             value={tematica}
-                                            onBlur={() => {crearDescripcion()}}
+                                            onBlur={() => {crearDescripcion(); crearTituloDefault()}}
                                             placeholder="Ej: Harry Potter" 
                                             type="text" 
                                             onChange={(e) => setTematica(e.target.value)} />
@@ -708,6 +710,14 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                             <div className="wbold">Código del producto:</div>
                             <FormGroup>
                                 <Input value={codigo_producto} placeholder="(del proveedor)" type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
+                            </FormGroup>
+                        </div>}
+
+                    {/* Link de Compra */}
+                        {!isCompuesto && <div>
+                            <div className="wbold">Link de compra:</div>
+                            <FormGroup>
+                                <Input value={linkCompra} placeholder="URL" type="text" onChange={(e) => setLinkCompra(e.target.value)} />
                             </FormGroup>
                         </div>}
 

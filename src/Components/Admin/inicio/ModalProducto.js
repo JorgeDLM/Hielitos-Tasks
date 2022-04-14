@@ -41,6 +41,7 @@ function ModalProducto() {
     const [subido, setSubido] = useState("")
     const [loading, setLoading] = useState("")
     const [cambio, setCambio] = useState(true)
+    const [linkCompra, setLinkCompra] = useState("")
     
     const [query, setQuery] = useState("")
     const [isCompuesto, setIsCompuesto] = useState(false)
@@ -210,6 +211,7 @@ function ModalProducto() {
                 descripcion: descripcion ? descripcion : descripcionDefault,
                 cantidad: cantidad ? cantidad : 0,
                 proveedor: !isCompuesto ? proveedor : "",
+                link_compra: linkCompra,
                 propietario: propietario ? propietario : "",
                 subido: subido === "false" ? false : subido === "true" ? true : false,
                 codigo_producto: !isCompuesto ? codigo_producto : "",
@@ -544,6 +546,14 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                         <div className="wbold">Código proveedor:</div>
                         <FormGroup>
                             <Input placeholder="Código del producto" type="text" onChange={(e) => setCodigoProducto(e.target.value)} />
+                        </FormGroup>
+                    </div>}
+
+                {/* Link de Compra */}
+                {!isCompuesto && <div>
+                        <div className="wbold">Link de compra:</div>
+                        <FormGroup>
+                            <Input value={linkCompra} placeholder="URL" type="text" onChange={(e) => setLinkCompra(e.target.value)} />
                         </FormGroup>
                     </div>}
 
