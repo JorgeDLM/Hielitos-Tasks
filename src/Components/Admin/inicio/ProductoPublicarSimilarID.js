@@ -18,7 +18,10 @@ function ProductoPublicarSimilarID(props) {
     
     const {loading, setLoading, productos} = useContext(UsuarioContext)
 
-    const [imagen, setImagen] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
+    
+    const [imagenGrande, setImagenGrande] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
+    const [imagenMediana, setImagenMediana] = useState("")
+    const [imagenThumbnail, setImagenThumbnail] = useState("")
     const [nombre, setNombre] = useState(props.p.nombre)
     const [titulo, setTitulo] = useState("")
     const [categoria, setCategoria] = useState(props.p.categoria)
@@ -84,9 +87,9 @@ function ProductoPublicarSimilarID(props) {
     const precio_venta_mlInvalido = !isCompuesto ? (!precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)) : false
     const precio_venta_mayoreoInvalido = !isCompuesto ? (!precio_venta_mayoreo || ((precio_venta_mayoreo - precio_compra) <= 0)) : false
     const productoCompuestoInvalido = isCompuesto ? compuesto?.length === 0 : false
-    const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 70) : false
+    const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 20) : false
     const envioInvalido = envio === "" || precioEnvio
-    const imagenInvalida = imagen === "https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg"
+    const imagenInvalida = imagenGrande === "https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg" || !imagenMediana || !imagenThumbnail
 
     const dataCompleta =  !precio_ventaInvalido && !envioInvalido && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido && nombre !== "" && !(titulo === "" && tituloDefault === "") && !imagenInvalida
 
@@ -222,8 +225,40 @@ function ProductoPublicarSimilarID(props) {
         }
     }
 
-    // PROMESA IMAGEN RESIZE
-    const resizeFile = (file) =>
+    // PROMESA IMAGEN RESIZE Thumbnail
+    const resizeFileThumbnail = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            150,
+            150,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+    // PROMESA IMAGEN RESIZE MEDIANA
+    const resizeFileMediana = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            350,
+            350,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+    // PROMESA IMAGEN RESIZE GRANDE
+    const resizeFileGrande = (file) =>
         new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
@@ -252,18 +287,21 @@ function ProductoPublicarSimilarID(props) {
                 button: "Cerrar"
             })
         }
+        
+        const imageThumbnail = await resizeFileThumbnail(img)
+        const imageMediana = await resizeFileMediana(img)
+        const imageGrande = await resizeFileGrande(img)
 
-        const image = await resizeFile(img)
-
-        if (image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg" || image.type === "image/webp"){
+        if (imageThumbnail.type === "image/png" || imageThumbnail.type === "image/jpeg" || imageThumbnail.type === "image/jpg" || imageThumbnail.type === "image/webp"){
             const data = new FormData();
-            data.append("file", image);
+            data.append("file", imageThumbnail);
+            console.log("subida")
             data.append("upload_preset", "mercadoalamano");
             data.append("cloud_name",  "mercadoalamano");
             fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
             {method: 'post', body: data}).then((res) => res.json())
             .then(data => {
-                setImagen(data.url.toString());
+                setImagenThumbnail(data.url.toString());
                 setLoading(false)
             })
             .catch((error) => {
@@ -284,6 +322,56 @@ function ProductoPublicarSimilarID(props) {
             });
             setLoading(false)
         }
+        
+        if (imageMediana.type === "image/png" || imageMediana.type === "image/jpeg" || imageMediana.type === "image/jpg" || imageMediana.type === "image/webp"){
+            const data = new FormData();
+            data.append("file", imageMediana);
+            console.log("subida")
+            data.append("upload_preset", "mercadoalamano");
+            data.append("cloud_name",  "mercadoalamano");
+            fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
+            {method: 'post', body: data}).then((res) => res.json())
+            .then(data => {
+                setImagenMediana(data.url.toString());
+                setLoading(false)
+            })
+            .catch((error) => {
+                swal({
+                    title: "Error al subir la imagen",
+                    text: error.message,
+                    icon: "error",
+                    button: "Cerrar"
+                });
+                setLoading(false)
+            })
+        } else {
+            setLoading(false)
+        }
+        
+        if (imageGrande.type === "image/png" || imageGrande.type === "image/jpeg" || imageGrande.type === "image/jpg" || imageGrande.type === "image/webp"){
+            const data = new FormData();
+            data.append("file", imageGrande);
+            console.log("subida")
+            data.append("upload_preset", "mercadoalamano");
+            data.append("cloud_name",  "mercadoalamano");
+            fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
+            {method: 'post', body: data}).then((res) => res.json())
+            .then(data => {
+                setImagenGrande(data.url.toString());
+                setLoading(false)
+            })
+            .catch((error) => {
+                swal({
+                    title: "Error al subir la imagen",
+                    text: error.message,
+                    icon: "error",
+                    button: "Cerrar"
+                });
+                setLoading(false)
+            })
+        } else {
+            setLoading(false)
+        }
     }
 
     
@@ -299,7 +387,9 @@ function ProductoPublicarSimilarID(props) {
 
 
     const dataFinal = {
-        imagen: imagen,
+        imagen_thumbnail: imagenThumbnail,
+        imagen_mediana: imagenMediana,
+        imagen: imagenGrande,
         nombre: nombre,
         tematica: tematica,
         titulo: titulo ? titulo : tituloDefault,
@@ -423,7 +513,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                         <>
                                             <div onClick={onButtonClick} className="overlayImagenEditar"></div>
                                             <FaCamera onClick={onButtonClick} className="posicionCamara" />
-                                            <img onClick={onButtonClick} src={imagen} className="tImagenEditar" alt="error imagen" />
+                                            <img onClick={onButtonClick} src={imagenGrande} className="tImagenEditar" alt="error imagen" />
                                         </>}
                                     </div>
                                     <FormGroup>
@@ -433,7 +523,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                             nombre="img" 
                                             accept="image/*" 
                                             onChange={(e) => postImagen(e.target.files[0])} 
-                                            invalid={!imagen} 
+                                            invalid={imagenInvalida} 
                                             style={{display: "none"}}
                                             />
                                         <FormFeedback>Ingrese una imagen</FormFeedback>

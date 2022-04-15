@@ -56,14 +56,14 @@ function Admin() {
     }, [categoria, categorias, setLoading])
     
     const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.25}, {name:"titulo", weight: 0.25}, {name:"categoria", weight: 0.20}, {name:"sub_categoria", weight: 0.20}, {name:"propietario", weight: 0.1}],
+        keys: [{name:"nombre", weight: 0.3}, {name:"titulo", weight: 0.2}, {name:"categoria", weight: 0.30}, {name:"sub_categoria", weight: 0.10}, {name:"propietario", weight: 0.1}],
         threshold: 0.4,
         includeScore: true,
         shouldSort: true,
       })
       
     const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+    const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
 
     return (
@@ -98,7 +98,7 @@ function Admin() {
                             {(categoria !== "" || subCategoria !== "") && <div><Button onClick={() => {setCategoria(""); setSubCategoria("")}} className="botonAmarilloComentario"><FaTrash className="tIconos" /></Button><span className="pizchico wbold">Filtros:</span> {categoria}{subCategoria && ` - ${subCategoria}`}</div>}
                             <div className="pargrande">
                                 <Row className="parchico">
-                                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
+                                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
                                         <ProductoEditar key={i} p={p}  cambio={query.length} />
                                     )}
                                 </Row>

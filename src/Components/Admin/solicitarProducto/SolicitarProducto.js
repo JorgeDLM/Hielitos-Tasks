@@ -95,7 +95,7 @@ const SolicitarProducto = () => {
                 {loading ? <div className="centro pabenorme"><Spinner className='gris' /></div> : <>
                     <div className='contenedor'>
                         <Card className="claseCard productosSolicitados pchico centradoEnmedio" >
-                            {productosSolicitados.map((p,i) => (
+                            {productosSolicitados.sort((a,b) => (a.nombre > b.nombre) ? 1 : -1).map((p,i) => (
                                 <div className='pabmuychico izquierda'>
                                     <Row key={i}>
                                         <Col>

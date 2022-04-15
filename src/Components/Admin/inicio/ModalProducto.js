@@ -16,7 +16,9 @@ function ModalProducto() {
     const {productos, setProductos} = useContext(UsuarioContext)
 
     const [modal, setModal] = useState(false)
-    const [imagen, setImagen] = useState("")
+    const [imagenGrande, setImagenGrande] = useState("")
+    const [imagenMediana, setImagenMediana] = useState("")
+    const [imagenThumbnail, setImagenThumbnail] = useState("")
     const [nombre, setNombre] = useState("")
     const [titulo, setTitulo] = useState("")
     const [tituloDefault, setTituloDefault] = useState("")
@@ -63,7 +65,7 @@ function ModalProducto() {
     }
 
 
-    const imagenInvalida = !imagen
+    const imagenInvalida = !imagenGrande || !imagenMediana || !imagenThumbnail
     const nombreInvalido = !nombre
     const tituloInvalido = !nombre
     const categoriaInvalida = categoria === ""
@@ -73,7 +75,7 @@ function ModalProducto() {
     const precio_ventaInvalido = !isCompuesto ? (!precio_venta || (precioInvalido)) : !precio_venta
     const precio_venta_mlInvalido = !isCompuesto ? (!precio_venta_ml || ((precio_venta_ml - precio_compra) <= 0)) : false
     const precio_venta_mayoreoInvalido = !isCompuesto ? (!precio_venta_mayoreo || ((precio_venta_mayoreo - precio_compra) <= 0)) : false
-    const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 70) : false
+    const precioEnvio = !isCompuesto ? ((precio_venta - precio_compra) < 20) : false
     const envioInvalido = envio === "" || precioEnvio
     const propietarioInvalida = propietario === ""
     const productoCompuestoInvalido = isCompuesto ? compuesto?.length === 0 : false
@@ -86,7 +88,9 @@ function ModalProducto() {
     }
 
     const clearInputs = () => {
-        setImagen("")
+        setImagenGrande("")
+        setImagenMediana("")
+        setImagenThumbnail("")
         setNombre("")
         setTitulo("")
         setTematica("")
@@ -110,8 +114,40 @@ function ModalProducto() {
 
     const dataCompleta =  !imagenInvalida && !tituloInvalido && !nombreInvalido && !categoriaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido
 
-    // PROMESA IMAGEN RESIZE
-    const resizeFile = (file) =>
+    // PROMESA IMAGEN RESIZE Thumbnail
+    const resizeFileThumbnail = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            150,
+            150,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+    // PROMESA IMAGEN RESIZE MEDIANA
+    const resizeFileMediana = (file) =>
+        new Promise((resolve) => {
+        Resizer.imageFileResizer(
+            file,
+            350,
+            350,
+            "PNG",
+            80,
+            0,
+            (uri) => {
+            resolve(uri);
+            },
+            "file"
+        );
+    });
+    // PROMESA IMAGEN RESIZE GRANDE
+    const resizeFileGrande = (file) =>
         new Promise((resolve) => {
         Resizer.imageFileResizer(
             file,
@@ -128,7 +164,7 @@ function ModalProducto() {
     });
 
 
-// POST IMAGEN ---------------------------------------------------------------
+// POST IMAGEN---------------------------------------------------------------
     const postImagen = async(img) => {
         setLoading(true)
 
@@ -141,18 +177,20 @@ function ModalProducto() {
             })
         }
         
-        const image = await resizeFile(img)
+        const imageThumbnail = await resizeFileThumbnail(img)
+        const imageMediana = await resizeFileMediana(img)
+        const imageGrande = await resizeFileGrande(img)
 
-        if (image.type === "image/png" || image.type === "image/jpeg" || image.type === "image/jpg" || image.type === "image/webp"){
+        if (imageThumbnail.type === "image/png" || imageThumbnail.type === "image/jpeg" || imageThumbnail.type === "image/jpg" || imageThumbnail.type === "image/webp"){
             const data = new FormData();
-            data.append("file", image);
+            data.append("file", imageThumbnail);
             console.log("subida")
             data.append("upload_preset", "mercadoalamano");
             data.append("cloud_name",  "mercadoalamano");
             fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
             {method: 'post', body: data}).then((res) => res.json())
             .then(data => {
-                setImagen(data.url.toString());
+                setImagenThumbnail(data.url.toString());
                 setLoading(false)
             })
             .catch((error) => {
@@ -171,6 +209,56 @@ function ModalProducto() {
                 icon: "error",
                 button: "Cerrar"
             });
+            setLoading(false)
+        }
+        
+        if (imageMediana.type === "image/png" || imageMediana.type === "image/jpeg" || imageMediana.type === "image/jpg" || imageMediana.type === "image/webp"){
+            const data = new FormData();
+            data.append("file", imageMediana);
+            console.log("subida")
+            data.append("upload_preset", "mercadoalamano");
+            data.append("cloud_name",  "mercadoalamano");
+            fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
+            {method: 'post', body: data}).then((res) => res.json())
+            .then(data => {
+                setImagenMediana(data.url.toString());
+                setLoading(false)
+            })
+            .catch((error) => {
+                swal({
+                    title: "Error al subir la imagen",
+                    text: error.message,
+                    icon: "error",
+                    button: "Cerrar"
+                });
+                setLoading(false)
+            })
+        } else {
+            setLoading(false)
+        }
+        
+        if (imageGrande.type === "image/png" || imageGrande.type === "image/jpeg" || imageGrande.type === "image/jpg" || imageGrande.type === "image/webp"){
+            const data = new FormData();
+            data.append("file", imageGrande);
+            console.log("subida")
+            data.append("upload_preset", "mercadoalamano");
+            data.append("cloud_name",  "mercadoalamano");
+            fetch("https://api.cloudinary.com/v1_1/mercadoalamano/image/upload", 
+            {method: 'post', body: data}).then((res) => res.json())
+            .then(data => {
+                setImagenGrande(data.url.toString());
+                setLoading(false)
+            })
+            .catch((error) => {
+                swal({
+                    title: "Error al subir la imagen",
+                    text: error.message,
+                    icon: "error",
+                    button: "Cerrar"
+                });
+                setLoading(false)
+            })
+        } else {
             setLoading(false)
         }
     }
@@ -193,7 +281,9 @@ function ModalProducto() {
             
 // SUBIR PRODUCTO firebase: ---------------------------------------------------
             const data = {
-                imagen: imagen,
+                imagen_thumbnail: imagenThumbnail,
+                imagen_mediana: imagenMediana,
+                imagen: imagenGrande,
                 nombre: nombre,
                 tematica: tematica ? tematica : "",
                 titulo: titulo ? titulo : tituloDefault,
@@ -320,10 +410,10 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
             <Button onClick={() => setModal(!modal)} className="botonNegro w100"><FaPlus className="t14 pabmuychico" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
-                    {imagen === "" ? 
+                    {imagenGrande === "" ? 
                         (<img className="productoLista" src={logo} alt="Error" />)
                         :
-                        (<img className="productoLista" src={imagen} alt="Error" />)
+                        (<img className="productoLista" src={imagenGrande} alt="Error" />)
                     }
                 </div>
                 <div className="pmediano">

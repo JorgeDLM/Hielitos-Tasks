@@ -20,7 +20,7 @@ function ProductoEditar(props) {
                 className="linkSF widthCardProveedor centradoRelativo fondoRojo">
                 <Card className={`pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick ${props.p.propietario === "Ana" && "fondoRojoClaro"}`}>
                     <div className="contenedor">
-                        <img src={props.p.imagen} className="claseImagenCatalogo" alt="error" />
+                        <img src={props.p.imagen_thumbnail} className="claseImagenCatalogo" alt="error" />
                         <div className="gris centro parmediano">{nombre}</div>
                     </div>
                 </Card>
