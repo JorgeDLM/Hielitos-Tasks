@@ -8,7 +8,7 @@ import ProductoID from "./Components/InicioCatalogo/ProductoID";
 import Login from './Components/login/Login'
 
 import Admin from './Components/Admin/Admin'
-import AdminInicio from './Components/Admin/inicio/AdminInicio'
+import InicioAdmin from './Components/Admin/inicio/InicioAdmin'
 import Inventario from './Components/Admin/inventario/Inventario'
 import Ventas from './Components/Admin/ventas/Ventas'
 import PorSubir from './Components/Admin/porSubir/PorSubir'
@@ -35,7 +35,7 @@ return (
 				<React.Fragment>
 					{usuarioLoggeado && <>
 						<Route path="admin/*" element={<Admin/>}  >
-							<Route path="inicio" element={<AdminInicio/>} />
+							<Route path="inicio" element={<InicioAdmin/>} />
 							<Route path="inventario" element={<Inventario/>} />
 							<Route path="ventas" element={<Ventas/>} />
 							<Route path="por-subir" element={<PorSubir/>} />

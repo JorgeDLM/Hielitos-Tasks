@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Card, Col, Container, Input, Row, Modal, InputGroup } from "reactstrap";
-import ProductoCompras from "./ProductoCompras";
 import Regla3 from "./Regla3";
-import Fuse from 'fuse.js'
-import { FaExclamationTriangle, FaPlus, FaMinus, FaDollarSign } from 'react-icons/fa'
+import { FaPlus, FaMinus, FaDollarSign } from 'react-icons/fa'
 import NumberFormat from "react-number-format";
 import TicketCompraActual from "./TicketCompraActual";
 
@@ -13,12 +11,12 @@ import { db } from '../../../firebase-config';
 import UsuarioContext from "../context/UsuarioContext";
 import swal from "sweetalert";
 import CardCompra from "./CardCompra";
+import Buscador from "../../buscador/Buscador";
 
 function Compras() {
     
-    const {productos, usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra, setLoadMore, loading} = useContext(UsuarioContext)
+    const {usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra, loading} = useContext(UsuarioContext)
 
-    const [query, setQuery] = useState('')
     const [nueva, setNueva] = useState(!loading ? (!compras?.length ? true : false) : false)
     const [regla3, setRegla3] = useState(false)
 
@@ -31,16 +29,7 @@ function Compras() {
     
     const [modal, setModal] = useState(false)
 
-    const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.3}, {name:"titulo", weight: 0.2}, {name:"categoria", weight: 0.30}, {name:"sub_categoria", weight: 0.10}, {name:"propietario", weight: 0.1}],
-        threshold: 0.4,
-        includeScore: true,
-        shouldSort: true,
-      })
-      
-    const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
-
+   
     const total = (productosCompra.length >= 1) && productosCompra?.map(m => +m.cantidad * +m.precio_compra)?.reduce((total, entrada) => (total += entrada))
     const cantidadTotal = (productosCompra.length >= 1) && productosCompra?.map(m => +m.cantidad)?.reduce((total, entrada) => (total += entrada))
 
@@ -122,16 +111,7 @@ function Compras() {
                         <Col>
                     
                             <div className="pargrande">
-                                <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} /></div>
-                                {productosValidos && <div className="w100"><Button className="botonNegro w100" onClick={() => setModal(!modal)} >Generar compra</Button></div>}
-                                    <div className="overflow">
-                                        {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
-                                            <ProductoCompras key={i} p={p}  cambio={query.length} />
-                                        )}
-                                    </div>
-                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
-                                        (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                                    )}
+                                <Buscador compras />
                             </div>
                         </Col>
                         {productosCompra.length >= 1 && <Col xs={4} className="pargrande">
