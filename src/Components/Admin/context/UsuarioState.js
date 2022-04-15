@@ -62,20 +62,18 @@ const UsuarioState = (props) => {
 // CARGAR COMPRAS-------------------------------------------------------
 // localStorage.removeItem("infoCompras")
 useEffect(() => {
-    // const infoCompras = JSON.parse(localStorage.getItem("infoCompras"))
-    //     if (infoCompras && (infoCompras.length >= 1)) {
-    //         setCompras( infoCompras )
-    //     } else {
         const fetchCompras = async() => {
-            const dataCompras =  await getDocs(collection(db, "compras"))
-            const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+            const dataCompras = query(collection(db, "compras"), where("activa", "==", true), limit(10))
+
+            const querySnapshot = await getDocs(dataCompras);
+            const getDataCompras = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+
+            // const dataCompras =  await getDocs(collection(db, "compras"))
+            // const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
             setCompras( getDataCompras )
             setLoading(false)
             }
             fetchCompras()
-        // }
-        // console.log(compras)
-
         
     }, [setCompras])
 // ------------------------------------------------------------------------

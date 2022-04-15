@@ -24,6 +24,7 @@ function ProductoPublicarSimilarID(props) {
     const [imagenThumbnail, setImagenThumbnail] = useState("")
     const [nombre, setNombre] = useState(props.p.nombre)
     const [titulo, setTitulo] = useState("")
+    const [clickeado, setClickeado] = useState(false)
     const [categoria, setCategoria] = useState(props.p.categoria)
     const [subCategoria, setSubCategoria] = useState(props.p.sub_categoria ? props.p.sub_categoria : "")
     const [categorias, setCategorias] = useState([])
@@ -863,7 +864,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                 <div className="pabmuygrande">
                     <Card className="pmuygrande claseCard">
                         <div className="pabchico">
-                            <Button disabled={!dataCompleta} onClick={() => {crearProductoSimilar()}} className="botonAmarillo w100">Crear producto</Button>
+                            <Button disabled={!dataCompleta || clickeado} onClick={() => {crearProductoSimilar(); setClickeado(true)}} className="botonAmarillo w100">Crear producto</Button>
                         </div>
                     </Card>
                 </div>

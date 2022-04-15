@@ -11,7 +11,7 @@ import swal from "sweetalert";
 
 function CardCompra(props) {
     
-    const { productos, setLoading, compras, setCompras, loading } = useContext(UsuarioContext)
+    const { setLoading, compras, setCompras, loading, productosCache } = useContext(UsuarioContext)
 
 
     const [dropdown, setDropdown] = useState(false)
@@ -117,7 +117,7 @@ function CardCompra(props) {
         <>
             <Card className="pmediano claseCard">
                 <Row className="pmediano">
-                    <Col xs={6}><span className="wbold">Fecha:</span> {new Date(props.c.timestamp).getDay()} de {meses[((new Date(props.c.timestamp).getMonth()) - 1)]} de {new Date(props.c.timestamp).getFullYear()}</Col>
+                    <Col xs={6}><span className="wbold">Fecha:</span> {new Date(props.c.timestamp).getDate()} de {meses[((new Date(props.c.timestamp).getMonth()))]} de {new Date(props.c.timestamp).getFullYear()}</Col>
                     <Col xs={5}>
                         <span className="wbold">Número de orden: </span>{props.c.numero_de_orden} <Button onClick={() => {navigator.clipboard.writeText(props.c.numero_de_orden)}} className="botonAzulComentario"><FaCopy className="claseIconos" /></Button>
                     </Col>
@@ -179,7 +179,7 @@ function CardCompra(props) {
                     <div className="wbold t18">TICKET</div>
                     <hr />
                     <div className="gris">
-                        {props.c.productos?.map((p, i) => <div key={i} className="t13 pabmuychico"><span className="wbold t15">{p.cantidad}</span> x {productos.filter(prod => prod.id ===  p.producto)[0]?.nombre}
+                        {props.c.productos?.map((p, i) => <div key={i} className="t13 pabmuychico"><span className="wbold t15">{p.cantidad}</span> x {productosCache.filter(prod => prod.id ===  p.producto)[0]?.nombre}
                         <span className="pizmuychico">(<NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_compra} /> x pza)</span>
                         <span className="wbold pizmuychico">- <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={p.precio_compra * p.cantidad} /></span>
                         </div>)}

@@ -109,7 +109,7 @@ function ProductoCompras(props) {
                 <div className="pmediano">
                     <Row>
                         <Col xs={4} md={3}>
-                            <div className="pizchico"><img className="productoLista" src={props.p.imagen} alt="error" /></div>
+                            <div className="pizchico"><img className="productoLista" src={props.p.imagen_thumbnail} alt="error" /></div>
                         </Col>
                         <Col>
                             <div className="t12">{props.p.nombre.toUpperCase()}</div>

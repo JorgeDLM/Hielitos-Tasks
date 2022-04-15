@@ -45,6 +45,8 @@ function ModalProducto() {
     const [cambio, setCambio] = useState(true)
     const [linkCompra, setLinkCompra] = useState("")
     
+    const [clickeado, setClickeado] = useState(false)
+    
     const [query, setQuery] = useState("")
     const [isCompuesto, setIsCompuesto] = useState(false)
     const [compuesto, setCompuesto] = useState([])
@@ -659,7 +661,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                         </FormGroup>
                     </>
                 </div>
-                <Button onClick={() => subirProducto()} className="botonAmarillo" disabled={!dataCompleta}>{loading ? <Spinner size="sm" /> : "Subir producto"}</Button>
+                <Button onClick={() => {subirProducto(); setClickeado(true)}} className="botonAmarillo" disabled={!dataCompleta || clickeado}>{loading ? <Spinner size="sm" /> : "Subir producto"}</Button>
             </Modal>
         </React.Fragment>
     );

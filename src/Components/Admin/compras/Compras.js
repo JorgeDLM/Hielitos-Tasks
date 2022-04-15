@@ -16,10 +16,10 @@ import CardCompra from "./CardCompra";
 
 function Compras() {
     
-    const {productos, usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra} = useContext(UsuarioContext)
+    const {productos, usuario, productosCompra, setLoading, compras, setCompras, setProductosCompra, setLoadMore, loading} = useContext(UsuarioContext)
 
     const [query, setQuery] = useState('')
-    const [nueva, setNueva] = useState(compras?.filter(c => c.activa)?.length >= 1 ? false : true)
+    const [nueva, setNueva] = useState(!loading ? (!compras?.length ? true : false) : false)
     const [regla3, setRegla3] = useState(false)
 
     const [proveedor, setProveedor] = useState("")
@@ -31,18 +31,18 @@ function Compras() {
     
     const [modal, setModal] = useState(false)
 
-
     const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.4}, {name:"categoria", weight: 0.25}, {name:"sub-categoria", weight: 0.25}, {name:"propietario", weight: 0.1}],
-        threshold: 0.5,
+        keys: [{name:"nombre", weight: 0.3}, {name:"titulo", weight: 0.2}, {name:"categoria", weight: 0.30}, {name:"sub_categoria", weight: 0.10}, {name:"propietario", weight: 0.1}],
+        threshold: 0.4,
         includeScore: true,
         shouldSort: true,
       })
       
     const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+    const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
     const total = (productosCompra.length >= 1) && productosCompra?.map(m => +m.cantidad * +m.precio_compra)?.reduce((total, entrada) => (total += entrada))
+    const cantidadTotal = (productosCompra.length >= 1) && productosCompra?.map(m => +m.cantidad)?.reduce((total, entrada) => (total += entrada))
 
     const productosValidos = (productosCompra.length >= 1) 
     const dataIncompleta = !productosValidos || (proveedor === "") || (numero_de_orden === "") || (plataforma === "") || (propietario === "")
@@ -122,14 +122,14 @@ function Compras() {
                         <Col>
                     
                             <div className="pargrande">
-                                <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
+                                <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} /></div>
                                 {productosValidos && <div className="w100"><Button className="botonNegro w100" onClick={() => setModal(!modal)} >Generar compra</Button></div>}
                                     <div className="overflow">
                                         {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
                                             <ProductoCompras key={i} p={p}  cambio={query.length} />
                                         )}
                                     </div>
-                                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
+                                    {productosFuse.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
                                         (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                                     )}
                             </div>
@@ -138,12 +138,12 @@ function Compras() {
                             <Card className="pmediano">
                                 <div className="wbold">Compra:</div>
                                 <div className={productosCompra?.length >= 7 && "overflowTicket"}>
-                                    {productosCompra.filter(a => a.activo).sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
+                                    {productosCompra.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) => <div key={i} className="gris t12 parchico">
                                         <TicketCompraActual p={p} i={i} />
                                     </div>)}
                                 </div>
                                     <div className="wbold t20 centro">TOTAL: 
-                                        <span className="pizchico"><NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} /></span>
+                                        <span className="pizchico"><NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} /> <span className="gris t12 wnormal"> - {cantidadTotal} ud. - (${(total/cantidadTotal).toFixed(0)}/pza)</span> </span>
                                     </div>
                             </Card>
                         </Col>}
