@@ -56,7 +56,7 @@ function Admin() {
     }, [categoria, categorias, setLoading])
     
     const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.3}, {name:"titulo", weight: 0.2}, {name:"categoria", weight: 0.30}, {name:"sub_categoria", weight: 0.10}, {name:"propietario", weight: 0.1}],
+        keys: [{name:"nombre", weight: 0.3}, {name:"titulo", weight: 0.1}, {name:"tematica", weight: 0.10}, {name:"categoria", weight: 0.25}, {name:"sub_categoria", weight: 0.05}, {name:"propietario", weight: 0.1}],
         threshold: 0.4,
         includeScore: true,
         shouldSort: true,
