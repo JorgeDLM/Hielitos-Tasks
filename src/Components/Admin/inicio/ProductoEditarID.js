@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoEditarID(props) {
     
-    const {loading, setLoading, productos, setProductos, productosCache} = useContext(UsuarioContext)
+    const {loading, setLoading, productos, setProductos, productosCache , setLoadMore} = useContext(UsuarioContext)
 
         
     const [imagenGrande, setImagenGrande] = useState(props.p.imagen)
@@ -44,6 +44,8 @@ function ProductoEditarID(props) {
     const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
     const [codigo_universal, setCodigoUniversal] = useState(props.p.codigo_universal ? props.p.codigo_universal : "")
     const [subido, setSubido] = useState(props.p.subido ? props.p.subido : false)
+    const [subidoAmazon, setSubidoAmazon] = useState(props.p.subido_amazon ? props.p.subido_amazon : false)
+    const [subidoFacebook, setSubidoFacebook] = useState(props.p.subido_facebook ? props.p.subido_facebook : false)
     const [cambio, setCambio] = useState(true)
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
     const [linkCompra, setLinkCompra] = useState(props.p.link_compra ? props.p.link_compra : "")
@@ -79,7 +81,7 @@ function ProductoEditarID(props) {
     if (precio_venta < 299 && !cambio){
         setCambio(true)
     }
-    const total = (compuesto.length >= 1) && compuesto?.map(c => +c.cantidad * +productos.filter(p=> p.id === c.producto)[0]?.precio_compra)?.reduce((total, entrada) => (total += entrada))
+    const total = (compuesto.length >= 1) && compuesto?.map(c => +c.cantidad * +productosCache.filter(p=> p.id === c.producto)[0]?.precio_compra)?.reduce((total, entrada) => (total += entrada))
 
     
     const precioInvalido = !isCompuesto ? ((precio_venta - precio_compra) <= 0) : false
@@ -394,16 +396,24 @@ function ProductoEditarID(props) {
         }
     }
 
-    
-    const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.7}, {name:"categoria", weight: 0.15}, {name:"sub-categoria", weight: 0.1}, {name:"propietario", weight: 0.05}],
+
+    const fuse = new Fuse(productosCache, {
+        keys: [
+            {name:"nombre", weight: 0.3}, 
+            {name:"titulo", weight: 0.1}, 
+            {name:"tematica", weight: 0.10}, 
+            {name:"categoria", weight: 0.25}, 
+            {name:"sub_categoria", weight: 0.05}, 
+            {name:"propietario", weight: 0.1}
+        ],
         threshold: 0.4,
         includeScore: true,
         shouldSort: true,
-    })
+      })
     
-    const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+    
+        const busqueda = fuse.search(query) 
+        const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productosCache.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
 
     const dataFinal = {
@@ -431,6 +441,8 @@ function ProductoEditarID(props) {
         link_compra: linkCompra,
         propietario: propietario,
         subido: subido === "false" ? false : subido === "true" ? true : subido,
+        subido_amazon: subidoAmazon === "false" ? false : subidoAmazon === "true" ? true : subidoAmazon,
+        subido_facebook: subidoFacebook === "false" ? false : subidoFacebook === "true" ? true : subidoFacebook,
         codigo_producto: !isCompuesto ? codigo_producto : "",
         compuesto: isCompuesto ? compuesto : [],
         comentario: comentario,
@@ -619,7 +631,7 @@ function ProductoEditarID(props) {
                 </div>
 
     {/* AREA 1 - Cantidad */}
-                <div className="pabmuygrande">
+                {!isCompuesto && <div className="pabmuygrande">
                     <Card className="parmediano pdegrande pizgrande pabgrande claseCard">
                         {/* Cantidad */}
                         <>
@@ -632,7 +644,7 @@ function ProductoEditarID(props) {
                                 onChange={(e) => setCantidad(e.target.value)} />
                         </>      
                     </Card>
-                </div>
+                </div>}
 
     {/* AREA 2 - Categoria - Sub-categoria - Tematica */}
                 <div className="pabmuygrande">
@@ -769,7 +781,7 @@ function ProductoEditarID(props) {
                                     <Card className="pmediano fondoVerdeClaro">
                                         {compuesto.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) =>
                                             <div key={i}>
-                                                <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
+                                                <ProductoCompuesto p={productosCache?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
                                             </div>
                                         )}
                                     </Card>
@@ -778,7 +790,7 @@ function ProductoEditarID(props) {
                                 <div className="pabmediano">
                                     <InputGroup>
                                         <Button className="botonAzul"><FaSearch className="tIconos" /></Button>
-                                        <Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} />
+                                        <Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} />
                                     </InputGroup>
                                 </div>
                                 <span className="wbold">Costo total:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} />
@@ -857,6 +869,7 @@ function ProductoEditarID(props) {
     {/* AREA 8 -  Comentario - Subido - Propietario*/}
                 <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
+                        
                         {/* Subido */}
                         <>
                             <div className="wbold">¿Subido en Mercadolibre?</div>
@@ -866,7 +879,28 @@ function ProductoEditarID(props) {
                                     <option value={true}>Sí</option>
                                     <option value={false}>No</option>
                                 </Input>
-                                <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
+                            </FormGroup>
+                        </>
+                        {/* Subido */}
+                        <>
+                            <div className="wbold">¿Subido en Amazon?</div>
+                            <FormGroup>
+                                <Input value={subidoAmazon} type="select" onChange={(e) => setSubidoAmazon(e.target.value)} >
+                                    <option value="" disabled={subidoAmazon !== ""}>Seleccione:</option>
+                                    <option value={true}>Sí</option>
+                                    <option value={false}>No</option>
+                                </Input>
+                            </FormGroup>
+                        </>
+                        {/* Subido */}
+                        <>
+                            <div className="wbold">¿Subido en Facebook?</div>
+                            <FormGroup>
+                                <Input value={subidoFacebook} type="select" onChange={(e) => setSubidoFacebook(e.target.value)} >
+                                    <option value="" disabled={subidoFacebook !== ""}>Seleccione:</option>
+                                    <option value={true}>Sí</option>
+                                    <option value={false}>No</option>
+                                </Input>
                             </FormGroup>
                         </>
                             
@@ -890,6 +924,7 @@ function ProductoEditarID(props) {
                                     <option value="" disabled={propietario !== ""}>Seleccione:</option>
                                     <option value="Jorge">Jorge</option>
                                     <option value="Ana">Ana</option>
+                                    <option value="Ana y Jorge">Ana y Jorge</option>
                                 </Input>
                                 <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
                             </FormGroup>

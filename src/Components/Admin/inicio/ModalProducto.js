@@ -13,7 +13,7 @@ import Resizer from "react-image-file-resizer";
 
 function ModalProducto() {
 
-    const {productos, setProductos} = useContext(UsuarioContext)
+    const {productos, setProductos, setLoadMore} = useContext(UsuarioContext)
 
     const [modal, setModal] = useState(false)
     const [imagenGrande, setImagenGrande] = useState("")
@@ -306,6 +306,8 @@ function ModalProducto() {
                 link_compra: linkCompra,
                 propietario: propietario ? propietario : "",
                 subido: subido === "false" ? false : subido === "true" ? true : false,
+                subido_amazon: false,
+                subido_facebook: false,
                 codigo_producto: !isCompuesto ? codigo_producto : "",
                 compuesto: isCompuesto ? compuesto : [],
                 comentario: "",
@@ -396,15 +398,24 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
 *********************************************************************************************************`)}
 
 
+
 const fuse = new Fuse(productos, {
-    keys: [{name:"nombre", weight: 0.7}, {name:"categoria", weight: 0.15}, {name:"sub-categoria", weight: 0.1}, {name:"propietario", weight: 0.05}],
+    keys: [
+        {name:"nombre", weight: 0.3}, 
+        {name:"titulo", weight: 0.1}, 
+        {name:"tematica", weight: 0.10}, 
+        {name:"categoria", weight: 0.25}, 
+        {name:"sub_categoria", weight: 0.05}, 
+        {name:"propietario", weight: 0.1}
+    ],
     threshold: 0.4,
     includeScore: true,
     shouldSort: true,
   })
-  
-const busqueda = fuse.search(query) 
-const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+
+
+    const busqueda = fuse.search(query) 
+    const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
 
     return (
@@ -512,7 +523,7 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                             <div className="pabmediano">
                                 <InputGroup>
                                     <Button className="botonAzul"><FaSearch className="tIconos" /></Button>
-                                    <Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} />
+                                    <Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} />
                                 </InputGroup>
                             </div>
                             <span className="wbold">Costo total:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} />
@@ -612,18 +623,19 @@ const productosFuse = query ? busqueda.map(resultado => resultado.item) : produc
                                 <option value="" disabled={propietario !== ""}>Seleccione:</option>
                                 <option value="Jorge">Jorge</option>
                                 <option value="Ana">Ana</option>
+                                <option value="Ana y Jorge">Ana y Jorge</option>
                             </Input>
                             <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
                         </FormGroup>
                         
                     </>
                 {/* Cantidad */}
-                    <>
+                    {!isCompuesto && <>
                         <div className="wbold">Cantidad en inventario:</div>
                         <FormGroup>
                             <Input placeholder="Cantidad" type="number" onChange={(e) => setCantidad(e.target.value)} min={0} />
                         </FormGroup>
-                    </>
+                    </>}
 
                 {/* Proveedor */}
                     {!isCompuesto && <>

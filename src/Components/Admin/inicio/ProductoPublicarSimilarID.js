@@ -45,6 +45,8 @@ function ProductoPublicarSimilarID(props) {
     const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
     const [codigo_universal, setCodigoUniversal] = useState(props.p.codigo_universal ? props.p.codigo_universal : "")
     const [subido, setSubido] = useState(props.p.subido ? props.p.subido : false)
+    const [subidoAmazon, setSubidoAmazon] = useState(props.p.subido_amazon ? props.p.subido_amazon : false)
+    const [subidoFacebook, setSubidoFacebook] = useState(props.p.subido_facebook ? props.p.subido_facebook : false)
     const [cambio, setCambio] = useState(true)
     const [comentario, setComentario] = useState(props.p.comentario ? props.p.comentario : "")
     const [descripcionDefault, setDescripcionDefault] = useState("")
@@ -411,6 +413,8 @@ function ProductoPublicarSimilarID(props) {
         link_compra: linkCompra,
         propietario: propietario,
         subido: subido === "false" ? false : subido === "true" ? true : subido,
+        subido_amazon: subidoAmazon === "false" ? false : subidoAmazon === "true" ? true : subidoAmazon,
+        subido_facebook: subidoFacebook === "false" ? false : subidoFacebook === "true" ? true : subidoFacebook,
         codigo_producto: !isCompuesto ? codigo_producto : "",
         compuesto: isCompuesto ? compuesto : [],
         comentario: comentario,
@@ -575,7 +579,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                 </div>
 
     {/* AREA 1 - Cantidad */}
-                <div className="pabmuygrande">
+                {!isCompuesto && <div className="pabmuygrande">
                     <Card className="parmediano pdegrande pizgrande pabgrande claseCard">
                         {/* Cantidad */}
                         <>
@@ -588,7 +592,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                 onChange={(e) => setCantidad(e.target.value)} />
                         </>      
                     </Card>
-                </div>
+                </div>}
 
     {/* AREA 2 - Categoria - Sub-categoria - Tematica */}
                 <div className="pabmuygrande">
@@ -828,7 +832,28 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                     <option value={true}>Sí</option>
                                     <option value={false}>No</option>
                                 </Input>
-                                <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
+                            </FormGroup>
+                        </>
+                        {/* Subido */}
+                        <>
+                            <div className="wbold">¿Subido en Amazon?</div>
+                            <FormGroup>
+                                <Input value={subidoAmazon} type="select" onChange={(e) => setSubidoAmazon(e.target.value)} >
+                                    <option value="" disabled={subidoAmazon !== ""}>Seleccione:</option>
+                                    <option value={true}>Sí</option>
+                                    <option value={false}>No</option>
+                                </Input>
+                            </FormGroup>
+                        </>
+                        {/* Subido */}
+                        <>
+                            <div className="wbold">¿Subido en Facebook?</div>
+                            <FormGroup>
+                                <Input value={subidoFacebook} type="select" onChange={(e) => setSubidoFacebook(e.target.value)} >
+                                    <option value="" disabled={subidoFacebook !== ""}>Seleccione:</option>
+                                    <option value={true}>Sí</option>
+                                    <option value={false}>No</option>
+                                </Input>
                             </FormGroup>
                         </>
                             
@@ -852,6 +877,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                     <option value="" disabled={propietario !== ""}>Seleccione:</option>
                                     <option value="Jorge">Jorge</option>
                                     <option value="Ana">Ana</option>
+                                    <option value="Ana y Jorge">Ana y Jorge</option>
                                 </Input>
                                 <FormFeedback>Dueño del producto (Jorge o Ana)</FormFeedback>
                             </FormGroup>
