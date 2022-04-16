@@ -71,7 +71,6 @@ useEffect(() => {
             // const dataCompras =  await getDocs(collection(db, "compras"))
             // const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
             setCompras( getDataCompras )
-            setLoading(false)
             }
             fetchCompras()
         

@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Container, Spinner, Input, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import ModalProducto from './ModalProducto'
 import ModalCategorias from "./ModalCategorias";
 import UsuarioContext from "../context/UsuarioContext";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase-config";
 import Buscador from "../../buscador/Buscador";
+import Categorias from "./Categorias";
 
 function InicioAdmin() {
     
-    const { loading, setLoadMore, setLoading } = useContext(UsuarioContext)
+    const { setLoading } = useContext(UsuarioContext)
 
 
     const [categoria, setCategoria] = useState("")
@@ -60,20 +61,14 @@ function InicioAdmin() {
                             <ModalCategorias />
                         </Row>
 
-                <Row className="pargrande">
-                    <Col>
-                        <Input type="select" value={categoria} onChange={e => {setCategoria(e.target.value); setLoadMore(5000); setLoading(true); setSubCategoria("")}} >
-                            <option value="">Categoria:</option>
-                            {categorias?.map((c, i) => <option key={i}>{c.categoria}</option>)}
-                        </Input>
-                    </Col>
-                    <Col>{loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> : 
-                        <Input disabled={!categoria} type="select" value={subCategoria} onChange={e => {setSubCategoria(e.target.value); setLoadMore(5000)}} >
-                            <option value="">Sub categoria:</option>
-                            {subCategorias?.map((c, i) => <option key={i}>{c.sub_categoria}</option>)}
-                        </Input>}
-                    </Col>
-                </Row>
+                <Categorias 
+                    categoria={categoria}
+                    setCategoria={setCategoria}
+                    setSubCategoria={setSubCategoria}
+                    subCategoria={subCategoria}
+                    subCategorias={subCategorias}
+                    categorias={categorias}
+                />
                 <Buscador 
                     categoria={categoria} 
                     setCategoria={setCategoria}
