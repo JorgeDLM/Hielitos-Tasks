@@ -1,9 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Row, Input } from 'reactstrap'
 import UsuarioContext from "../Admin/context/UsuarioContext";
-import ProductoCatalogo from "./ProductoCatalogo";
-import Fuse from 'fuse.js'
-import { FaExclamationTriangle } from 'react-icons/fa'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase-config";
 import Categorias from "../Admin/inicio/Categorias";
