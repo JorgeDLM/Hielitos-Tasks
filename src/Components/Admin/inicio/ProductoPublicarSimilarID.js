@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoPublicarSimilarID(props) {
     
-    const {loading, setLoading, productos} = useContext(UsuarioContext)
+    const {loading, setLoading, productosCache} = useContext(UsuarioContext)
 
     
     const [imagenGrande, setImagenGrande] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
@@ -82,7 +82,7 @@ function ProductoPublicarSimilarID(props) {
     if (precio_venta < 299 && !cambio){
         setCambio(true)
     }
-    const total = (compuesto.length >= 1) && compuesto?.map(c => +c.cantidad * +productos.filter(p=> p.id === c.producto)[0]?.precio_compra)?.reduce((total, entrada) => (total += entrada))
+    const total = (compuesto.length >= 1) && compuesto?.map(c => +c.cantidad * +productosCache.filter(p=> p.id === c.producto)[0]?.precio_compra)?.reduce((total, entrada) => (total += entrada))
 
     
     const precioInvalido = !isCompuesto ? ((precio_venta - precio_compra) <= 0) : false
@@ -377,16 +377,24 @@ function ProductoPublicarSimilarID(props) {
         }
     }
 
-    
-    const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.7}, {name:"categoria", weight: 0.15}, {name:"sub-categoria", weight: 0.1}, {name:"propietario", weight: 0.05}],
+ 
+    const fuse = new Fuse(productosCache, {
+        keys: [
+            {name:"nombre", weight: 0.3}, 
+            {name:"titulo", weight: 0.1}, 
+            {name:"tematica", weight: 0.10}, 
+            {name:"categoria", weight: 0.25}, 
+            {name:"sub_categoria", weight: 0.05}, 
+            {name:"propietario", weight: 0.1}
+        ],
         threshold: 0.4,
         includeScore: true,
         shouldSort: true,
-    })
+      })
     
-    const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+    
+        const busqueda = fuse.search(query) 
+        const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productosCache.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
 
     const dataFinal = {
@@ -735,7 +743,7 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                     <Card className="pmediano fondoVerdeClaro">
                                         {compuesto.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) =>
                                             <div key={i}>
-                                                <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
+                                                <ProductoCompuesto p={productosCache?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
                                             </div>
                                         )}
                                     </Card>
