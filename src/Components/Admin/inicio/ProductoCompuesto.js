@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Input, Row, Col } from "reactstrap"
+import { Input, Row, Col, InputGroup, Button } from "reactstrap"
+import { FaTrash } from 'react-icons/fa'
 
 function ProductoCompuesto(props) {
 
@@ -37,7 +38,14 @@ function ProductoCompuesto(props) {
         }
         
     }
-    
+
+    const borrarProducto = async() => {
+        await props.compuesto.splice(index, 1)
+        await props.setCompuesto([...props.compuesto])
+        setCantidad("")
+        console.log("3")
+    }
+     
     if (props.cambio >= 1 && !busqueda){
         setBusqueda(true)
         setCantidad("")
@@ -54,11 +62,14 @@ function ProductoCompuesto(props) {
         <React.Fragment>
             <Row>
                 <Col xs={3}>
-                    <Input type="number" className="inputNumeroSF" 
-                        placeholder={placeholder} 
-                        value={cantidad}
-                        onBlur={() => setProducto()} 
-                        onChange={(e) => {setCantidad(e.target.value)}} />
+                    <InputGroup>
+                        <Input type="number" className="inputNumeroSF" 
+                            placeholder={placeholder} 
+                            value={cantidad}
+                            onBlur={() => setProducto()} 
+                            onChange={(e) => {setCantidad(e.target.value)}} />
+                            {(props.compuesto.filter(c  => c.producto === props.p.id).length >= 1) && <Button onClick={borrarProducto} className="botonRojo"><FaTrash className="claseIconos" /></Button>}
+                    </InputGroup>
                 </Col>
                 <Col>{props.p?.nombre} - ${props.p?.precio_compra}</Col>
             </Row>

@@ -509,11 +509,11 @@ const fuse = new Fuse(productos, {
                            {compuesto.length >= 1 && 
                             <div className="pabchico">
                                 <Card className="pmediano fondoVerdeClaro">
-                                                {compuesto.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) =>
-                                                    <div key={i}>
-                                                        <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
-                                                    </div>
-                                                )}
+                                    {compuesto.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) =>
+                                        <div key={i}>
+                                            <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
+                                        </div>
+                                    )}
                                 </Card>
                             </div>
                            }
