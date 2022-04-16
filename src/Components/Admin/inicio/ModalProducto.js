@@ -302,6 +302,7 @@ function ModalProducto() {
                 material: material ? material : "",
                 descripcion: descripcion ? descripcion : descripcionDefault,
                 cantidad: cantidad ? cantidad : 0,
+                cantidad_minima: 0,
                 proveedor: !isCompuesto ? proveedor : "",
                 link_compra: linkCompra,
                 propietario: propietario ? propietario : "",

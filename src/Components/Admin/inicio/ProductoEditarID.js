@@ -39,6 +39,7 @@ function ProductoEditarID(props) {
     const [material, setMaterial] = useState(props.p.material ? props.p.material : "")
     const [descripcion, setDescripcion] = useState(props.p.descripcion ? props.p.descripcion : "")
     const [cantidad, setCantidad] = useState(props.p.cantidad ? props.p.cantidad : "")
+    const [cantidadMinima, setCantidadMinima] = useState(props.p.cantidad_minima ? props.p.cantidad_minima : "")
     const [proveedor, setProveedor] = useState(props.p.proveedor ? props.p.proveedor : "")
     const [propietario, setPropietario] = useState(props.p.propietario ? props.p.propietario : "")
     const [codigo_producto, setCodigoProducto] = useState(props.p.codigo_producto ? props.p.codigo_producto : "")
@@ -434,6 +435,7 @@ function ProductoEditarID(props) {
         material: material,
         descripcion: descripcion,
         cantidad: cantidad,
+        cantidad_minima: cantidadMinima,
         proveedor: !isCompuesto ? proveedor : "",
         link_compra: linkCompra,
         propietario: propietario,
@@ -632,13 +634,26 @@ function ProductoEditarID(props) {
                     <Card className="parmediano pdegrande pizgrande pabgrande claseCard">
                         {/* Cantidad */}
                         <>
-                            <div className="wbold">Cantidad en inventario:</div>
-                            <Input 
-                                value={cantidad} 
-                                placeholder="0" 
-                                type="number" 
-                                min={0}
-                                onChange={(e) => setCantidad(e.target.value)} />
+                            <Row>
+                                <Col>
+                                    <div className="wbold">Cantidad en inventario:</div>
+                                    <Input 
+                                        value={cantidad} 
+                                        placeholder="0" 
+                                        type="number" 
+                                        min={0}
+                                        onChange={(e) => setCantidad(e.target.value)} />
+                                </Col>
+                                <Col>
+                                    <div className="wbold">Cantidad mínima:</div>
+                                    <Input 
+                                        value={cantidadMinima} 
+                                        placeholder="0" 
+                                        type="number" 
+                                        min={0}
+                                        onChange={(e) => setCantidadMinima(e.target.value)} />
+                                </Col>
+                            </Row>
                         </>      
                     </Card>
                 </div>}
@@ -867,7 +882,7 @@ function ProductoEditarID(props) {
                 <div className="pabmuygrande">
                     <Card className="pargrande pabgrande pizgrande pdegrande claseCard">
                         
-                        {/* Subido */}
+                        {/* Subido ML */}
                         <>
                             <div className="wbold">¿Subido en Mercadolibre?</div>
                             <FormGroup>
@@ -878,7 +893,7 @@ function ProductoEditarID(props) {
                                 </Input>
                             </FormGroup>
                         </>
-                        {/* Subido */}
+                        {/* Subido Amazon */}
                         <>
                             <div className="wbold">¿Subido en Amazon?</div>
                             <FormGroup>
@@ -889,7 +904,7 @@ function ProductoEditarID(props) {
                                 </Input>
                             </FormGroup>
                         </>
-                        {/* Subido */}
+                        {/* Subido Facebook */}
                         <>
                             <div className="wbold">¿Subido en Facebook?</div>
                             <FormGroup>
