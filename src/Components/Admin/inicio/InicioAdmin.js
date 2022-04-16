@@ -68,7 +68,7 @@ function InicioAdmin() {
                         </Input>
                     </Col>
                     <Col>{loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> : 
-                        <Input type="select" value={subCategoria} onChange={e => {setSubCategoria(e.target.value); setLoadMore(5000)}} >
+                        <Input disabled={!categoria} type="select" value={subCategoria} onChange={e => {setSubCategoria(e.target.value); setLoadMore(5000)}} >
                             <option value="">Sub categoria:</option>
                             {subCategorias?.map((c, i) => <option key={i}>{c.sub_categoria}</option>)}
                         </Input>}

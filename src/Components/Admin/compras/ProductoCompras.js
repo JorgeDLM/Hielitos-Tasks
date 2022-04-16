@@ -139,7 +139,8 @@ function ProductoCompras(props) {
                                     </InputGroup>
                                 </Col>
                                 <Col>
-                                    <span className="wbold azul pizchico">{usuario?.nombre} {usuario?.apellidos}</span></Col>
+                                    Comprado por: <span className="wbold azul pizchico">{usuario?.nombre} {usuario?.apellidos}</span>
+                                </Col>
                             </Row>
                         </Col>
                     </Row>

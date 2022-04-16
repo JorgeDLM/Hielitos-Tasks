@@ -28,9 +28,11 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
       
     const busqueda = fuse.search(query) 
     const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+
+    const largoBusqueda = productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).length
     
     const spinner = <div className="centro parmediano azul"><Spinner /></div>
-    const botonLoadMore = loading ? <div className="centro azul"><Spinner /></div> : <>{productosFuse.length >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>
+    const botonLoadMore = loading ? <div className="centro azul"><Spinner /></div> : <>{largoBusqueda >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>
 
     
     const filtradoInicioAdmin = inicio && (loading ? spinner :
@@ -71,7 +73,7 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
     return (
         <React.Fragment>
                 <div className="parchico"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} /></div>
-                <div className="derecha pdechico gris t14">{productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).length} resultados</div>
+                <div className="derecha pdechico gris t14">{largoBusqueda} resultados</div>
                 {filtradoInicioAdmin}
                 {filtradoCompras}
         </React.Fragment>
