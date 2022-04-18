@@ -7,8 +7,9 @@ import { FaExclamationTriangle, FaTrash } from 'react-icons/fa'
 import ProductoCompras from "../Admin/compras/ProductoCompras";
 import ProductoCatalogo from "../InicioCatalogo/ProductoCatalogo";
 import ProductoPorSubir from "../Admin/porSubir/ProductoPorSubir";
+import ProductoInventario from "../Admin/inventario/ProductoInventario";
 
-function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo, porSubir}) {
+function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo, porSubir, inventario}) {
     
     const { productos, setLoadMore, loading, loadMore } = useContext(UsuarioContext)
     
@@ -37,25 +38,6 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
     const botonLoadMore = loading ? spinner : largoBusqueda === (loadMore + 20) && <>{largoBusqueda >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>
     const botonBorrarFiltros = ((categoria !== "" || subCategoria !== "") && <div><Button onClick={() => {setCategoria(""); setSubCategoria("")}} className="botonAmarilloComentario"><FaTrash className="tIconos" /></Button><span className="pizchico wbold">Filtros:</span> {categoria}{subCategoria && ` - ${subCategoria}`}</div>)
 
-// ADMIN INICIO
-    const filtradoInicioAdmin = inicio && (loading ? spinner :
-        <>
-            <div className="pabmuygrande">{botonBorrarFiltros}</div>
-                <Row className="pabchico paddingIos">
-                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
-                        <ProductoEditar key={i} p={p}  cambio={query.length} />
-                    )}
-                    {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados :
-                        <>
-                            {productosFuse.length <= 0 && 
-                                (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                            )}
-                        </>
-                    }
-                </Row>
-            {botonLoadMore}
-        </>)
- 
 // CATALAGO
 const filtradoCatalogo = catalogo && (
     <>
@@ -74,6 +56,27 @@ const filtradoCatalogo = catalogo && (
             }
         </Row>
     </>)
+
+
+// ADMIN INICIO
+    const filtradoInicioAdmin = inicio && (loading ? spinner :
+        <>
+            <div className="pabmuygrande">{botonBorrarFiltros}</div>
+                <Row className="pabchico paddingIos">
+                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                        <ProductoEditar key={i} p={p}  cambio={query.length} />
+                    )}
+                    {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados :
+                        <>
+                            {productosFuse.length <= 0 && 
+                                (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                            )}
+                        </>
+                    }
+                </Row>
+            {botonLoadMore}
+        </>)
+
 
 //  ADMIN COMPRAS
     const filtradoCompras = compras && (loading ? spinner :
@@ -94,9 +97,30 @@ const filtradoCatalogo = catalogo && (
         </>)
 
 
-// POR SUBIR
+//  ADMIN INVENTARIO
+    const filtradoInventario = inventario && (loading ? spinner :
+        <>
+            {botonBorrarFiltros}
+            <>
+                {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                    <ProductoInventario key={i} p={p}  cambio={query.length} />
+                )}
+                {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : 
+                    <>
+                        {productosFuse.length <= 0 && 
+                            (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                        )}
+                        <div className="parchico">{botonLoadMore}</div>
+                    </>
+                }
+            </>
+        </>)
+
+
+// ADMIN POR SUBIR
     const filtradoPorSubir = porSubir && ( 
-        <div className="pargrande">
+        <>
+            <div className="pabmuygrande">{botonBorrarFiltros}</div>
             {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
                 <ProductoPorSubir key={i} p={p}  cambio={query.length} />
             )}
@@ -104,9 +128,9 @@ const filtradoCatalogo = catalogo && (
                 {productosFuse.length <= 0 && 
                     (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                 )}
-                {botonLoadMore}
+                <div className="parchico">{botonLoadMore}</div>
             </>}
-        </div>
+        </>
     )
 
     return (
@@ -114,6 +138,7 @@ const filtradoCatalogo = catalogo && (
                 <div className="parchico"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} /></div>
                 <div className="derecha pdechico gris t14">{largoBusqueda} resultados</div>
                 {filtradoInicioAdmin}
+                {filtradoInventario}
                 {filtradoCompras}
                 {filtradoCatalogo}
                 {filtradoPorSubir}

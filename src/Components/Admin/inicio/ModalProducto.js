@@ -418,7 +418,7 @@ const fuse = new Fuse(productos, {
 
     return (
         <React.Fragment>
-            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria"><FaPlus className="t14 pabmuychico" /> Producto</Button>
+            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria"><FaPlus className="tIconoCategoria" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
                     {imagenGrande === "" ? 

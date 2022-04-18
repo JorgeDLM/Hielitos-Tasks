@@ -14,15 +14,19 @@ const UsuarioState = (props) => {
     const [productosVenta, setProductosVenta] = useState([])
     const [compras, setCompras] = useState([])
     const [loadMore, setLoadMore] = useState(0)
+    const [categoria, setCategoria] = useState("")
+    const [categorias, setCategorias] = useState([])
+    const [subCategoria, setSubCategoria] = useState("")
+    const [subCategorias, setSubCategorias] = useState([])
 
-    // USUARIO LOGGEADO
+// USUARIO LOGGEADO
     useEffect(() => {
         const userInfo = JSON.parse(localStorage.getItem("infoUsuario"))
         userInfo ? setUsuarioLoggeado(true) : setUsuarioLoggeado(false)
         setUsuario(userInfo)
 	}, []);    
     
-    // CARGAR PRODUCTOS-------------------------------------------------------
+// CARGAR PRODUCTOS-------------------------------------------------------
     useEffect(() => {
         const fetchProductos = async() => {
             try {
@@ -54,21 +58,46 @@ const UsuarioState = (props) => {
         fetchProductos();
         setLoading(false)
         console.log("cargar más")
-    }, [loadMore, productosCache])
-    // console.log(productosCache)
-    
-    // localStorage.removeItem('productosCache')      
+    }, [loadMore, productosCache])  
 
-    // CARGAR PRODUCTOSCACHE-------------------------------------------------------
+// CARGAR PRODUCTOSCACHE-------------------------------------------------------
     useEffect(() => {
         const productosCacheData = JSON.parse(localStorage.getItem("productosCache"))    
         setProductosCache(productosCacheData)
     }, [loadMore])
-// ------------------------------------------------------------------------
+
+    
+// FETCH CATEGORIAS
+    useEffect(() => {
+        const fetchCategorias = async() => {
+            const dataCategoria =  await getDocs(collection(db, "categorias"))
+            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setCategorias(data)
+        }
+        fetchCategorias();
+        setLoading(false)
+        console.log("a")
+    }, [setLoading])
+    
+// FETCH SUBCATEGORIAS
+    useEffect(() => {
+        const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
+        const set = async () => {
+            const dataSubCategoria =  await getDocs(collection(db, "categorias", categoriaID, "sub_categorias"))
+            const data = dataSubCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setLoading(false)
+            setSubCategorias(data)
+        }
+        if(categoria !== ""){
+            set()
+        }
+        setLoading(false)
+        
+        console.log("b")
+    }, [categoria, categorias, setLoading])
 
 
 // CARGAR COMPRAS-------------------------------------------------------
-// localStorage.removeItem("infoCompras")
 useEffect(() => {
         const fetchCompras = async() => {
             try {
@@ -87,8 +116,8 @@ useEffect(() => {
         fetchCompras()
         
     }, [setCompras])
-// ------------------------------------------------------------------------
-    // CARGAR COMPRA STATE-------------------------------------------------------
+
+// CARGAR COMPRA STATE-------------------------------------------------------
     useEffect(() => {
         const infoProductosCompras = JSON.parse(localStorage.getItem("infoProductosCompras"))
             if (infoProductosCompras) {
@@ -96,8 +125,9 @@ useEffect(() => {
             }
             
         }, [setProductosCompra])
-// ------------------------------------------------------------------------
-    // CARGAR VENTAS-------------------------------------------------------
+
+
+// CARGAR VENTAS-------------------------------------------------------
     useEffect(() => {
         const infoProductosVentas = JSON.parse(localStorage.getItem("infoProductosVentas"))
             if (infoProductosVentas) {
@@ -105,7 +135,6 @@ useEffect(() => {
             }
             
         }, [setProductosVenta])
-// ------------------------------------------------------------------------
 
 
     return (
@@ -127,7 +156,15 @@ useEffect(() => {
             compras, 
             setCompras,
             setLoadMore,
-            loadMore
+            loadMore,
+            categoria, 
+            setCategoria,
+            categorias, 
+            setCategorias,
+            subCategoria, 
+            setSubCategoria,
+            subCategorias, 
+            setSubCategorias,
         }}>
             {props.children}
         </UsuarioContext.Provider>  
