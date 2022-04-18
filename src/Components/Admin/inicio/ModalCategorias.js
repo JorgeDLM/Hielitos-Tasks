@@ -115,8 +115,8 @@ const agregarSubCategoria = async() => {
 
     return (
         <React.Fragment>
-            <Col className="pizchico"><Button onClick={() => setModal(!modal)} className="botonAmarillo w100"><FaPlus className="t14 pabmuychico" /> Categoria</Button></Col>
-            <Col className="pizchico"><Button onClick={() => setModal2(!modal2)} className="botonAzul w100" disabled={loading}><FaPlus className="t14 pabmuychico" /> <span className="d-none d-md-inline">Sub-categoria</span><span className="d-inline d-md-none">Sub</span></Button></Col>
+            <Col className="sinpymiz sinpymde"><Button onClick={() => setModal(!modal)} className="botonAmarillo tCategoria w100"><FaPlus className="t14 pabmuychico" /> Categoria</Button></Col>
+            <Col><Button onClick={() => setModal2(!modal2)} className="botonAzul tCategoria w100" disabled={loading}><FaPlus className="t14 pabmuychico" /> <span className="d-none d-md-inline">Sub-categoria</span><span className="d-inline d-md-none">Sub</span></Button></Col>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
             <div className="pargrande azul wbolder centro tmuygrande">
                 <div className="pabmediano"><img className="productoLista" src={logo} alt="Error" /></div>
