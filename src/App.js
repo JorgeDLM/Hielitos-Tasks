@@ -18,6 +18,7 @@ import ProductoEditarID from "./Components/Admin/inicio/ProductoEditarID";
 import Usuario from "./Components/Admin/context/UsuarioContext";
 import ProductoPublicarSimilarID from "./Components/Admin/inicio/ProductoPublicarSimilarID";
 import SolicitarProducto from "./Components/Admin/solicitarProducto/SolicitarProducto";
+import Contabilidad from "./Components/Admin/contabilidad/Contabilidad";
 
 function App() {
 
@@ -40,6 +41,7 @@ return (
 							<Route path="ventas" element={<Ventas/>} />
 							<Route path="por-subir" element={<PorSubir/>} />
 							<Route path="compras" element={<Compras/>} />
+							<Route path="contabilidad" element={<Contabilidad/>} />
 							{productoEditar}
 							{productoSimilar}
 						</Route>

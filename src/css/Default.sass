@@ -571,6 +571,16 @@ body
   &:hover
     background: $verdeobscuro !important
 
+.botonVerdeObscuro
+  background: $verdeobscuro !important
+  border-color: $verde !important
+  color: $blanco  !important
+  font-weight: bold !important
+  &:active
+    opacity: $opacity !important
+  &:hover
+    opacity: $opacity !important
+
 .botonAmarillo
   background: $amarillo  !important
   border-color: $amarillo !important
@@ -3550,6 +3560,14 @@ body
   height: calc(90vh - 294px)
   overflow-y: auto
   overflow-x: hidden
+
+.overflowGastos
+  height: calc(30vh)
+  overflow-y: auto
+  overflow-x: hidden
+  // lg
+  @media (min-width: 992px)
+    height: calc(79vh - 100px)
 
 .botonInputLugarAzul
   font-size: 14px !important

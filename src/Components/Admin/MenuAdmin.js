@@ -29,6 +29,10 @@ function MenuAdmin() {
 			nombre: "Solicitudes",
 			path: `/solicitar`,
 		},
+		{
+			nombre: "Contabilidad",
+			path: `/admin/contabilidad`,
+		},
 
 	];
 

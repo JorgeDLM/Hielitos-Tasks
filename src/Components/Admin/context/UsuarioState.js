@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import UsuarioContext from './UsuarioContext'
-import { collection, getDocs, limit, query, where  } from "firebase/firestore"
+import { collection, getDocs, limit, orderBy, query, where  } from "firebase/firestore"
 import { db } from "../../../firebase-config"
 
 const UsuarioState = (props) => {
@@ -25,23 +25,31 @@ const UsuarioState = (props) => {
     // CARGAR PRODUCTOS-------------------------------------------------------
     useEffect(() => {
         const fetchProductos = async() => {
-            const dataProductos = query(collection(db, "productos"), where("activo", "==", true), limit(20+(loadMore >= 5000 ? 5000 : loadMore)))
-
-            const querySnapshot = await getDocs(dataProductos);
-            const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
-            
-
-            const ifProductosCache = productosCache ? productosCache : []
-            const setCache = [ ...getDataProductos, ...ifProductosCache ]
-            // const unico = setCache.filter((value, index, self) => index === self.findIndex((p) => {p.id === value.id && p.nombre === value.nombre}))
-            const unico = setCache.filter((value, index, self) =>
-                index === self.findIndex((t) => (
-                    t.id === value.id
+            try {
+                const dataProductos = query(collection(db, "productos"), 
+                where('activo', '==', true), 
+                orderBy('nombre', 'asc'), 
+                limit(20+(loadMore >= 5000 ? 5000 : loadMore)
                 ))
-            )
-            
-            localStorage.setItem('productosCache', JSON.stringify([...unico]))    
-            setProductos(getDataProductos)
+
+                const querySnapshot = await getDocs(dataProductos);
+                const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+                
+
+                const ifProductosCache = productosCache ? productosCache : []
+                const setCache = [ ...getDataProductos, ...ifProductosCache ]
+                const unico = setCache.filter((value, index, self) =>
+                index === self.findIndex((t) => (
+                        t.id === value.id
+                    ))
+                )
+                        
+                localStorage.setItem('productosCache', JSON.stringify([...unico]))    
+                setProductos(getDataProductos)
+
+            } catch (error) {
+                console.log(error)
+            }
         }
         fetchProductos();
         setLoading(false)
@@ -63,16 +71,20 @@ const UsuarioState = (props) => {
 // localStorage.removeItem("infoCompras")
 useEffect(() => {
         const fetchCompras = async() => {
-            const dataCompras = query(collection(db, "compras"), where("activa", "==", true), limit(10))
+            try {
+                const dataCompras = query(collection(db, "compras"), where("activa", "==", true), orderBy("timestamp", "asc"), limit(10))
 
-            const querySnapshot = await getDocs(dataCompras);
-            const getDataCompras = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+                const querySnapshot = await getDocs(dataCompras);
+                const getDataCompras = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
 
-            // const dataCompras =  await getDocs(collection(db, "compras"))
-            // const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
-            setCompras( getDataCompras )
+                // const dataCompras =  await getDocs(collection(db, "compras"))
+                // const getDataCompras = dataCompras.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+                setCompras( getDataCompras )
+            } catch (error) {
+                console.log(error)
             }
-            fetchCompras()
+        }
+        fetchCompras()
         
     }, [setCompras])
 // ------------------------------------------------------------------------
