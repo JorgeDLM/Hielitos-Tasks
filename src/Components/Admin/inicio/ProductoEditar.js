@@ -25,7 +25,7 @@ function ProductoEditar(props) {
                     </div>
                 </Card>
             </Link>
-            <div className="centro parmediano t20 bottom">
+            <div className="centro parmediano t20 bottomIOS">
                 {props.p.precio_venta_ml && <span className="lineaEnmedio wbold">${props.p.precio_venta_ml}</span>} {props.p.precio_venta && <span className={props.p.precio_venta_ml && `pizmuychico`}>${props.p.precio_venta}</span>}
             </div>
         </Col>
