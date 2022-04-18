@@ -1,40 +1,71 @@
-import React, { useContext, useState } from "react";
-import { Container, Input } from "reactstrap";
-import ProductoPorSubir from "./ProductoPorSubir";
+import React, { useContext, useEffect, useState } from "react";
+import { Container } from "reactstrap";
 import UsuarioContext from "../context/UsuarioContext";
-import Fuse from 'fuse.js'
-import { FaExclamationTriangle } from 'react-icons/fa'
+import Buscador from "../../buscador/Buscador";
+import Categorias from "../inicio/Categorias";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase-config";
 
 
 function PorSubir() {
     
-    const {productos} = useContext(UsuarioContext)
+    const { setLoading } = useContext(UsuarioContext)
 
 
-    const [query, setQuery] = useState('')
-
-    const fuse = new Fuse(productos, {
-        keys: [{name:"nombre", weight: 0.4}, {name:"categoria", weight: 0.25}, {name:"sub-categoria", weight: 0.25}, {name:"propietario", weight: 0.1}],
-        threshold: 0.5,
-        includeScore: true,
-        shouldSort: true,
-      })
-      
-    const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
-
+    const [categoria, setCategoria] = useState("")
+    const [categorias, setCategorias] = useState([])
+    const [subCategoria, setSubCategoria] = useState("")
+    const [subCategorias, setSubCategorias] = useState([])
+    
+    // FETCH CATEGORIAS
+    useEffect(() => {
+        const fetchCategorias = async() => {
+            const dataCategoria =  await getDocs(collection(db, "categorias"))
+            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setCategorias(data)
+        }
+        fetchCategorias();
+        setLoading(false)
+        console.log("a")
+    }, [setLoading])
+    
+    
+    
+    // FETCH SUBCATEGORIAS
+    useEffect(() => {
+        const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
+        const set = async () => {
+            const dataSubCategoria =  await getDocs(collection(db, "categorias", categoriaID, "sub_categorias"))
+            const data = dataSubCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
+            setLoading(false)
+            setSubCategorias(data)
+        }
+        if(categoria !== ""){
+            set()
+        }
+        setLoading(false)
+        
+        console.log("b")
+    }, [categoria, categorias, setLoading])
+    
     return (
         <React.Fragment>
-            <Container className="pabenorme">
-                <div className="pargrande">
-                <div className="pabmediano"><Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value)}} /></div>
-                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).map((p, i) => 
-                        <ProductoPorSubir key={i} p={p}  cambio={query.length} />
-                    )}
-                    {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 
-                        (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                    )}
-                </div>
+            <Container className="pabenorme">   
+                <Categorias 
+                    categoria={categoria}
+                    setCategoria={setCategoria}
+                    setSubCategoria={setSubCategoria}
+                    subCategoria={subCategoria}
+                    subCategorias={subCategorias}
+                    categorias={categorias}
+                /> 
+                <Buscador 
+                    categoria={categoria} 
+                    setCategoria={setCategoria}
+                    subCategoria={subCategoria} 
+                    setSubCategoria={setSubCategoria} 
+                    porSubir
+                    />
             </Container>
         </React.Fragment>
     );

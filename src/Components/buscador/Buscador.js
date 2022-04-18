@@ -6,8 +6,9 @@ import ProductoEditar from "../Admin/inicio/ProductoEditar";
 import { FaExclamationTriangle, FaTrash } from 'react-icons/fa'
 import ProductoCompras from "../Admin/compras/ProductoCompras";
 import ProductoCatalogo from "../InicioCatalogo/ProductoCatalogo";
+import ProductoPorSubir from "../Admin/porSubir/ProductoPorSubir";
 
-function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo}) {
+function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo, porSubir}) {
     
     const { productos, setLoadMore, loading, loadMore } = useContext(UsuarioContext)
     
@@ -29,36 +30,51 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
       
     const busqueda = fuse.search(query) 
     const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
-
     const largoBusqueda = productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).length
     
     const spinner = <div className="centro parmediano azul"><Spinner /></div>
     const spinnerSinResultados = <div className="centro azul t30"><Spinner /><span className="pizmediano">Cargando...</span></div>
-    const botonLoadMore = loading ? spinner : <>{largoBusqueda >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>
+    const botonLoadMore = loading ? spinner : largoBusqueda === (loadMore + 20) && <>{largoBusqueda >= 20 && <Button className="botonAzul w100 pabmediano parmediano t20" onClick={() => setLoadMore(loadMore + 60)}>Cargar más</Button>}</>
     const botonBorrarFiltros = ((categoria !== "" || subCategoria !== "") && <div><Button onClick={() => {setCategoria(""); setSubCategoria("")}} className="botonAmarilloComentario"><FaTrash className="tIconos" /></Button><span className="pizchico wbold">Filtros:</span> {categoria}{subCategoria && ` - ${subCategoria}`}</div>)
 
 // ADMIN INICIO
     const filtradoInicioAdmin = inicio && (loading ? spinner :
         <>
-            <div>
-                {botonBorrarFiltros}
-                <div className="pargrande">
-                    <Row className="parchico">
-                        {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
-                            <ProductoEditar key={i} p={p}  cambio={query.length} />
-                        )}
-                    </Row>
+            <div className="pabmuygrande">{botonBorrarFiltros}</div>
+                <Row className="pabchico">
+                    {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                        <ProductoEditar key={i} p={p}  cambio={query.length} />
+                    )}
                     {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados :
-                    <>
-                        {productosFuse.length <= 0 && 
-                            (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                        )}
-                    </>}
-                </div>
-            </div>
+                        <>
+                            {productosFuse.length <= 0 && 
+                                (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                            )}
+                        </>
+                    }
+                </Row>
             {botonLoadMore}
         </>)
  
+// CATALAGO
+const filtradoCatalogo = catalogo && (
+    <>
+        <div className="pabmuygrande">{botonBorrarFiltros}</div>
+        <Row className="pabchico">
+            {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                <ProductoCatalogo key={i} p={p} />
+            )}
+            {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : 
+                <>
+                    {productosFuse.length <= 0 && 
+                        (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                    )}
+                    {botonLoadMore}
+                </>
+            }
+        </Row>
+    </>)
+
 //  ADMIN COMPRAS
     const filtradoCompras = compras && (loading ? spinner :
         <>
@@ -77,24 +93,21 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
             }
         </>)
 
-// CATALAGO
-    const filtradoCatalogo = catalogo && (
-        <>
-            <div className="pabmuygrande">{botonBorrarFiltros}</div>
-			<Row className="pabchico">
-                {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
-                    <ProductoCatalogo key={i} p={p} />
+
+// POR SUBIR
+    const filtradoPorSubir = porSubir && ( 
+        <div className="pargrande">
+            {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                <ProductoPorSubir key={i} p={p}  cambio={query.length} />
+            )}
+            {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : <>
+                {productosFuse.length <= 0 && 
+                    (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
                 )}
-                {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : 
-                    <>
-                        {productosFuse.length <= 0 && 
-                            (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
-                        )}
-                        {botonLoadMore}
-                    </>
-                }
-            </Row>
-        </>)
+                {botonLoadMore}
+            </>}
+        </div>
+    )
 
     return (
         <React.Fragment>
@@ -103,6 +116,7 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
                 {filtradoInicioAdmin}
                 {filtradoCompras}
                 {filtradoCatalogo}
+                {filtradoPorSubir}
         </React.Fragment>
     );
 }

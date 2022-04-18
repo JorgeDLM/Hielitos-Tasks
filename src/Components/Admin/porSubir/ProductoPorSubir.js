@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Card, Row, Col, Button } from "reactstrap";
-import { FaCopy, FaPlus } from 'react-icons/fa'
-// import UsuarioContext from "../context/UsuarioContext";
-// import { doc, updateDoc } from "firebase/firestore";
-// import { db } from "../../../firebase-config";
-// import swal from "sweetalert";
+import { FaCopy, FaPlus, FaCheck } from 'react-icons/fa'
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../../firebase-config";
+import swal from "sweetalert";
 
 function ProductoPorSubir(props) {
 
-    // const {productos, setProductos, loading, setLoading} = useContext(UsuarioContext)
-
     const [ver, setVer] = useState(false)
+    const [ML, setML] = useState(props.p.subido)
+    const [amazon, setAmazon] = useState(props.p.subido_amazon)
+    const [facebook, setFacebook] = useState(props.p.subido_facebook)
 
 
     const copiar = () => {
@@ -18,12 +18,58 @@ function ProductoPorSubir(props) {
     }
 
 
+    const actualizarProductoML = async() => {
+        try {
+            const data = {
+                subido: !ML,
+            }
+            await updateDoc(doc(db, "productos", props.p.id), data)
+            swal({
+                title: "Producto actualizado con exito",
+                icon: "success"
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const actualizarProductoAmazon = async() => {
+        try {
+            const data = {
+                subido_amazon: !amazon,
+            }
+            await updateDoc(doc(db, "productos", props.p.id), data)
+            swal({
+                title: "Producto actualizado con exito",
+                icon: "success"
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const actualizarProductoFB = async() => {
+        try {
+            const data = {
+                subido_facebook: !facebook,
+            }
+            await updateDoc(doc(db, "productos", props.p.id), data)
+            swal({
+                title: "Producto actualizado con exito",
+                icon: "success"
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const palabras = props.p.nombre.split(" ");
     const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ")
 
     return (
         <>
-            {!(props.p.subido && props.p.subido_amazon && props.p.subido_facebook) && <div className="parchico">
+            {/* {!(ML && amazon && facebook) && <div className="parchico"> */}
+            {<div className="parchico">
                 <Card className="claseCard">
                     <div className="pmediano">
                         <Row>
@@ -33,15 +79,23 @@ function ProductoPorSubir(props) {
                             <Col>
                                 <div className="t16">{nombre}</div>
                                 <Row className="parchico">
-                                    <Col>{!props.p.subido ? <><Button className="botonVerdeComentario" ><FaPlus className="claseIconos" /></Button> ML</> : "Subido en ML"}</Col>
-                                    <Col>{!props.p.subido_amazon ? <><Button className="botonVerdeComentario" ><FaPlus className="claseIconos" /></Button> Amazon</> : "Subido en Amazon"}</Col>
-                                    <Col>{!props.p.subido_facebook ? <><Button className="botonVerdeComentario" ><FaPlus className="claseIconos" /></Button> FB</> : "Subido en FB"}</Col>
+                                    <Col>{!ML ? <><Button className="botonAmarilloComentario" onClick={() => {setML(true); actualizarProductoML()}} >
+                                        <FaPlus className="claseIconos" /></Button> ML</> : 
+                                        <><Button onClick={() => {setML(false); actualizarProductoML()}} className="botonVerdeComentario" ><FaCheck className="claseIconos" /></Button> Subido en ML</>}</Col>
+
+                                    <Col>{!amazon ? <><Button className="botonAmarilloComentario" onClick={() => {setAmazon(true); actualizarProductoAmazon()}} >
+                                        <FaPlus className="claseIconos" /></Button> Amazon</> : 
+                                        <><Button onClick={() => {setAmazon(false); actualizarProductoAmazon()}} className="botonVerdeComentario" ><FaCheck className="claseIconos" /></Button> Subido en Amazon</>}</Col>
+
+                                    <Col>{!facebook ? <><Button className="botonAmarilloComentario" onClick={() => {setFacebook(true); actualizarProductoFB()}} >
+                                        <FaPlus className="claseIconos" /></Button> FB</> : 
+                                        <><Button onClick={() => {setFacebook(false); actualizarProductoFB()}} className="botonVerdeComentario" ><FaCheck className="claseIconos" /></Button> Subido en FB</>}</Col>
                                 </Row>
                             </Col>
                         </Row>
                         {ver && <hr />}
                     </div>
-                    {!ver && <Button onClick={() => setVer(!ver)} className="botonAmarillo w100">Ver más</Button>}
+                    {!ver && <Button onClick={() => setVer(!ver)} className="botonTransparente w100 azul wbold">Ver más</Button>}
                         {ver && <div className="pizchico pdechico pabchico">
                             <div><span className="wbold azul">Temática:</span> {props.p.tematica}</div>
                             <div><span className="wbold azul">Categoria:</span> {props.p.categoria}</div>
@@ -58,7 +112,7 @@ function ProductoPorSubir(props) {
                             <div><span className="wbold azul">Inventario:</span> {props.p.cantidad}</div>
                             <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
                         </div>}
-                    {ver && <Button onClick={() => setVer(!ver)} className="botonAmarillo w100">Ver menos</Button>}
+                    {ver && <Button onClick={() => setVer(!ver)} className="botonTransparente w100 azul wbold">Ver menos</Button>}
                 </Card>
             </div>}
         </>

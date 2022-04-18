@@ -54,13 +54,12 @@ function InicioAdmin() {
     return (
         <React.Fragment>
             <Container className="pabenorme">
-                        <Row className="pargrande centro">
-                            <Col>
-                                <ModalProducto />
-                            </Col>
-                            <ModalCategorias />
-                        </Row>
-
+                <Row className="pargrande centro">
+                    <Col>
+                        <ModalProducto />
+                    </Col>
+                    <ModalCategorias />
+                </Row>
                 <Categorias 
                     categoria={categoria}
                     setCategoria={setCategoria}
