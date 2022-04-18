@@ -41,7 +41,7 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
     const filtradoInicioAdmin = inicio && (loading ? spinner :
         <>
             <div className="pabmuygrande">{botonBorrarFiltros}</div>
-                <Row className="pabchico">
+                <Row className="pabchico paddingIos">
                     {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
                         <ProductoEditar key={i} p={p}  cambio={query.length} />
                     )}
