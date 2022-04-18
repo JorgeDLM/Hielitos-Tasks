@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Button, Input, Row, Spinner } from "reactstrap";
 import Fuse from 'fuse.js'
 import UsuarioContext from "../Admin/context/UsuarioContext";
-import ProductoEditar from "../Admin/inicio/ProductoEditar";
+// import ProductoEditar from "../Admin/inicio/ProductoEditar";
 import { FaExclamationTriangle, FaTrash } from 'react-icons/fa'
 import ProductoCompras from "../Admin/compras/ProductoCompras";
 import ProductoCatalogo from "../InicioCatalogo/ProductoCatalogo";
