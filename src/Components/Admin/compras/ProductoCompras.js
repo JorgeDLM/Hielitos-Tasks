@@ -117,9 +117,8 @@ function ProductoCompras(props) {
                                 <Col xs={8} md={6}>
                                     <InputGroup>
                                         <Button className="botonAzul">$</Button>
-                                        <Input type="number" className="letraEditarDatosInput" value={precio_compra} 
+                                        <Input type="number" className="letraEditarDatosInput" 
                                             placeholder={`$${props.p.precio_compra}`} 
-                                            defaultValue={props.p.precio_compra}
                                             onChange={(e) => setPrecioCompra(e.target.value)} 
                                             min={0}
                                             onKeyPress={(e) => prevDefault(e)}

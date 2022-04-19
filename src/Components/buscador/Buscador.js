@@ -24,9 +24,11 @@ function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inici
             {name:"sub_categoria", weight: 0.05}, 
             {name:"propietario", weight: 0.1}
         ],
-        threshold: 0.4,
+        threshold: .25,
         includeScore: true,
         shouldSort: true,
+        distance: 60,
+        ignoreLocation: true
       })
       
     const busqueda = fuse.search(query) 
@@ -82,7 +84,7 @@ const filtradoCatalogo = catalogo && (
     const filtradoCompras = compras && (loading ? spinner :
         <>
            <div className="overflowProductosCompra">
-                {productosFuse.map((p, i) => 
+                {productosFuse.filter(prod => prod.compuesto.length <= 0).map((p, i) => 
                     <ProductoCompras key={i} p={p}  cambio={query.length} />
                 )}
                 {botonLoadMore}
