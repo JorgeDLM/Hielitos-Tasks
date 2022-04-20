@@ -171,7 +171,7 @@ function ProductoPorSubir(props) {
                                 <div className="pizchico"><img className="productoLista" src={props.p.imagen} alt="error" /></div>
                             </Col>
                             <Col>
-                                <div className="t16">{nombre}</div>
+                                <div className="t16 wbold">{nombre}</div>
                                 <Row className="parchico">
                                     <Col>{!ML ? <><Button className="botonAmarilloComentario" onClick={() => {setML(true); actualizarProductoML()}} >
                                         <FaPlus className="claseIconos" /></Button> ML</> : 
