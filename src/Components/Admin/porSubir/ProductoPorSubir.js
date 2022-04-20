@@ -47,7 +47,7 @@ function ProductoPorSubir(props) {
     }
     
     const copiarMarca = () => {
-        navigator.clipboard.writeText(cuenta === "jorge" ? "Somos Geek" : cuenta === "ana" ? "The gamer zone" : "Genérico")
+        navigator.clipboard.writeText(cuenta === "jorge" ? "Somos Geek" : cuenta === "ana" ? "The Gamer Zone" : "Genérico")
     }
 
     const botones = [
