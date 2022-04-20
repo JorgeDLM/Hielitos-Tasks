@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Card, Row, Col, Button, Input, InputGroup, Spinner } from "reactstrap";
 import UsuarioContext from "../context/UsuarioContext";
 import { FaTrash } from 'react-icons/fa'
-// import { doc, updateDoc } from "firebase/firestore";
-// import { db } from "../../../firebase-config";
 import swal from "sweetalert";
 
 function ProductoCompras(props) {

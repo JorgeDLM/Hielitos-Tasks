@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Card, Row, Col, Button } from "reactstrap";
+import { Card, Row, Col, Button, Input, InputGroup } from "reactstrap";
 import { FaCopy, FaPlus, FaCheck } from 'react-icons/fa'
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase-config";
-import swal from "sweetalert";
 
 function ProductoPorSubir(props) {
 
@@ -11,53 +10,148 @@ function ProductoPorSubir(props) {
     const [ML, setML] = useState(props.p.subido)
     const [amazon, setAmazon] = useState(props.p.subido_amazon)
     const [facebook, setFacebook] = useState(props.p.subido_facebook)
+    const [cuenta, setCuenta] = useState("")
 
 
-    const copiar = () => {
+  
+    const copiarNombre = () => {
+        navigator.clipboard.writeText(props.p.nombre)
+    }
+    const copiarTitulo = () => {
+        navigator.clipboard.writeText(props.p.titulo)
+    }
+    const copiarTematica = () => {
+        navigator.clipboard.writeText(props.p.tematica)
+    }
+    const copiarCategoria = () => {
+        navigator.clipboard.writeText(props.p.categoria)
+    }
+    const copiarPrecioVenta = () => {
+        navigator.clipboard.writeText(props.p.precio_venta_ml)
+    }
+    const copiarCodigoUniversal = () => {
+        navigator.clipboard.writeText(props.p.codigo_universal)
+    }
+    const copiarMedidas = () => {
+        navigator.clipboard.writeText(props.p.medidas)
+    }
+    const copiarMaterial = () => {
+        navigator.clipboard.writeText(props.p.material)
+    }
+    const copiarCantidad = () => {
+        navigator.clipboard.writeText(props.p.cantidad)
+    }
+    
+    const copiarDescripcion = () => {
         navigator.clipboard.writeText(props.p.descripcion)
     }
+    
+    const copiarMarca = () => {
+        navigator.clipboard.writeText(cuenta === "jorge" ? "Somos Geek" : cuenta === "ana" ? "The gamer zone" : "Genérico")
+    }
 
+    const botones = [
+        {   
+            nombre: "Nombre:", 
+            texto: props.p.nombre, 
+            copiar: copiarNombre,
+            col: 12
+        },
+        {   
+            nombre: "Categoría:", 
+            texto: props.p.categoria, 
+            copiar: copiarCategoria,
+            col: 12
+        },
+        {   
+            input:
+                <Input type="select" value={cuenta} onChange={e => setCuenta(e.target.value)}>
+                    <option disabled value="">Marca: ¿Dónde lo estás subiendo?</option>
+                    <option value="jorge">Cuenta de Jorge</option>
+                    <option value="ana">Cuenta de Ana</option>
+                    <option value="otro">Otro lado</option>
+                </Input>,
+            copiar: copiarMarca,
+            col: 12
+        },
+        {   
+            nombre: "Modelo:", 
+            texto: props.p.tematica, 
+            copiar: copiarTematica,
+            col: 12
+        },
+        {   
+            nombre: "Título:", 
+            texto: props.p.titulo, 
+            copiar: copiarTitulo,
+            col: 12
+        },
+        {   
+            nombre: "Cantidad:", 
+            texto: props.p.cantidad, 
+            copiar: copiarCantidad,
+            col: 12
+        },
+        {   
+            nombre: "Código universal", 
+            copiar: copiarCodigoUniversal,
+            col: 4
+        },
+        {   
+            nombre: "Medidas:", 
+            texto: props.p.medidas, 
+            copiar: copiarMedidas,
+            col: 4
+        },
+        {   
+            nombre: "Material:", 
+            texto: props.p.material, 
+            copiar: copiarMaterial,
+            col: 4
+        },
+        {   
+            nombre: "Precio:", 
+            texto: "$" + props.p.precio_venta_ml, 
+            copiar: copiarPrecioVenta,
+            col: 12
+        },
+    ]
 
+    const contenido = 
+        <Row>
+            {botones.map((b, i) => (
+                <Col lg={b.col} key={i}>{b.copiar && <InputGroup className={!b.input && "d-inline"}><Button onClick={b.copiar} className="botonAzul"><FaCopy className="claseIconos" /></Button>{b.input && b.input}</InputGroup>}{!b.input && <><span className="wbold rojoObscuro pizmuychico d-inline">{b.nombre}</span> {b.texto}</>}</Col>
+            ))}
+        </Row>
+
+   
+    
     const actualizarProductoML = async() => {
         try {
             const data = {
                 subido: !ML,
             }
             await updateDoc(doc(db, "productos", props.p.id), data)
-            swal({
-                title: "Producto actualizado con exito",
-                icon: "success"
-            })
         } catch (error) {
             console.log(error)
         }
     }
-
     const actualizarProductoAmazon = async() => {
         try {
             const data = {
                 subido_amazon: !amazon,
             }
             await updateDoc(doc(db, "productos", props.p.id), data)
-            swal({
-                title: "Producto actualizado con exito",
-                icon: "success"
-            })
         } catch (error) {
             console.log(error)
         }
     }
-
     const actualizarProductoFB = async() => {
         try {
             const data = {
                 subido_facebook: !facebook,
             }
             await updateDoc(doc(db, "productos", props.p.id), data)
-            swal({
-                title: "Producto actualizado con exito",
-                icon: "success"
-            })
         } catch (error) {
             console.log(error)
         }
@@ -69,8 +163,8 @@ function ProductoPorSubir(props) {
     return (
         <>
             {/* {!(ML && amazon && facebook) && <div className="parchico"> */}
-            {<div className="parchico">
-                <Card className="claseCard">
+            {<div className={ver ? "parchico pabmediano" : "parchico"}>
+                <Card className={ver ? "claseCard fondoVerdeClaro" : "claseCard"}>
                     <div className="pmediano">
                         <Row>
                             <Col xs={4} md={3}>
@@ -97,20 +191,11 @@ function ProductoPorSubir(props) {
                     </div>
                     {!ver && <Button onClick={() => setVer(!ver)} className="botonTransparente w100 azul wbold">Ver más</Button>}
                         {ver && <div className="pizchico pdechico pabchico">
-                            <div><span className="wbold azul">Temática:</span> {props.p.tematica}</div>
-                            <div><span className="wbold azul">Categoria:</span> {props.p.categoria}</div>
-                            <div><span className="wbold azul">Precio de compra:</span> {props.p.precio_compra}</div>
-                            <div><span className="wbold azul">Ganancia:</span> {props.p.precio_venta - props.p.precio_compra - (props.p.precio_venta >= 299 ? (props.p.envio === true ? 72 : 0) : (props.p.envio === true ? 100 : 0))}</div>
-                            <div><span className="wbold azul">Medidas:</span> {props.p.medidas}</div>
+                            {contenido}
                             <hr />
-                            <div className="descripcion">
-                                <Row className="wbold azul">
-                                    <Col>Descripción: </Col>
-                                    <Col className="derecha"><Button onClick={copiar} className="botonAzul"><FaCopy className="claseIconos" /></Button></Col>
-                                </Row>
+                            <div className="descripcion"><Button onClick={copiarDescripcion} className="botonAzul"><FaCopy className="claseIconos" /></Button> <span className="wbold rojoObscuro">Descripción:</span>
+                                    
                              <br />{props.p.descripcion}</div>
-                            <div><span className="wbold azul">Inventario:</span> {props.p.cantidad}</div>
-                            <div><span className="wbold azul">Proveedor:</span> {props.p.proveedor}</div>
                         </div>}
                     {ver && <Button onClick={() => setVer(!ver)} className="botonTransparente w100 azul wbold">Ver menos</Button>}
                 </Card>
