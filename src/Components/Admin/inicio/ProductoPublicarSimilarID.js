@@ -483,7 +483,7 @@ function ProductoPublicarSimilarID(props) {
     const crearDescripcion = () => {
         setDescripcionDefault(
 `*********************************************************************************************************
-¡PUBLICACIÓN POR ${nombre.toUpperCase()} ${tematica && "DE "}${tematica.toUpperCase()}!
+¡PUBLICACIÓN POR ${nombre.toUpperCase()}${tematica && " DE "}${tematica.toUpperCase()}!
 *********************************************************************************************************
 
 Material: ${material}
@@ -492,13 +492,13 @@ Tamaño: ${medidas}
 
 
 *********************************************************************************************************
-Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
+Contamos con más ${categoria}${tematica && " de " + tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
 tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
 *********************************************************************************************************`)
 }
 
     const crearTituloDefault = () => {
-        setTituloDefault((`${nombre} - ${tematica}`).length <= 60 ? `${nombre} - ${tematica}` : `${nombre}`)
+        setTituloDefault((`${nombre} - ${tematica}`).length <= 60 ? `${nombre}${tematica && " - " + tematica}` : `${nombre}`)
     }
 
     // FETCH CATEGORIAS
@@ -635,23 +635,23 @@ tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para res
                                 </Col>
                     
                             {/* SubCategoria */}
-                            <Col>
-                                {loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> :  
-                                subCategorias.length >= 1 && <>
-                                        <div className="wbold">*Sub<span className="d-none d-md-inline">-categoria</span><span className="d-inline d-md-none"></span>:</div>
-                                        <FormGroup>
-                                            <Input 
-                                            value={subCategoria}
-                                            onBlur={() => {crearDescripcion()}}
-                                            type="select" 
-                                            onChange={(e) => setSubCategoria(e.target.value)} 
-                                            invalid={!subCategoria} >
-                                                <option value="" disabled={subCategoria !== ""}>Seleccione:</option>
-                                                {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
-                                            </Input>
-                                        </FormGroup>
-                                    </>}
-                            </Col>
+                            {loading ? <Col className="centro"><Spinner className="azul" size="sm" /></Col> :  
+                                subCategorias.length >= 1 &&
+                                <Col>
+                                    <div className="wbold">*Sub<span className="d-none d-md-inline">-categoria</span><span className="d-inline d-md-none"></span>:</div>
+                                    <FormGroup>
+                                        <Input 
+                                        value={subCategoria}
+                                        onBlur={() => {crearDescripcion()}}
+                                        type="select" 
+                                        onChange={(e) => setSubCategoria(e.target.value)} 
+                                        invalid={!subCategoria} >
+                                            <option value="" disabled={subCategoria !== ""}>Seleccione:</option>
+                                            {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                            }
                     
                             {/* Temática */}
                                 <Col>

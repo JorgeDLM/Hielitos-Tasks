@@ -379,13 +379,13 @@ function ModalProducto() {
     const crearTitulo = () => {
         const tituloLength =  `${nombre}${tematica && " - " + tematica}`
         const tematicaTrue = (tituloLength.length <= 60)
-        setTituloDefault(`${nombre}${tematicaTrue ? ` - ${tematica}` : ""}`)
+        setTituloDefault(`${nombre}${tematicaTrue ? `${tematica && " - " + tematica}` : ""}`)
     }
 
     const crearDescripcion = () => {
         setDescripcionDefault(
 `*********************************************************************************************************
-¡PUBLICACIÓN POR ${nombre.toUpperCase()} ${tematica && "DE "}${tematica.toUpperCase()}!
+¡PUBLICACIÓN POR ${nombre.toUpperCase()}${tematica && " DE "}${tematica.toUpperCase()}!
 *********************************************************************************************************
 
 Material: ${material}
@@ -394,7 +394,7 @@ Tamaño: ${medidas}
 
 
 *********************************************************************************************************
-Contamos con más ${categoria} de ${tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
+Contamos con más ${categoria}${tematica && " de " + tematica}, si buscabas algo en especial contáctanos! Recuerda que en 
 tu compra de $299 o más el envió es gratis! Si tienes dudas estaremos para resolverte.
 *********************************************************************************************************`)}
 
@@ -444,9 +444,8 @@ const fuse = new Fuse(productos, {
                 {/* Nombre */}
                     <>
                         <div className="wbold">** Nombre:</div>
-                        <FormGroup>
                             <Input onBlur={() => {crearTitulo(); crearDescripcion()}} placeholder="Nombre corto" type="text" maxLength={60} onChange={(e) => setNombre(e.target.value)} invalid={nombreInvalido} />
-                        </FormGroup>
+                        <div className="derecha pdemediano">{nombre?.length}/60</div>
                     </>
 
                 {/* Temática */}
@@ -460,7 +459,6 @@ const fuse = new Fuse(productos, {
                 {/* TITULO */}
                     <>
                         <div className="wbold">** Título:</div>
-                        <FormGroup>
                             <Input 
                                 defaultValue={tituloDefault}
                                 // value={titulo}
@@ -469,7 +467,7 @@ const fuse = new Fuse(productos, {
                                 maxLength={60} 
                                 onChange={(e) => setTitulo(e.target.value)} 
                                 invalid={tituloInvalido} />
-                        </FormGroup>
+                        <div className="derecha pdemediano">{titulo?.length !== 0 ? titulo?.length : tituloDefault.length}/60</div>
                     </>
 
                 {/* Categoria */}

@@ -678,22 +678,22 @@ function ProductoEditarID(props) {
                                 </Col>
                     
                             {/* SubCategoria */}
-                            <Col>
-                                {loading ? <div className="centro"><Spinner className="azul" size="sm" /></div> :  
-                                subCategorias.length >= 1 && <>
-                                        <div className="wbold">*Sub<span className="d-none d-md-inline">-categoria</span><span className="d-inline d-md-none"></span>:</div>
-                                        <FormGroup>
-                                            <Input 
-                                            value={subCategoria}
-                                            type="select" 
-                                            onChange={(e) => setSubCategoria(e.target.value)} 
-                                            invalid={!subCategoria} >
-                                                <option value="" disabled={subCategoria !== ""}>Seleccione:</option>
-                                                {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
-                                            </Input>
-                                        </FormGroup>
-                                    </>}
-                            </Col>
+                            {loading ? <Col className="centro"><Spinner className="azul" size="sm" /></Col> :  
+                                subCategorias.length >= 1 &&
+                                <Col>
+                                    <div className="wbold">*Sub<span className="d-none d-md-inline">-categoria</span><span className="d-inline d-md-none"></span>:</div>
+                                    <FormGroup>
+                                        <Input 
+                                        value={subCategoria}
+                                        type="select" 
+                                        onChange={(e) => setSubCategoria(e.target.value)} 
+                                        invalid={!subCategoria} >
+                                            <option value="" disabled={subCategoria !== ""}>Seleccione:</option>
+                                            {subCategorias?.map((c, i) => <option key={i} id={c.id} value={c.sub_categoria}>{c.sub_categoria}</option>)}
+                                        </Input>
+                                    </FormGroup>
+                                </Col>
+                            }
                     
                             {/* Temática */}
                                 <Col>
