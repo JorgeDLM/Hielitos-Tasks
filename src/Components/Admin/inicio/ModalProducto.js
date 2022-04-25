@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal, Input, FormGroup, FormFeedback, Spinner, Card, InputGroup } from "reactstrap";
 import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
 import UsuarioContext from "../context/UsuarioContext";
 import Fuse from 'fuse.js'
@@ -47,7 +47,7 @@ function ModalProducto() {
     
     const [clickeado, setClickeado] = useState(false)
     
-    const [query, setQuery] = useState("")
+    const [queryFuse, setQuery] = useState("")
     const [isCompuesto, setIsCompuesto] = useState(false)
     const [compuesto, setCompuesto] = useState([])
     const [cambioCompuesto, setCambioCompuesto] = useState(false)
@@ -95,6 +95,7 @@ function ModalProducto() {
         setImagenThumbnail("")
         setNombre("")
         setTitulo("")
+        setTituloDefault("")
         setTematica("")
         setCategoria("")
         setSubCategoria("")
@@ -112,6 +113,7 @@ function ModalProducto() {
         setCodigoProducto("")
         setSubido("")
         setModal(false)
+        setClickeado(false)
     }
 
     const dataCompleta =  !imagenInvalida && !tituloInvalido && !nombreInvalido && !categoriaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido
@@ -347,34 +349,34 @@ function ModalProducto() {
         }
     }
 
-    // FETCH CATEGORIAS
-    useEffect(() => {
-        const fetchCategorias = async() => {
-            const dataCategoria =  await getDocs(collection(db, "categorias"))
-            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-            setCategorias(data)
-        }
-        fetchCategorias();
-        setLoading(false)
-    }, [])
-
-    
-    
-    // FETCH SUBCATEGORIAS
-    useEffect(() => {
-        const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
-        const set = async () => {
-            const dataSubCategoria =  await getDocs(collection(db, "categorias", categoriaID, "sub_categorias"))
-            const data = dataSubCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-            setLoading(false)
-            setSubCategorias(data)
-        }
-        if(categoria !== ""){
-            set()
-        }
-        setLoading(false)
+// FETCH CATEGORIAS
+useEffect(() => {
+    const fetchCategorias = async() => {
         
-        }, [categoria, categorias])
+        const dataCategorias = query(collection(db, "categorias"), orderBy("categoria", "asc"))
+        
+        const querySnapshot =  await getDocs(dataCategorias)
+        const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
+        setCategorias(data)
+    }
+    fetchCategorias();
+    setLoading(false)
+}, [])
+
+// FETCH SUBCATEGORIAS
+useEffect(() => {
+    const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
+    const set = async () => {
+        const dataSubCategorias = query(collection(db, "categorias", categoriaID, "sub_categorias"), orderBy("sub_categoria", "asc"))
+        const querySnapshot =  await getDocs(dataSubCategorias)
+        const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
+        setSubCategorias(data)
+    }
+    if(categoria !== ""){
+        set()
+    }
+    setLoading(false)
+}, [categoria, categorias])
 
     const crearTitulo = () => {
         const tituloLength =  `${nombre}${tematica && " - " + tematica}`
@@ -412,8 +414,8 @@ const fuse = new Fuse(productos, {
   })
 
 
-    const busqueda = fuse.search(query) 
-    const productosFuse = query ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
+    const busqueda = fuse.search(queryFuse) 
+    const productosFuse = queryFuse ? busqueda.sort((a, b) => (a.score > b.score) ? 1 : -1).map(resultado => resultado.item) : productos.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1)
 
 
     return (
@@ -510,7 +512,7 @@ const fuse = new Fuse(productos, {
                                 <Card className="pmediano fondoVerdeClaro">
                                     {compuesto.sort((a, b) => (a.producto > b.producto) ? 1 : -1).map((p, i) =>
                                         <div key={i}>
-                                            <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
+                                            <ProductoCompuesto p={productos?.filter(prod => prod?.id === p.producto)[0]} agregado compuesto={compuesto} setCompuesto={setCompuesto} cambio={queryFuse.length} />
                                         </div>
                                     )}
                                 </Card>
@@ -519,7 +521,7 @@ const fuse = new Fuse(productos, {
                             <div className="pabmediano">
                                 <InputGroup>
                                     <Button className="botonAzul"><FaSearch className="tIconos" /></Button>
-                                    <Input type="search" placeholder="Buscar producto" input={query} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} />
+                                    <Input type="search" placeholder="Buscar producto" input={queryFuse} onChange={e => {setQuery(e.target.value); setLoadMore(5000)}} />
                                 </InputGroup>
                             </div>
                             <span className="wbold">Costo total:</span> <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} />
@@ -527,7 +529,7 @@ const fuse = new Fuse(productos, {
                                 <div className="overflowModal">
                                     {productosFuse.filter(prod => prod.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).filter(producto => !producto.compuesto?.length).map((p, i) =>
                                         <div key={i}>
-                                            <ProductoCompuesto p={p} compuesto={compuesto} setCompuesto={setCompuesto} cambio={query.length} />
+                                            <ProductoCompuesto p={p} compuesto={compuesto} setCompuesto={setCompuesto} cambio={queryFuse.length} />
                                         </div>
                                     )}
                                     {productosFuse.filter(a => a.activo).sort((a, b) => (a.nombre > b.nombre) ? 1 : -1).length <= 0 && 

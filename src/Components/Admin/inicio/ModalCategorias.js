@@ -131,7 +131,7 @@ const agregarSubCategoria = async() => {
                         <Input type="text" placeholder="Código universal" onChange={(e) => setCodigoUniversal(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button className="botonAmarillo w100" onClick={() => agregarCategoria()}>Crear</Button>
+                <Button className="botonAmarillo w100" onClick={() => {agregarCategoria(); setLoading(true)}} disabled={loading}>Crear</Button>
             </div>
             </Modal>
             <Modal isOpen={modal2} toggle={() => setModal2(!modal2)}> 
@@ -144,10 +144,10 @@ const agregarSubCategoria = async() => {
                             <option value="seleccione">Seleccione:</option>
                             {categorias?.map((c, i) => <option key={i} id={c.id} value={c.categoria}>{c.categoria}</option>)}
                         </Input>
-                        <Input type="text" placeholder="Categoria" onChange={(e) => setSubCategoria(e.target.value)} />
+                        <Input type="text" placeholder="Sub categoria" onChange={(e) => setSubCategoria(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button onClick={() => agregarSubCategoria()} className="botonAmarillo w100">Crear</Button>
+                <Button onClick={() => {agregarSubCategoria(); setLoading(true)}} disabled={loading} className="botonAmarillo w100">Crear</Button>
             </div>
             </Modal>
         </React.Fragment>

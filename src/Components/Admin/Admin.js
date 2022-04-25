@@ -5,13 +5,12 @@ import MenuAdmin from "./MenuAdmin";
 
 function Admin() {
 
-
     return (
         <>
 			<MenuAdmin  />
-			<>
+			<div className="noselect">
 				<Outlet/>
-			</>
+			</div>
         </>
     );
 }
