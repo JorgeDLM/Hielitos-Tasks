@@ -549,7 +549,7 @@ function ProductoEditarID(props) {
         setLoading(false)
     }, [setLoading])
 
-    const ganancia = precio_venta_ml - costo_envio - (isCompuesto ? total : precio_compra)
+    const ganancia = precio_venta - costo_envio - (isCompuesto ? total : precio_compra)
 
 
     return (
