@@ -112,7 +112,6 @@ function ModalProducto() {
         setCodigoProducto("")
         setSubido("")
         setModal(false)
-        setClickeado(false)
     }
 
     const dataCompleta =  !imagenInvalida && !tituloInvalido && !nombreInvalido && !categoriaInvalida && !precio_ventaInvalido && !envioInvalido && !propietarioInvalida && !precioInvalido && !precio_venta_mlInvalido && !productoCompuestoInvalido
@@ -281,8 +280,7 @@ function ModalProducto() {
             return
         }
         try {
-            
-// SUBIR PRODUCTO firebase: ---------------------------------------------------
+        // SUBIR PRODUCTO firebase: ---------------------------------------------------
             const data = {
                 imagen_thumbnail: imagenThumbnail,
                 imagen_mediana: imagenMediana,
@@ -320,7 +318,7 @@ function ModalProducto() {
                 await addDoc(collection(db, "productos"), data)
             }
             newProduct()
-// -----------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------
 
             swal({
                 title: "¡Felicidades!",
@@ -331,6 +329,7 @@ function ModalProducto() {
 
             localStorage.setItem('productoInfo', JSON.stringify(data))
             setProductos([...productos, data])
+            setClickeado(false)
             clearInputs()
             setLoading(false);
 
@@ -405,7 +404,7 @@ const fuse = new Fuse(productos, {
 
     return (
         <React.Fragment>
-            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria" disabled={!clickeado}><FaPlus className="tIconoCategoria" /> Producto</Button>
+            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria" disabled={clickeado === true}><FaPlus className="tIconoCategoria" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
                     {imagenGrande === "" ? 
