@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoPublicarSimilarID(props) {
     
-    const {loading, setLoading, productosCache} = useContext(UsuarioContext)
+    const {loading, setLoading, productosCache, categorias} = useContext(UsuarioContext)
 
     
     const [imagenGrande, setImagenGrande] = useState("https://static.vecteezy.com/system/resources/thumbnails/000/350/939/small/Electronic_Devices__2828_29.jpg")
@@ -27,7 +27,6 @@ function ProductoPublicarSimilarID(props) {
     const [clickeado, setClickeado] = useState(false)
     const [categoria, setCategoria] = useState(props.p.categoria)
     const [subCategoria, setSubCategoria] = useState(props.p.sub_categoria ? props.p.sub_categoria : "")
-    const [categorias, setCategorias] = useState([])
     const [subCategorias, setSubCategorias] = useState([])
     const [tematica, setTematica] = useState(props.p.tematica ? props.p.tematica : "")
     const [precio_compra, setPrecioCompra] = useState(props.p.precio_compra ? props.p.precio_compra : "")
@@ -104,16 +103,6 @@ function ProductoPublicarSimilarID(props) {
         navigate(`/admin/inicio`)
     }
 
-        // FETCH CATEGORIAS
-        useEffect(() => {
-            const fetchCategorias = async() => {
-                const dataCategoria =  await getDocs(collection(db, "categorias"))
-                const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-                setCategorias(data)
-            }
-            fetchCategorias();
-            setLoading(false)
-        }, [setLoading])
 
         
         // FETCH SUBCATEGORIAS
@@ -466,17 +455,6 @@ function ProductoPublicarSimilarID(props) {
             }
         }
     
-
-// FETCH CATEGORIAS
-    useEffect(() => {
-        const fetchCategorias = async() => {
-            const dataCategoria =  await getDocs(collection(db, "categorias"))
-            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-            setCategorias(data)
-        }
-        fetchCategorias();
-        setLoading(false)
-    }, [setLoading])
 
     const ganancia = precio_venta - costo_envio - (isCompuesto ? total : precio_compra)
 

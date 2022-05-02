@@ -16,7 +16,7 @@ import Resizer from "react-image-file-resizer";
 
 function ProductoEditarID(props) {
     
-    const {loading, setLoading, productos, setProductos, productosCache , setLoadMore} = useContext(UsuarioContext)
+    const {loading, setLoading, productos, setProductos, productosCache , setLoadMore, categorias} = useContext(UsuarioContext)
 
         
     const [imagenGrande, setImagenGrande] = useState(props.p.imagen)
@@ -26,7 +26,6 @@ function ProductoEditarID(props) {
     const [titulo, setTitulo] = useState(props.p.titulo)
     const [categoria, setCategoria] = useState(props.p.categoria)
     const [subCategoria, setSubCategoria] = useState(props.p.sub_categoria ? props.p.sub_categoria : "")
-    const [categorias, setCategorias] = useState([])
     const [subCategorias, setSubCategorias] = useState([])
     const [tematica, setTematica] = useState(props.p.tematica ? props.p.tematica : "")
     const [precio_compra, setPrecioCompra] = useState(props.p.precio_compra ? props.p.precio_compra : "")
@@ -101,19 +100,7 @@ function ProductoEditarID(props) {
     const navigate = useNavigate()
     const regresar = () => {
         navigate(`/admin/inicio`)
-    }
-
-        // FETCH CATEGORIAS
-        useEffect(() => {
-            const fetchCategorias = async() => {
-                const dataCategoria =  await getDocs(collection(db, "categorias"))
-                const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-                setCategorias(data)
-            }
-            fetchCategorias();
-            setLoading(false)
-        }, [setLoading])
-    
+    }  
         
         
         // FETCH SUBCATEGORIAS
@@ -537,17 +524,6 @@ function ProductoEditarID(props) {
                 setLoading(false);
         }
     }
-
-// FETCH CATEGORIAS
-    useEffect(() => {
-        const fetchCategorias = async() => {
-            const dataCategoria =  await getDocs(collection(db, "categorias"))
-            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-            setCategorias(data)
-        }
-        fetchCategorias();
-        setLoading(false)
-    }, [setLoading])
 
     const ganancia = precio_venta - costo_envio - (isCompuesto ? total : precio_compra)
 

@@ -13,7 +13,7 @@ import Resizer from "react-image-file-resizer";
 
 function ModalProducto() {
 
-    const {productos, setProductos, setLoadMore} = useContext(UsuarioContext)
+    const {productos, setProductos, setLoadMore, categorias} = useContext(UsuarioContext)
 
     const [modal, setModal] = useState(false)
     const [imagenGrande, setImagenGrande] = useState("")
@@ -24,7 +24,6 @@ function ModalProducto() {
     const [tituloDefault, setTituloDefault] = useState("")
     const [categoria, setCategoria] = useState("")
     const [subCategoria, setSubCategoria] = useState("")
-    const [categorias, setCategorias] = useState([])
     const [subCategorias, setSubCategorias] = useState([])
     const [tematica, setTematica] = useState("")
     const [precio_compra, setPrecioCompra] = useState("")
@@ -349,20 +348,6 @@ function ModalProducto() {
         }
     }
 
-// FETCH CATEGORIAS
-useEffect(() => {
-    const fetchCategorias = async() => {
-        
-        const dataCategorias = query(collection(db, "categorias"), orderBy("categoria", "asc"))
-        
-        const querySnapshot =  await getDocs(dataCategorias)
-        const data = querySnapshot.docs.map(doc => ({id: doc.id, ...doc.data()}))
-        setCategorias(data)
-    }
-    fetchCategorias();
-    setLoading(false)
-}, [])
-
 // FETCH SUBCATEGORIAS
 useEffect(() => {
     const categoriaID = categorias?.filter(c => categoria === c.categoria)[0]?.id
@@ -420,7 +405,7 @@ const fuse = new Fuse(productos, {
 
     return (
         <React.Fragment>
-            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria"><FaPlus className="tIconoCategoria" /> Producto</Button>
+            <Button onClick={() => setModal(!modal)} className="botonNegro w100 tCategoria" disabled={!clickeado}><FaPlus className="tIconoCategoria" /> Producto</Button>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}> 
                 <div className="pargrande azul wbolder centro tmuygrande">
                     {imagenGrande === "" ? 

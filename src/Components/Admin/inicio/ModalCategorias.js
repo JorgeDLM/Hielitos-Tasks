@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Modal, Input, FormGroup, Col } from "reactstrap";
 import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
 import { FaPlus } from 'react-icons/fa'
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
+import UsuarioContext from "../context/UsuarioContext";
 
 
 function ModalCategorias() {
     const [modal, setModal] = useState(false)
     const [modal2, setModal2] = useState(false)
     const [categoria, setCategoria] = useState("")
-    const [categorias, setCategorias] = useState([])
     const [subCategoria, setSubCategoria] = useState("")
     const [codigo_universal, setCodigoUniversal] = useState("")
-    const [loading, setLoading] = useState(true)
+    const [loading2, setLoading2] = useState(true)
+    const { categorias, loading } = useContext(UsuarioContext)
 
 
 
 // SUBIR CATEGORIA ------------------------------------------------------------
 const agregarCategoria = async() => {
-    setLoading(true);
+    setLoading2(true);
     if(!categoria){
         swal({
             title: "Rellene el campo",
@@ -28,7 +29,7 @@ const agregarCategoria = async() => {
             icon: "error",
             button: "cerrar"
         });
-        setLoading(false);
+        setLoading2(false);
         return
     }
     try {
@@ -43,7 +44,7 @@ const agregarCategoria = async() => {
             icon: "success",
             button: "cerrar"
         })
-        setLoading(false);
+        setLoading2(false);
         setCategoria("")
         window.location.reload()
 
@@ -54,7 +55,7 @@ const agregarCategoria = async() => {
                 icon: "error",
                 button: "cerrar"
             });
-            setLoading(false);
+            setLoading2(false);
         
     }
 }
@@ -62,7 +63,7 @@ const agregarCategoria = async() => {
     
 // SUBIR SUB-CATEGORIA ------------------------------------------------------------
 const agregarSubCategoria = async() => {
-    setLoading(true);
+    setLoading2(true);
     if(!categoria && !subCategoria){
         swal({
             title: "Rellene todos los campos",
@@ -70,7 +71,7 @@ const agregarSubCategoria = async() => {
             icon: "error",
             button: "cerrar"
         });
-        setLoading(false);
+        setLoading2(false);
         return
     }
     try {
@@ -85,7 +86,7 @@ const agregarSubCategoria = async() => {
             icon: "success",
             button: "cerrar"
         })
-        setLoading(false);
+        setLoading2(false);
         setCategoria("")
         window.location.reload()
 
@@ -96,22 +97,11 @@ const agregarSubCategoria = async() => {
                 icon: "error",
                 button: "cerrar"
             });
-            setLoading(false);
+            setLoading2(false);
         
     }
 }
 // -----------------------------------------------------------------------------------
-
-    useEffect(() => {
-        const fetchCategorias = async() => {
-            const dataCategoria =  await getDocs(collection(db, "categorias"))
-            
-            const data = dataCategoria.docs.map(doc => ({id: doc.id, ...doc.data()}))
-            setCategorias(data)
-        }
-        fetchCategorias();
-        setLoading(false)
-    }, [])
 
     return (
         <React.Fragment>
@@ -131,7 +121,7 @@ const agregarSubCategoria = async() => {
                         <Input type="text" placeholder="Código universal" onChange={(e) => setCodigoUniversal(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button className="botonAmarillo w100" onClick={() => {agregarCategoria(); setLoading(true)}} disabled={loading}>Crear</Button>
+                <Button className="botonAmarillo w100" onClick={() => {agregarCategoria(); setLoading2(true)}} disabled={loading2}>Crear</Button>
             </div>
             </Modal>
             <Modal isOpen={modal2} toggle={() => setModal2(!modal2)}> 
@@ -147,7 +137,7 @@ const agregarSubCategoria = async() => {
                         <Input type="text" placeholder="Sub categoria" onChange={(e) => setSubCategoria(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button onClick={() => {agregarSubCategoria(); setLoading(true)}} disabled={loading} className="botonAmarillo w100">Crear</Button>
+                <Button onClick={() => {agregarSubCategoria(); setLoading2(true)}} disabled={loading2} className="botonAmarillo w100">Crear</Button>
             </div>
             </Modal>
         </React.Fragment>
