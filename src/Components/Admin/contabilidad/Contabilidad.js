@@ -77,7 +77,7 @@ function Contabilidad() {
                                 <Card className="claseCard pmediano">
                                     <div className="wbold">{new Date(g.timestamp).getDate()} de {meses[((new Date(g.timestamp).getMonth()))]} de {new Date(g.timestamp).getFullYear()}</div>
                                     <div>
-                                    <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={g.gasto_total} /> - {g.cantidad} {g.unidad ? g.unidad : ""} de <span className="wbold t16 azul">{g.nombre.toUpperCase()}</span> (Jorge de la Mora Menéndez)
+                                    <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={g.gasto_total} /> - {g.cantidad} {g.unidad ? g.unidad : ""} de <span className="wbold t16 azul">{g.nombre.toUpperCase()}</span> ({g.creado_por})
                                     </div>
                                 </Card>
                             </div>

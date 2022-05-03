@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Input, Modal, Row, Spinner } from 'reactstrap';
 import Menu from '../../menu/Menu'
 import { FaPlus, FaTrash, FaLongArrowAltDown } from 'react-icons/fa'
-import { addDoc, collection, deleteDoc, doc, getDocs, orderBy } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy, query } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
 import swal from 'sweetalert';
 import UsuarioContext from '../context/UsuarioContext';
@@ -17,6 +17,7 @@ const SolicitarProducto = () => {
     const [cantidad, setCantidad] = useState("")
     const [inventario, setInventario] = useState("")
     const [productosSolicitados, setProductosSolicitados] = useState([])
+    const [productosPorNombre, setProductosPorNombre] = useState([])
     const [loading, setLoading] = useState(true)
     const [orderTipo, setOrderTipo] = useState(false)
 
@@ -75,9 +76,23 @@ const SolicitarProducto = () => {
 
     useEffect(() => {
         const getSolicitados = async() => {
-            const productosRef = await getDocs(collection(db, "productos_solicitados"), orderBy('timestamp', 'desc'))
-            const getDataProductos = productosRef.docs.map((doc) => ({...doc.data(), id: doc.id}))
+            const productosRef = query(collection(db, "productos_solicitados"), orderBy('timestamp', 'desc'))
+            const querySnapshot = await getDocs(productosRef);
+            const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
             setProductosSolicitados(getDataProductos)
+
+            setLoading(false)
+        }
+        getSolicitados()
+    }, [])
+
+    useEffect(() => {
+        const getSolicitados = async() => {
+            const productosRef = query(collection(db, "productos_solicitados"), orderBy('nombre', 'desc'))
+            const querySnapshot = await getDocs(productosRef);
+            const getDataProductos = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+            setProductosPorNombre(getDataProductos)
+
             setLoading(false)
         }
         getSolicitados()
@@ -100,7 +115,7 @@ const SolicitarProducto = () => {
                 {loading ? <div className="centro pabenorme"><Spinner className='gris' /></div> : <>
                     <div className='contenedor'>
                         <Card className="claseCard productosSolicitados pchico centradoEnmedio" >
-                            {orderTipo && productosSolicitados.sort((a,b) => (a.nombre > b.nombre) ? 1 : -1).map((p,i) => (
+                            {orderTipo && productosPorNombre.sort((a,b) => (a.nombre > b.nombre) ? 1 : -1).map((p,i) => (
                                 <div className='pabmuychico izquierda'>
                                     <Row key={i}>
                                         <Col>
@@ -113,7 +128,7 @@ const SolicitarProducto = () => {
                                     <hr className='sinpym' />
                                 </div>
                             ))}
-                            {!orderTipo && productosSolicitados.map((p,i) => (
+                            {!orderTipo && productosSolicitados.sort((a,b) => (a.timestamp > b.timestamp) ? 1 : -1).map((p,i) => (
                                 <div className='pabmuychico izquierda'>
                                     <Row key={i}>
                                         <Col>
