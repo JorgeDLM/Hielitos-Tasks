@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Input, Modal, Row, Spinner } from 'reactstrap';
 import Menu from '../../menu/Menu'
-import { FaPlus, FaTrash } from 'react-icons/fa'
-import { addDoc, collection, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { FaPlus, FaTrash, FaLongArrowAltDown } from 'react-icons/fa'
+import { addDoc, collection, deleteDoc, doc, getDocs, orderBy } from 'firebase/firestore';
 import { db } from '../../../firebase-config';
 import swal from 'sweetalert';
 import UsuarioContext from '../context/UsuarioContext';
@@ -18,6 +18,7 @@ const SolicitarProducto = () => {
     const [inventario, setInventario] = useState("")
     const [productosSolicitados, setProductosSolicitados] = useState([])
     const [loading, setLoading] = useState(true)
+    const [orderTipo, setOrderTipo] = useState(false)
 
 	const links = [
 		{
@@ -30,7 +31,7 @@ const SolicitarProducto = () => {
     const crearSolicitud = async() => {
         if(nombre){
             try{
-                const data = {nombre: nombre, cantidad: cantidad, inventario: inventario}
+                const data = {nombre: nombre, cantidad: cantidad, inventario: inventario, timestamp: new Date().getTime()}
                 await addDoc(collection(db, "productos_solicitados"), data)
                 setProductosSolicitados([...productosSolicitados, data])
                 setNombre("")
@@ -74,7 +75,7 @@ const SolicitarProducto = () => {
 
     useEffect(() => {
         const getSolicitados = async() => {
-            const productosRef = await getDocs(collection(db, "productos_solicitados"))
+            const productosRef = await getDocs(collection(db, "productos_solicitados"), orderBy('timestamp', 'desc'))
             const getDataProductos = productosRef.docs.map((doc) => ({...doc.data(), id: doc.id}))
             setProductosSolicitados(getDataProductos)
             setLoading(false)
@@ -91,11 +92,28 @@ const SolicitarProducto = () => {
             <div className='centro pabmediano'>
                 <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Solicitar producto</Button>
             </div>
+            <div className='centro pabmuychico'>
+                <span className='pdechico'><Button onClick={() => setOrderTipo(false)} className="botonAmarilloComentario">{!orderTipo && <FaLongArrowAltDown className='tIconos' /> }Fecha</Button></span>
+                <Button onClick={() => setOrderTipo(true)} className="botonAmarilloComentario">{orderTipo && <FaLongArrowAltDown className='tIconos' /> }Nombre</Button>
+            </div>
             <div>
                 {loading ? <div className="centro pabenorme"><Spinner className='gris' /></div> : <>
                     <div className='contenedor'>
                         <Card className="claseCard productosSolicitados pchico centradoEnmedio" >
-                            {productosSolicitados.sort((a,b) => (a.nombre > b.nombre) ? 1 : -1).map((p,i) => (
+                            {orderTipo && productosSolicitados.sort((a,b) => (a.nombre > b.nombre) ? 1 : -1).map((p,i) => (
+                                <div className='pabmuychico izquierda'>
+                                    <Row key={i}>
+                                        <Col>
+                                            <span className='gris t12'>{p.cantidad && `${p.cantidad} x `}</span><span className="wbold">{p.nombre}</span>{p.cantidad && <div className='gris t12 centro'> (quedan {p.inventario}/pzas)</div>}
+                                        </Col>
+                                        {usuarioLoggeado && <Col xs={3}>
+                                            <Button onClick={() => borrarSolicitud(p)} className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
+                                        </Col>}
+                                    </Row>
+                                    <hr className='sinpym' />
+                                </div>
+                            ))}
+                            {!orderTipo && productosSolicitados.map((p,i) => (
                                 <div className='pabmuychico izquierda'>
                                     <Row key={i}>
                                         <Col>
