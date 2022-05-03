@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Modal, Input, FormGroup, Col } from "reactstrap";
+import { Button, Modal, Input, FormGroup, Col, Spinner } from "reactstrap";
 import swal from 'sweetalert';
 import logo from '../../../imgs/logoNegro.png'
 import { FaPlus } from 'react-icons/fa'
@@ -14,7 +14,7 @@ function ModalCategorias() {
     const [categoria, setCategoria] = useState("")
     const [subCategoria, setSubCategoria] = useState("")
     const [codigo_universal, setCodigoUniversal] = useState("")
-    const [loading2, setLoading2] = useState(true)
+    const [loading2, setLoading2] = useState(false)
     const { categorias, loading } = useContext(UsuarioContext)
 
 
@@ -121,7 +121,7 @@ const agregarSubCategoria = async() => {
                         <Input type="text" placeholder="Código universal" onChange={(e) => setCodigoUniversal(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button className="botonAmarillo w100" onClick={() => {agregarCategoria(); setLoading2(true)}} disabled={loading2}>Crear</Button>
+                <Button className="botonAmarillo w100" onClick={() => {agregarCategoria(); setLoading2(true)}} disabled={loading || !categoria || !codigo_universal}>Crear</Button>
             </div>
             </Modal>
             <Modal isOpen={modal2} toggle={() => setModal2(!modal2)}> 
@@ -130,14 +130,14 @@ const agregarSubCategoria = async() => {
                 Crear sub-categoria:
                 <div className="pizchico pdechico">
                     <FormGroup>
-                        <Input type="select" placeholder="Categoria" onChange={(e) => {setCategoria(e.target.value)}}>
-                            <option value="seleccione">Seleccione:</option>
+                        <Input type="select" placeholder="Categoria" value={categoria} onChange={(e) => {setCategoria(e.target.value)}}>
+                            <option value="" disabled>Seleccione:</option>
                             {categorias?.map((c, i) => <option key={i} id={c.id} value={c.categoria}>{c.categoria}</option>)}
                         </Input>
                         <Input type="text" placeholder="Sub categoria" onChange={(e) => setSubCategoria(e.target.value)} />
                     </FormGroup>
                 </div>
-                <Button onClick={() => {agregarSubCategoria(); setLoading2(true)}} disabled={loading2} className="botonAmarillo w100">Crear</Button>
+                <Button onClick={() => {agregarSubCategoria(); setLoading2(true)}} disabled={loading || !subCategoria || categoria === ""} className="botonAmarillo w100">{loading2 ? <Spinner /> : "Crear"}</Button>
             </div>
             </Modal>
         </React.Fragment>

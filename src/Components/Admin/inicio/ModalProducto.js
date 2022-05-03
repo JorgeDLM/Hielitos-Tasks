@@ -269,6 +269,7 @@ function ModalProducto() {
 // SUBIR PRODUCTO ------------------------------------------------------------
     const subirProducto = async() => {
         setLoading(true);
+        setClickeado(true)
         if(!dataCompleta){
             swal({
                 title: "Rellene todos los campos",
@@ -277,6 +278,7 @@ function ModalProducto() {
                 button: "cerrar"
             });
             setLoading(false);
+            setClickeado(false)
             return
         }
         try {
@@ -329,8 +331,8 @@ function ModalProducto() {
 
             localStorage.setItem('productoInfo', JSON.stringify(data))
             setProductos([...productos, data])
-            setClickeado(false)
             clearInputs()
+            setClickeado(false)
             setLoading(false);
 
             // window.location.reload()
@@ -343,6 +345,7 @@ function ModalProducto() {
                     button: "cerrar"
                 });
                 setLoading(false);
+                setClickeado(false)
             
         }
     }
@@ -655,7 +658,7 @@ const fuse = new Fuse(productos, {
                         </FormGroup>
                     </>
                 </div>
-                <Button onClick={() => {subirProducto(); setClickeado(true)}} className="botonAmarillo" disabled={!dataCompleta || clickeado}>{loading ? <Spinner size="sm" /> : "Subir producto"}</Button>
+                <Button onClick={() => {subirProducto()}} className="botonAmarillo" disabled={!dataCompleta || clickeado}>{loading ? <Spinner size="sm" /> : "Subir producto"}</Button>
             </Modal>
         </React.Fragment>
     );
