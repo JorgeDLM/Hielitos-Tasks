@@ -66,7 +66,7 @@ function Menu(props) {
                   </NavItem>
                 ))}
                 {!usuarioLoggeado && <NavItem className="pabMenu">
-                  <a className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}} target="_blank"  href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a &phone=+52${"2228377162"}`}>Contáctanos</a>
+                  <a className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}} target="_blank" rel="noreferrer noopener" href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a &phone=+52${"2228377162"}`}>Contáctanos</a>
                 </NavItem>}
                 <hr className="d-block d-md-none" />
                   <NavItem className="pabMenu">
