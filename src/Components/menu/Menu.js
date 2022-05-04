@@ -7,6 +7,7 @@ import logoNegro from "../../imgs/logoNegro.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import UsuarioContext from "../Admin/context/UsuarioContext";
+import {FaWhatsapp} from 'react-icons/fa'
 
 function Menu(props) {
 
@@ -65,10 +66,11 @@ function Menu(props) {
                     </NavLink>
                   </NavItem>
                 ))}
-                {!usuarioLoggeado && <NavItem className="pabMenu">
-                  <a className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}} target="_blank" rel="noreferrer noopener" href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a &phone=+52${"2228377162"}`}>Contáctanos</a>
-                </NavItem>}
                 <hr className="d-block d-md-none" />
+                {!usuarioLoggeado && <NavItem className="pabMenu">
+                  <a className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}} target="_blank" rel="noreferrer noopener" href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a &phone=+52${"2228377162"}`}><FaWhatsapp className="t20 tIconos verde" /><span className="pizmuychico">Contáctanos</span> </a>
+                </NavItem>}
+                <hr className="d-block d-md-none sinpymar" />
                   <NavItem className="pabMenu">
                       {usuarioLoggeado ? <NavLink className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar(); cerrarSesion()}}  to='/'>
                         Cerrar sesión
