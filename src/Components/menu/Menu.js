@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Navbar, NavbarBrand, Nav, NavItem } from "reactstrap";
 import { NavbarToggler, Collapse } from 'reactstrap';
-import logoBlanco from "../../imgs/logoBlanco.png";
 import logoNegro from "../../imgs/logoNegro.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
@@ -44,16 +43,7 @@ function Menu(props) {
           className={`${props.rojo ? "fondoRojo" : props.negro ? "fondoNegro" :  props.rojo ? "fondoRojo": props.blanco ? "fondoAzul" :  props.verde ? "fondoVerde": "fondoBlanco"} hMenu noselect`}
         >
           <NavbarBrand href={props.hrefLogo} className="logoMenu">
-            {!props.logoBlanco && (
               <img src={logoNegro} className="mercadologo" alt="logo" />
-            )}
-            {props.logoBlanco && (
-              <img
-                src={logoBlanco}
-                className="mercadologo"
-                alt="logo"
-              />
-            )}
           </NavbarBrand>
           <NavbarToggler className="burgerMenu" onClick={() => toggleNavbar()} />
           <Collapse isOpen={toggle} navbar>
