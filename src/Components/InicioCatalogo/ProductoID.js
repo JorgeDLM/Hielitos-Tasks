@@ -63,7 +63,7 @@ function ProductoID(props) {
                         ¡Contáctanos!
                     <div className="parchico linkGris">
                         <a
-                            target="_blank"  href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a ${props.p.nombre} &phone=+52${"2228377162"}`}>
+                            target="_blank" rel="noreferrer noopener" href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a ${props.p.nombre} &phone=+52${"2228377162"}`}>
                             <FaWhatsapp className="verde tIconos"/>
                             <span className="pizchico">+52 {("2228377162").replace(/\D*(\d{3})\D*(\d{3})\D*(\d{4})\D*/, '$1 $2 $3')}</span>
                         </a>
