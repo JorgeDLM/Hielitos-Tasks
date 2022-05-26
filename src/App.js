@@ -19,6 +19,7 @@ import Usuario from "./Components/Admin/context/UsuarioContext";
 import ProductoPublicarSimilarID from "./Components/Admin/inicio/ProductoPublicarSimilarID";
 import SolicitarProducto from "./Components/Admin/solicitarProducto/SolicitarProducto";
 import Contabilidad from "./Components/Admin/contabilidad/Contabilidad";
+import Tasks from "./Components/Admin/tasks/Tasks";
 
 function App() {
 
@@ -64,6 +65,7 @@ return (
 						{productoCatalogo}
 					</>}
 					<>
+						<Route path="tasks" element={<Tasks/>} />
 						<Route path="solicitar" element={<SolicitarProducto/>} />
 					</>
 				</React.Fragment>

@@ -20,7 +20,7 @@ function Contabilidad() {
             try {
                 const dataGastos = query(collection(db, "gastos"), 
                     orderBy('timestamp', 'desc'), 
-                    limit(10)
+                    limit(50)
                 )
 
                 const querySnapshot = await getDocs(dataGastos);
@@ -69,7 +69,9 @@ function Contabilidad() {
             <Row>
                 <Col xs={12} lg={6}>
                     <div>
-                        <span className="wbold t20 rojoObscuro">Gastos</span>
+                        <span className="wbold t20 rojoObscuro">Gastos</span> {(!loading || gastos.length) && 
+                            <span className="wbold t16">- <NumberFormat displayType={'text'} decimalScale={0} thousandSeparator={true} prefix={'$'} value={gastos.length && gastos?.map(a => +a.gasto_total)?.reduce((total, entrada) =>  (total += entrada))} /></span>
+                        }
                     </div>
                     {(loading || gastos.length <= 0) ? spinner : <div className="overflowGastos">
                         {gastos.map((g, i) => (
@@ -77,7 +79,7 @@ function Contabilidad() {
                                 <Card className="claseCard pmediano">
                                     <div className="wbold">{new Date(g.timestamp).getDate()} de {meses[((new Date(g.timestamp).getMonth()))]} de {new Date(g.timestamp).getFullYear()}</div>
                                     <div>
-                                    <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={g.gasto_total} /> - {g.cantidad} {g.unidad ? g.unidad : ""} de <span className="wbold t16 azul">{g.nombre.toUpperCase()}</span> ({g.creado_por})
+                                    <NumberFormat displayType={'text'} decimalScale={0} thousandSeparator={true} prefix={'$'} value={g.gasto_total} /> - {g.cantidad} {g.unidad ? g.unidad : ""} de <span className="wbold t16 azul">{g.nombre.toUpperCase()}</span> ({g.creado_por})
                                     </div>
                                 </Card>
                             </div>
@@ -88,7 +90,7 @@ function Contabilidad() {
                 <Col>
                     <div>
                         <span className="wbold t20 verdeObscuro">Activos</span> {(!loading || activos.length) && 
-                            <span className="wbold t16">- <NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={activos.length && activos?.map(a => +a.costo_unitario * +a.cantidad)?.reduce((total, entrada) =>  (total += entrada))} /></span>
+                            <span className="wbold t16">- <NumberFormat displayType={'text'} decimalScale={0} thousandSeparator={true} prefix={'$'} value={activos.length && activos?.map(a => +a.costo_unitario * +a.cantidad)?.reduce((total, entrada) =>  (total += entrada))} /></span>
                         }
                     </div>
                     {(loading || activos.length <= 0) ? spinner : <div className="overflowActivos">

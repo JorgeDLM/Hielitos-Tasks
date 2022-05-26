@@ -21,12 +21,20 @@ const SolicitarProducto = () => {
     const [loading, setLoading] = useState(true)
     const [orderTipo, setOrderTipo] = useState(false)
 
+
 	const links = [
 		{
-			nombre: "Producto solicitado",
+			nombre: "Catálogo",
+			path: `/`,
+		},
+		{
+			nombre: "Solicitar productos",
 			path: `/solicitar`,
 		},
-
+        {
+            nombre: "Tareas",
+            path: `/tasks`,
+        }
 	];
 
     const crearSolicitud = async() => {
@@ -128,7 +136,7 @@ const SolicitarProducto = () => {
                                     <hr className='sinpym' />
                                 </div>
                             ))}
-                            {!orderTipo && productosSolicitados.sort((a,b) => (a.timestamp > b.timestamp) ? 1 : -1).map((p,i) => (
+                            {!orderTipo && productosSolicitados.map((p,i) => (
                                 <div className='pabmuychico izquierda'>
                                     <Row key={i}>
                                         <Col>

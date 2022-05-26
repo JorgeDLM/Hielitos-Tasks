@@ -33,6 +33,10 @@ function MenuAdmin() {
 			nombre: "Contabilidad",
 			path: `/admin/contabilidad`,
 		},
+		{
+			nombre: "Tasks",
+			path: `/tasks`,
+		},
 
 	];
 
