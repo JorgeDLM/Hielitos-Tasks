@@ -89,7 +89,7 @@ function Tasks() {
         getSolicitados()
     }, [])
 
-    const items = usuarioLoggeado ? [{user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otros"}] : [{user: "Fanny"}, {user: "Otros"}]
+    const items = usuarioLoggeado ? [{user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Otro"}]
 
     return (
         <>
@@ -107,14 +107,17 @@ function Tasks() {
                             <div className="wbold t20 azul">{item.user}</div>
                             <hr />
                             {tasks.filter(t => t.usuario === item.user).map((t, i) => 
-                                <Row key={i} className="wbold">
-                                    <Col>
-                                        {t.nombre} - <span className={`${t.prioridad === "1" ? "rojo" : t.prioridad === "2" ? "naranja" : t.prioridad === "3" ? "amarillo" : t.prioridad === "4" ? "verde" : "negro" }`}>{t.prioridad === "1" ? "Urgente" : t.prioridad === "2" ? "Necesario" : t.prioridad === "3" ? "Conveniente" : t.prioridad === "4" ? "Opcional" : "Error" }</span>
-                                    </Col>
-                                    {usuarioLoggeado && <Col xs={3}>
-                                        <Button onClick={() => borrarTask(t)} className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
-                                    </Col>}
-                                </Row>
+                                <>
+                                    <Row key={i} className="wbold t13">
+                                        <Col>
+                                            {t.nombre} - <span className={`${t.prioridad === "1" ? "rojo" : t.prioridad === "2" ? "naranja" : t.prioridad === "3" ? "amarillo" : t.prioridad === "4" ? "verde" : "negro" }`}>{t.prioridad === "1" ? "Urgente" : t.prioridad === "2" ? "Necesario" : t.prioridad === "3" ? "Conveniente" : t.prioridad === "4" ? "Opcional" : "Error" }</span>
+                                        </Col>
+                                        {usuarioLoggeado && <Col xs={3}>
+                                            <Button onClick={() => borrarTask(t)} className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
+                                        </Col>}
+                                    </Row>
+                                    <hr className="sinpym" />
+                                </>
                             )}
                        </div>}
                     </Card>
