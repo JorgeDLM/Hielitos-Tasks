@@ -113,7 +113,14 @@ function Tasks() {
                                             {t.nombre} - <span className={`${t.prioridad === "1" ? "rojo" : t.prioridad === "2" ? "naranja" : t.prioridad === "3" ? "amarillo" : t.prioridad === "4" ? "verde" : "negro" }`}>{t.prioridad === "1" ? "Urgente" : t.prioridad === "2" ? "Necesario" : t.prioridad === "3" ? "Conveniente" : t.prioridad === "4" ? "Opcional" : "Error" }</span>
                                         </Col>
                                         {usuarioLoggeado && <Col xs={3}>
-                                            <Button onClick={() => borrarTask(t)} className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
+                                            <Button 
+                                                onClick={() => swal({ 
+                                                        title: "¿Estás segur@?" , 
+                                                        text: "No podrás revertirlo!", 
+                                                        icon: "warning", 
+                                                        buttons: ["Cancelar", "Borrar"]
+                                                    }).then((res) => {if(res){borrarTask(t)}})} 
+                                                className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
                                         </Col>}
                                     </Row>
                                     <hr className="sinpym" />
