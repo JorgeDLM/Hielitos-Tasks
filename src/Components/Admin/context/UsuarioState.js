@@ -82,6 +82,8 @@ const UsuarioState = (props) => {
     const [productosCache, setProductosCache] = useState(JSON.parse(localStorage.getItem("productosCache"))  ? JSON.parse(localStorage.getItem("productosCache")) : [])
     const [productosCompra, setProductosCompra] = useState([])
     const [productosVenta, setProductosVenta] = useState([])
+    const [almighty, setAlmighty] = useState([])
+    const [productosAlmighty, setProductosAlmighty] = useState([])
     const [compras, setCompras] = useState([])
     const [loadMore, setLoadMore] = useState(0)
     const [categoria, setCategoria] = useState("")
@@ -211,6 +213,35 @@ useEffect(() => {
             
         }, [setProductosVenta])
 
+        
+
+        
+// CARGAR ALMIGHTY-------------------------------------------------------
+useEffect(() => {
+    const fetchAlmighty = async() => {
+        try {
+            const dataAlmighty = query(collection(db, "almighty"))
+
+            const querySnapshot = await getDocs(dataAlmighty);
+            const getDataAlmighty = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+
+            setAlmighty( getDataAlmighty )
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    fetchAlmighty()
+    
+}, [setAlmighty])
+
+// CARGAR ALMIGHTY STATE-------------------------------------------------------
+    useEffect(() => {
+        const infoProductosAlmighty = JSON.parse(localStorage.getItem("infoProductosAlmighty"))
+            if (infoProductosAlmighty) {
+                setProductosAlmighty( infoProductosAlmighty )
+            }
+            
+        }, [setProductosAlmighty])
 
     return (
         <UsuarioContext.Provider value={{
@@ -240,6 +271,10 @@ useEffect(() => {
             setSubCategoria,
             subCategorias, 
             setSubCategorias,
+            productosAlmighty, 
+            setProductosAlmighty,
+            almighty, 
+            setAlmighty,
         }}>
             {props.children}
         </UsuarioContext.Provider>  

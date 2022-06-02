@@ -27,7 +27,7 @@ function ProductoCompras(props) {
     }, [cantidad, productosCompra, setProductosCompra])
     
 
-    // AGREGAR INVENTARIO
+    // AGREGAR A COMPRA
     const agregarProductosCompra = async(e) => {
         setLoading(true)
         try {

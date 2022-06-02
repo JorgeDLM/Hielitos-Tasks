@@ -60,13 +60,13 @@ const filtradoCatalogo = catalogo && (
         </Row>
     </>)
 
-// CATALAGO
+// ALMIGHTY
 const filtradoAlmighty = almighty && (
     <>
         <div className="pabmuygrande">{botonBorrarFiltros}</div>
         <Row className="pabchico">
             {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
-                <ProductoAlmighty key={i} p={p} />
+                <ProductoAlmighty key={i} p={p} cambio={query.length} />
             )}
             {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : 
                 <>
