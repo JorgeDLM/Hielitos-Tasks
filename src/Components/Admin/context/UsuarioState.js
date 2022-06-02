@@ -83,6 +83,7 @@ const UsuarioState = (props) => {
     const [productosCompra, setProductosCompra] = useState([])
     const [productosVenta, setProductosVenta] = useState([])
     const [almighty, setAlmighty] = useState([])
+    // cache de almighty admin
     const [productosAlmighty, setProductosAlmighty] = useState([])
     const [compras, setCompras] = useState([])
     const [loadMore, setLoadMore] = useState(0)
@@ -236,13 +237,44 @@ useEffect(() => {
 
 // CARGAR ALMIGHTY STATE-------------------------------------------------------
     useEffect(() => {
-        const infoProductosAlmighty = JSON.parse(localStorage.getItem("infoProductosAlmighty"))
-            if (infoProductosAlmighty) {
-                setProductosAlmighty( infoProductosAlmighty )
-            }
+        const cacheAlmighty = JSON.parse(localStorage.getItem("infoProductosAlmighty"))
+        const infoAlmighty = JSON.parse(localStorage.getItem("infoAlmighty"))
+        
+        // SI hay cache y NO hay solicitudes en base de datos
+        if ((cacheAlmighty && cacheAlmighty.length) && !infoAlmighty) {
+            setProductosAlmighty( cacheAlmighty )
+        } 
+        // NO hay cache pero SI hay solicitudes en base de datos
+        if (!(cacheAlmighty && cacheAlmighty.length) && infoAlmighty) {
+            // setProductosAlmighty([infoAlmighty])
+        }
+        // SI hay cache Y SI hay solicitudes en base de datos
+        if ((cacheAlmighty && cacheAlmighty.length) && infoAlmighty){ 
+  
+            // BASE DE DATOS
+            // const dataInfoAlmighty = infoAlmighty ? infoAlmighty : [] 
+            // CACHE
+            // const dataCache = cacheAlmighty.length ? cacheAlmighty : []
+            // const data = cacheAlmighty ? cacheAlmighty : []
+            
+            // const setCache = [ ...dataInfoAlmighty, ...dataCache ]
+            // const unico = setCache.filter((value, index, self) =>
+            // index === self.findIndex((t) => (
+            //         t.producto === value.producto
+            //     ))
+            // )
+            setProductosAlmighty( cacheAlmighty )
+                    
+            // const dataUnico = localStorage.setItem('infoProductosAlmighty', JSON.stringify([data]))    
+            // setProductosAlmighty(dataUnico)
+
+        }
             
         }, [setProductosAlmighty])
 
+
+        console.log("db:", almighty)
+        console.log("cache:", productosAlmighty)
     return (
         <UsuarioContext.Provider value={{
             loading, 

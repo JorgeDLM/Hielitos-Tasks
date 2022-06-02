@@ -1,12 +1,12 @@
-import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
-import { Button, Card, Col, Container, Row } from "reactstrap";
+import { Button, Card, Col, Container, Row, Spinner } from "reactstrap";
 import swal from "sweetalert";
-import { db } from "../../firebase-config";
 import UsuarioContext from "../Admin/context/UsuarioContext";
 import Categorias from "../Admin/inicio/Categorias";
 import Buscador from "../buscador/Buscador";
 import Menu from "../menu/Menu";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase-config";
 
 
 function Admin() {
@@ -34,7 +34,8 @@ function Admin() {
             }
             await setDoc(doc(db, "almighty", "productosAlmighty"), data)
             setProductosAlmighty([])
-            setAlmighty([...almighty, data])
+            setAlmighty([data])
+            // setAlmighty([...almighty, data])
             localStorage.setItem('infoAlmighty', JSON.stringify(data));
             localStorage.removeItem('infoProductosAlmighty')
             setLoading(false)
@@ -54,9 +55,7 @@ function Admin() {
             setLoading(false)
         }
     }   
-  
-    console.log(almighty.map(p => p.productos.map(prod => prod.producto)))
-
+    
     return (
         <>
             <Menu iniciarsesion links={links} logoNegro  />
@@ -87,9 +86,8 @@ function Admin() {
                     </>
                 }
 
-
                 <div className="wbold t20 pabmediano parchico">Hi friend, this is what i currently need to buy:</div>
-                <Row>
+                {(loading || (almighty.length === 0)) ? <div className="centro"><Spinner /></div> : <Row>
                     {almighty.map(p => p.productos.map(prod => 
                         <Col className="pabmediano contenedor widthCardAlmightyCol2">
                             <Card className={`pmediano claseCard widthCardAlmighty2 centradoRelativo`}>
@@ -100,7 +98,7 @@ function Admin() {
                             </Card>
                         </Col>
                     ))}
-                </Row>
+                </Row>}
 			</Container>
         </>
     );

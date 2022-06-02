@@ -5,7 +5,7 @@ import UsuarioContext from "../Admin/context/UsuarioContext";
 
 
 function ProductoAlmighty(props) {
-    const {productosAlmighty, setProductosAlmighty, setLoading, loading } = useContext(UsuarioContext)
+    const {productosAlmighty, setProductosAlmighty, setLoading } = useContext(UsuarioContext)
     const [agregar, setAgregar] = useState(false)
 
     const palabras = props.p.nombre.split(" ");
@@ -20,14 +20,14 @@ function ProductoAlmighty(props) {
     }
 
     useEffect(() => {
-        localStorage.setItem('infoProductosAlmighty', JSON.stringify(productosAlmighty));
-    }, [cantidad, productosAlmighty, setProductosAlmighty])
+        localStorage.setItem('infoProductosAlmighty', JSON.stringify([...productosAlmighty]));
+    }, [productosAlmighty, setProductosAlmighty])
     
     // AGREGAR PRODUCTOS
     const agregarProductos = async(e) => {
         setLoading(true)
         try {
-            const data =  [{ producto: props.p.id, cantidad: cantidad, imagen: props.p.imagen_mediana, nombre: name }]
+            const data =  [{ producto: props.p.id, imagen: props.p.imagen_mediana, nombre: name, cantidad: cantidad }]
             const index = productosAlmighty.findIndex(p => p.producto === props.p.id)
 
                 if(e){
