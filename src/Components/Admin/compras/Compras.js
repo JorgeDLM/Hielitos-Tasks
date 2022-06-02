@@ -126,6 +126,8 @@ function Compras() {
                                         <span className="pizchico"><NumberFormat displayType={'text'} thousandSeparator={true} prefix={'$'} value={total} /> <span className="gris t12 wnormal"> - {cantidadTotal} ud. - (${(total/cantidadTotal).toFixed(0)}/pza)</span> </span>
                                     </div>
                             </Card>
+                            <Button onClick={() => setModal(true)} className="w100 botonNegro">Generar compra</Button>
+
                         </Col>}
                     </Row>
                     <hr />

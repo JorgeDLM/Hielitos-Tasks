@@ -8,8 +8,9 @@ import ProductoCompras from "../Admin/compras/ProductoCompras";
 import ProductoCatalogo from "../InicioCatalogo/ProductoCatalogo";
 import ProductoPorSubir from "../Admin/porSubir/ProductoPorSubir";
 import ProductoInventario from "../Admin/inventario/ProductoInventario";
+import ProductoAlmighty from "../AlmightySupplier/ProductoAlmighty";
 
-function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo, porSubir, inventario}) {
+function Buscador({categoria, subCategoria, setCategoria, setSubCategoria, inicio, compras, catalogo, porSubir, inventario, almighty}) {
     
     const { productos, setLoadMore, loading, loadMore } = useContext(UsuarioContext)
     
@@ -59,6 +60,24 @@ const filtradoCatalogo = catalogo && (
         </Row>
     </>)
 
+// CATALAGO
+const filtradoAlmighty = almighty && (
+    <>
+        <div className="pabmuygrande">{botonBorrarFiltros}</div>
+        <Row className="pabchico">
+            {productosFuse.filter(prod => (categoria ? prod.categoria === categoria : prod)).filter(prod => (subCategoria ? prod.sub_categoria === subCategoria : prod)).map((p, i) => 
+                <ProductoAlmighty key={i} p={p} />
+            )}
+            {(loading || ((productosFuse.length <= 0) && !query)) ? spinnerSinResultados : 
+                <>
+                    {productosFuse.length <= 0 && 
+                        (<div className="pizchico pabmediano  parchico"><FaExclamationTriangle className="amarillo tIconos" /> No encontramos resultados para tu busqueda.</div> 
+                    )}
+                    {botonLoadMore}
+                </>
+            }
+        </Row>
+    </>)
 
 // ADMIN INICIO
     const filtradoInicioAdmin = inicio && (loading ? spinner :
@@ -144,6 +163,7 @@ const filtradoCatalogo = catalogo && (
                 {filtradoCompras}
                 {filtradoCatalogo}
                 {filtradoPorSubir}
+                {filtradoAlmighty}
         </React.Fragment>
     );
 }

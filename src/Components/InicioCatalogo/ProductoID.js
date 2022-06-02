@@ -26,7 +26,7 @@ function ProductoID(props) {
             <Container className="parmediano pabenorme noselect">
                 <Card className="pabgrande pizgrande pdegrande claseCard">
                     <Row className="pargrande pabchico">
-                        <Col className="centro"><img src={props.p.imagen} className="tImagenID" alt="error imagen" /></Col>
+                        <Col className="centro"><img src={props.p.imagen} draggable="false" className="tImagenID" alt="error imagen" /></Col>
                         <Col xs={12} md={4} className="parenorme izquierda t26 d-md-block d-none">
                             {/* PANTALLA MEDIANA */}
                             <Card className="pchico">

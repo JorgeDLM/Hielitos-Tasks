@@ -554,6 +554,7 @@ function ProductoEditarID(props) {
                                             ref={inputFile}
                                             type="file" 
                                             nombre="img" 
+                                            draggable="false"
                                             accept="image/*" 
                                             onChange={(e) => postImagen(e.target.files[0])} 
                                             invalid={imagenInvalida} 

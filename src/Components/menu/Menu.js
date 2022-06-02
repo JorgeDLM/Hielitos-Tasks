@@ -61,7 +61,7 @@ function Menu(props) {
                   <a className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar()}} target="_blank" rel="noreferrer noopener" href={`https://api.whatsapp.com/send?text=Hola Somos Geek, los contacto con respecto a &phone=+52${"2228377162"}`}><FaWhatsapp className="t20 tIconos verde" /><span className="pizmuychico">Contáctanos</span> </a>
                 </NavItem>}
                 <hr className="d-block d-md-none sinpymar" />
-                  <NavItem className="pabMenu">
+                  {!props.iniciarsesion && <NavItem className="pabMenu">
                       {usuarioLoggeado ? <NavLink className="navHighlightBlancoMenu"  onClick={() => {toggleNavbar(); cerrarSesion()}}  to='/'>
                         Cerrar sesión
                       </NavLink> :
@@ -69,7 +69,7 @@ function Menu(props) {
                         Iniciar sesión
                       </NavLink>
                       }
-                  </NavItem>
+                  </NavItem>}
               </Nav>
           </Collapse>
         </Navbar>

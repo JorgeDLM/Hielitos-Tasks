@@ -14,6 +14,7 @@ import Ventas from './Components/Admin/ventas/Ventas'
 import PorSubir from './Components/Admin/porSubir/PorSubir'
 import Compras from './Components/Admin/compras/Compras'
 import ProductoEditarID from "./Components/Admin/inicio/ProductoEditarID";
+import AlmightySupplier from "./Components/AlmightySupplier/AlmightySupplier";
 
 import Usuario from "./Components/Admin/context/UsuarioContext";
 import ProductoPublicarSimilarID from "./Components/Admin/inicio/ProductoPublicarSimilarID";
@@ -67,6 +68,7 @@ return (
 					<>
 						<Route path="tasks" element={<Tasks/>} />
 						<Route path="solicitar" element={<SolicitarProducto/>} />
+						<Route path="almighty-supplier" element={<AlmightySupplier/>} />
 					</>
 				</React.Fragment>
 			</Routes>

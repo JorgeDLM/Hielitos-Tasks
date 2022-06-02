@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Col } from 'reactstrap'
-import { useNavigate } from "react-router-dom";
 
 
-function ProductoCatalogo(props) {
+function ProductoAlmighty(props) {
+    const [agregar, setAgregar] = useState(false)
     
-    const navigate = useNavigate()
     const irID = () => {
-        navigate(`/catalogo/${props.p.id}`)
-        window.scrollTo(0, 0); 
+        setAgregar(!agregar)
     }
 
     
@@ -17,17 +15,14 @@ function ProductoCatalogo(props) {
 
     return (
         <Col className="pabmediano contenedor widthCardProveedorCol">
-            <Card className="pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick" onClick={() => irID()}>
+            <Card className={`pmediano claseCard widthCardProveedor centradoRelativo mouseSelectClick ${agregar && "fondoVerde"}`} onClick={() => irID()}>
                 <div className="contenedor">
                     <img draggable="false" src={props.p.imagen_mediana} className="claseImagenCatalogo" alt="" />
                     <div className="gris centro parmediano">{nombre}</div>
                 </div>
             </Card>
-            <div className="centro parmediano t20 bottom">
-                {props.p.precio_venta_ml && <span className="lineaEnmedio wbold">${props.p.precio_venta_ml}</span>} {props.p.precio_venta && <span className={props.p.precio_venta_ml && `pizmuychico`}>${props.p.precio_venta}</span>}
-            </div>
         </Col>
     );
 }
 
-export default ProductoCatalogo;
+export default ProductoAlmighty;
