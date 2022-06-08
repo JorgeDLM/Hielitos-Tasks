@@ -89,16 +89,16 @@ function Tasks() {
         getSolicitados()
     }, [])
 
-    const items = usuarioLoggeado ? [{user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Otro"}]
+    const items = usuarioLoggeado ? [{user: "Pausar"}, {user: "Activar"}, {user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Pausar"}, {user: "Activar"}, {user: "Otro"}]
 
     return (
         <>
         {usuarioLoggeado && <MenuAdmin />}
         {!usuarioLoggeado && <Menu links={links} logoNegro  />}
             <div className="penorme">
-                {usuarioLoggeado && <div className='centro pabmediano'>
+                <div className='centro pabmediano'>
                     <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Crear tarea</Button>
-                </div>}
+                </div>
 
                 {/* JORGE HIJO */}
                 {items.map((item, i) => tasks.filter(t => t.usuario === item.user).length > 0 && <div className="pabchico">
@@ -146,6 +146,8 @@ function Tasks() {
                         <option>Ana</option>
                         <option>Jorge (papá)</option>
                         <option>Fanny</option>
+                        <option>Pausar</option>
+                        <option>Activar</option>
                         <option>Otro</option>
                     </Input>
                 </div>

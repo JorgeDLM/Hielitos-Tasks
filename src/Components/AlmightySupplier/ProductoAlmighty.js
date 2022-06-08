@@ -12,7 +12,7 @@ function ProductoAlmighty(props) {
     const nombre = palabras.map(p => ((p[0] !== undefined && p[0]?.toUpperCase()) === false ? "" : (p[0] !== undefined && p[0]?.toUpperCase())) + (p !== undefined && p.substring(1).toLowerCase()) + " ").join("")
 
     const [cantidad, setCantidad] = useState("")
-    const [name, setNombre] = useState(nombre)
+    const [name, setNombre] = useState("")
     
     const irID = () => {
         agregarProductos()
