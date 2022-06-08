@@ -89,7 +89,7 @@ function Tasks() {
         getSolicitados()
     }, [])
 
-    const items = usuarioLoggeado ? [{user: "Pausar"}, {user: "Activar"}, {user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Pausar"}, {user: "Activar"}, {user: "Otro"}]
+    const items = usuarioLoggeado ? [{user: "Pausar"}, {user: "Activar"}, {user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Pausar"}, {user: "Activar"}]
 
     return (
         <>
