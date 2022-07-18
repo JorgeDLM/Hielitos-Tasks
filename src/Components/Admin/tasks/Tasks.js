@@ -12,9 +12,13 @@ function Tasks() {
     const {usuarioLoggeado} = useContext(UsuarioContext)
 
     const [modal, setModal] = useState(false)
+    const [modal2, setModal2] = useState(false)
     const [nombre, setNombre] = useState("")
     const [prioridad, setPrioridad] = useState("")
     const [usuario, setUsuario] = useState("")
+    const [empleados, setEmpleados] = useState("")
+    const [nombreEmpleado, setNombreEmpleado] = useState("")
+    const [rol, setRol] = useState("")
     const [tasks, setTasks] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -42,6 +46,7 @@ function Tasks() {
             }
         }
     }
+
     const borrarTask = async(producto) => {
         try{
             await deleteDoc(doc(db, "tasks", producto.id))
@@ -64,20 +69,34 @@ function Tasks() {
     }
 
 	const links = [
-		{
-			nombre: "Catálogo",
-			path: `/`,
-		},
-		{
-			nombre: "Solicitar productos",
-			path: `/solicitar`,
-		},
         {
             nombre: "Tareas",
             path: `/tasks`,
         }
 	];
 
+    const crearEmpleado = async() => {
+        if(nombreEmpleado && rol){
+            try{
+                const data = {nombre: nombreEmpleado, rol: rol}
+                await addDoc(collection(db, "empleados"), data)
+                setNombreEmpleado("")
+                setRol("")
+
+                swal({ 
+                    title: "Empleado creado con exito", 
+                    text: "", 
+                    icon: "success", 
+                })
+            } catch (error) {
+                swal({ 
+                    title: "Error" , 
+                    text: error.message, 
+                    icon: "error", 
+                })
+            }
+        }
+    }
     useEffect(() => {
         const getSolicitados = async() => {
             const tasksRef = query(collection(db, "tasks"), orderBy('prioridad', 'asc'))
@@ -89,7 +108,24 @@ function Tasks() {
         getSolicitados()
     }, [])
 
-    const items = usuarioLoggeado ? [{user: "Pausar"}, {user: "Activar"}, {user: "Jorge (hijo)"}, {user: "Ana"}, {user: "Jorge (papá)"}, {user: "Fanny"}, {user: "Otro"}] : [{user: "Fanny"}, {user: "Pausar"}, {user: "Activar"}]
+    useEffect(() => {
+        const getEmpleados = async() => {
+            const empleadosRef = query(collection(db, "empleados"), orderBy('rol', 'asc'))
+            const querySnapshot = await getDocs(empleadosRef);
+            const getDataEmpleados = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
+            setEmpleados(getDataEmpleados)
+            setLoading(false)
+        }
+        getEmpleados()
+    }, [])
+
+    const items = tasks?.map(task => ({user: `${task.usuario}`}))
+    const unique = items.filter((value, index) => {
+        const _value = JSON.stringify(value);
+        return index === items.findIndex(obj => {
+          return JSON.stringify(obj) === _value;
+        });
+      });
 
     return (
         <>
@@ -97,38 +133,43 @@ function Tasks() {
         {!usuarioLoggeado && <Menu links={links} logoNegro  />}
             <div className="penorme">
                 <div className='centro pabmediano'>
+                    {!usuarioLoggeado && <div className="d-inline pdemediano">
+                        <Button className="botonBlanco" onClick={() => setModal2(!modal2)}><FaPlus className="tIconos" /> Empleado</Button></div> 
+                    }
                     <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Crear tarea</Button>
                 </div>
 
-                {/* JORGE HIJO */}
-                {items.map((item, i) => tasks.filter(t => t.usuario === item.user).length > 0 && <div className="pabchico">
-                    <Card key={i} className="penorme">
-                       {loading ? <Spinner /> : <div>
-                            <div className="wbold t20 azul">{item.user}</div>
-                            <hr />
-                            {tasks.filter(t => t.usuario === item.user).map((t, i) => 
-                                <>
-                                    <Row key={i} className="wbold t13">
-                                        <Col>
-                                            {t.nombre} - <span className={`${t.prioridad === "1" ? "rojo" : t.prioridad === "2" ? "naranja" : t.prioridad === "3" ? "amarillo" : t.prioridad === "4" ? "verde" : "negro" }`}>{t.prioridad === "1" ? "Urgente" : t.prioridad === "2" ? "Necesario" : t.prioridad === "3" ? "Conveniente" : t.prioridad === "4" ? "Opcional" : "Error" }</span>
-                                        </Col>
-                                        {usuarioLoggeado && <Col xs={3}>
-                                            <Button 
-                                                onClick={() => swal({ 
-                                                        title: "¿Estás segur@?" , 
-                                                        text: "No podrás revertirlo!", 
-                                                        icon: "warning", 
-                                                        buttons: ["Cancelar", "Borrar"]
-                                                    }).then((res) => {if(res){borrarTask(t)}})} 
-                                                className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
-                                        </Col>}
-                                    </Row>
-                                    <hr className="sinpym" />
-                                </>
-                            )}
-                       </div>}
-                    </Card>
-                </div>)}
+                {/* TASKS */}
+                {loading ? <div className="centro pargrande"><Spinner className="azul" /></div> : <>
+                    {unique.map((item, i) => tasks.filter(t => t.usuario === item.user).length > 0 && <div className="pabchico">
+                        <Card key={i} className="penorme">
+                           {loading ? <Spinner /> : <div>
+                                <div className="wbold t20 azul">{item.user}</div>
+                                <hr />
+                                {tasks.filter(t => t.usuario === item.user).map((t, i) => 
+                                    <>
+                                        <Row key={i} className="wbold t13">
+                                            <Col>
+                                                {t.nombre} - <span className={`${t.prioridad === "1" ? "rojo" : t.prioridad === "2" ? "naranja" : t.prioridad === "3" ? "amarillo" : t.prioridad === "4" ? "verde" : "negro" }`}>{t.prioridad === "1" ? "Urgente" : t.prioridad === "2" ? "Necesario" : t.prioridad === "3" ? "Conveniente" : t.prioridad === "4" ? "Opcional" : "Error" }</span>
+                                            </Col>
+                                            {usuarioLoggeado && <Col xs={3}>
+                                                <Button 
+                                                    onClick={() => swal({ 
+                                                            title: "¿Estás segur@?" , 
+                                                            text: "No podrás revertirlo!", 
+                                                            icon: "warning", 
+                                                            buttons: ["Cancelar", "Borrar"]
+                                                        }).then((res) => {if(res){borrarTask(t)}})} 
+                                                    className="botonRojoComentario"><FaTrash className="tIconos" /></Button>
+                                            </Col>}
+                                        </Row>
+                                        <hr className="sinpym" />
+                                    </>
+                                )}
+                           </div>}
+                        </Card>
+                    </div>)}
+                </>}
             </div>
             <Modal isOpen={modal} toggle={() => setModal(!modal)}>
                 <div className='pgrande'>
@@ -142,17 +183,23 @@ function Tasks() {
                     </Input>
                     <Input type="select" placeholder='Cantidad solicitada' value={usuario} onChange={e => setUsuario(e.target.value)} >
                         <option value="" disabled>Usuario encargado:</option>
-                        <option>Jorge (hijo)</option>
-                        <option>Ana</option>
-                        <option>Jorge (papá)</option>
-                        <option>Fanny</option>
-                        <option>Pausar</option>
-                        <option>Activar</option>
-                        <option>Otro</option>
+                        {empleados && empleados.map((e, i) => <option key={i}>{e.nombre}</option>)}
                     </Input>
                 </div>
                 <Button disabled={!nombre || !prioridad || !usuario}className="botonAzul" onClick={() => {crearTask()}}>Crear tarea</Button>
                 <Button className="botonRojo" onClick={() => setModal(!modal)}>Cancelar</Button>
+            </Modal>
+            <Modal isOpen={modal2} toggle={() => setModal2(!modal2)}>
+                <div className='pgrande'>
+                    <Input type="text" placeholder='Nombre completo' value={nombreEmpleado} onChange={e => setNombreEmpleado(e.target.value)} />
+                    <Input type="select" value={rol} onChange={e => setRol(e.target.value)} >
+                        <option value="" disabled>Rol:</option>
+                        <option value="admin">Admin</option>
+                        <option value="empleado">Empleado</option>
+                    </Input>
+                </div>
+                <Button disabled={!nombreEmpleado || !rol}className="botonAzul" onClick={() => {crearEmpleado()}}>Crear empleado</Button>
+                <Button className="botonRojo" onClick={() => setModal2(!modal2)}>Cancelar</Button>
             </Modal>
         </>      
     );

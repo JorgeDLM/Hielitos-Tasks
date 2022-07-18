@@ -110,18 +110,12 @@ const Login = () => {
         </InputGroup>
         <Row className="parchico">
           <Col className="centro" xs={{ size: 12 }}>
-            <Button onClick={login} className="botonAmarillo w100">
+            <Button onClick={login} className="botonAzul w100">
               {loading ? <Spinner size="sm" className='tSpinnerBoton' /> : "Iniciar Sesión"}
             </Button>
           </Col>
-          {/* <Col xs={12} className="centro parmuychico linkAzul">
-            <Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link>
-          </Col> */}
         </Row>   
       </div>
-      {/* <div className="parenorme">
-        <div className="wbold parenorme centro"><Link to="/registro-cliente" className="botonTransparente azul linkSF">¡Regístrate aquí!</Link></div>
-      </div> */}
     </>
   )
 }

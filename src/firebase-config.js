@@ -7,17 +7,15 @@ import { getAuth } from "@firebase/auth"
 
 // CREDENCIALES DE PRUEBASs
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_apiKey,
-  authDomain: process.env.REACT_APP_authDomain,
-  projectId: process.env.REACT_APP_projectId,
-  storageBucket: process.env.REACT_APP_storageBucket,
-  messagingSenderId: process.env.REACT_APP_messagingSenderId,
-  appId: process.env.REACT_APP_appId,
-  measurementId: process.env.REACT_APP_measurementId
+  apiKey: "AIzaSyCsRRa53MPjVGoYkwaPVzBslb1FNVl95eA",
+  authDomain: "hielitos---tasks.firebaseapp.com",
+  projectId: "hielitos---tasks",
+  storageBucket: "hielitos---tasks.appspot.com",
+  messagingSenderId: "725085689661",
+  appId: "1:725085689661:web:f766a396c2b3eb270b1754"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
 export const db = getFirestore(app)
 export const auth = getAuth(app)

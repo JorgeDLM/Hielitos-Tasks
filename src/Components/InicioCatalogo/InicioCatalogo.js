@@ -8,8 +8,8 @@ function InicioCatalogo() {
 
 	const links = [
 		{
-			nombre: "Catálogo",
-			path: `/catalogo`,
+			nombre: "Tareas",
+			path: `/tasks`,
 		},
 	];
 
