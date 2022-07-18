@@ -54,7 +54,7 @@ const Login = () => {
         setUsuarioLoggeado(true)
         await setUsuario(dataUsuario)
         window.location.reload()
-        navigate('/admin')
+        navigate('/tasks')
         setLoading(false)
         
 

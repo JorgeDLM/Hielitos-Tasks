@@ -25,7 +25,7 @@ function Tasks() {
     const crearTask = async() => {
         if(nombre && prioridad && usuario){
             try{
-                const data = {nombre: nombre, prioridad: prioridad, usuario: usuario, timestamp: new Date().getTime()}
+                const data = {nombre: nombre, prioridad: prioridad, usuario: usuario, rol: empleados?.filter(e => e.nombre === usuario)[0].rol, timestamp: new Date().getTime()}
                 await addDoc(collection(db, "tasks"), data)
                 setTasks([...tasks, data])
                 setNombre("")
@@ -97,17 +97,20 @@ function Tasks() {
             }
         }
     }
+
+    // cargar tasks
     useEffect(() => {
-        const getSolicitados = async() => {
+        const getTasks = async() => {
             const tasksRef = query(collection(db, "tasks"), orderBy('prioridad', 'asc'))
             const querySnapshot = await getDocs(tasksRef);
             const getDataTasks = querySnapshot.docs.map((doc) => ({...doc.data(), id: doc.id}))   
             setTasks(getDataTasks)
             setLoading(false)
         }
-        getSolicitados()
+        getTasks()
     }, [])
 
+    // cargar empleados
     useEffect(() => {
         const getEmpleados = async() => {
             const empleadosRef = query(collection(db, "empleados"), orderBy('rol', 'asc'))
@@ -119,7 +122,7 @@ function Tasks() {
         getEmpleados()
     }, [])
 
-    const items = tasks?.map(task => ({user: `${task.usuario}`}))
+    const items = tasks?.map(task => ({user: `${task.usuario}`, rol: `${task.rol}`}))
     const unique = items.filter((value, index) => {
         const _value = JSON.stringify(value);
         return index === items.findIndex(obj => {
@@ -127,21 +130,25 @@ function Tasks() {
         });
       });
 
+    const itemsFinales = !usuarioLoggeado ? unique.filter(item => item.rol === "empleado") : unique
+
+
+
     return (
         <>
         {usuarioLoggeado && <MenuAdmin />}
         {!usuarioLoggeado && <Menu links={links} logoNegro  />}
             <div className="penorme">
                 <div className='centro pabmediano'>
-                    {!usuarioLoggeado && <div className="d-inline pdemediano">
+                    {usuarioLoggeado && <><div className="d-inline pdemediano">
                         <Button className="botonBlanco" onClick={() => setModal2(!modal2)}><FaPlus className="tIconos" /> Empleado</Button></div> 
+                    <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Crear tarea</Button></>
                     }
-                    <Button className="botonAzul" onClick={() => setModal(!modal)}><FaPlus className="tIconos" /> Crear tarea</Button>
                 </div>
 
                 {/* TASKS */}
                 {loading ? <div className="centro pargrande"><Spinner className="azul" /></div> : <>
-                    {unique.map((item, i) => tasks.filter(t => t.usuario === item.user).length > 0 && <div className="pabchico">
+                    {itemsFinales.map((item, i) => tasks.filter(t => t.usuario === item.user).length > 0 && <div className="pabchico">
                         <Card key={i} className="penorme">
                            {loading ? <Spinner /> : <div>
                                 <div className="wbold t20 azul">{item.user}</div>

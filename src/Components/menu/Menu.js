@@ -6,7 +6,6 @@ import logoNegro from "../../imgs/logoNegro.png";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase-config";
 import UsuarioContext from "../Admin/context/UsuarioContext";
-import {FaWhatsapp} from 'react-icons/fa'
 
 function Menu(props) {
 
